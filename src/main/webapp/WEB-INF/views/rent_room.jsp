@@ -16,8 +16,6 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 	<link rel="stylesheet" href="resources/plugins/fonts/line-awesome.css">
-
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 	<link rel="stylesheet" href="resources/css/uc.min.css">
 	<link rel="stylesheet" href="resources/css/basic.css">
 	<link rel="stylesheet" href="resources/css/slick.css">

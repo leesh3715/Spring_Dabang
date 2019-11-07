@@ -1,4 +1,4 @@
-.header_wrap{max-width: 1000px;}
+.header_wrap{max-width: 1200px;}
 
 /*header*/
 #header{background: #ffd800; }
@@ -12,7 +12,7 @@
 .util li{float: left; padding: 0 20px;}
 .util li img{vertical-align: bottom;}
 
-/*sub °øÅë*/
+/*sub ï¿½ï¿½ï¿½ï¿½*/
 .sub_top{height: 155px; margin-bottom: 54px; overflow: hidden;}
 .sub_top .title{margin-top: 45px; font-size: 36px; color: black; text-align: center; letter-spacing: 0.04em; display: block; text-align: center; margin-bottom: 10px;}
 .sub_top div{text-align: center;}

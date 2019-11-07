@@ -66,14 +66,14 @@ public class memService implements memDAO{
 
 	@Override
 	public void logout(HttpSession session) {
-		
 		session.invalidate();
-		
 	}
-	
 	
 	public void updateMem(memDTO mdto) {
 		this.sst.update("updateMem", mdto);
 	}
-	
+
+	public memDTO selectMem(memDTO mdto) {
+		return this.sst.selectOne("selectMem", mdto);
+	}
 }

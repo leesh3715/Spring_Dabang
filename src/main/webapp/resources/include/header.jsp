@@ -680,8 +680,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
  <c:set var="session" value="${member}"/>
  	<c:if test="${!empty session}">
 <header id="header">
-        <div class="header_wrap">
+        <div class="header_wrap row">
+        	<div class="col-xs-8 col-sm-3"> 
             <h1><a href="<%=request.getContextPath() %>/main_room.do"><img src="resources/images/main/logo.png" alt=""></a></h1>
+            </div>
+            <div class="col-xs-8 col-sm-5">
             <nav id="gnb">
             
             
@@ -693,12 +696,13 @@ var idJ = /^[a-z0-9]{4,12}$/;
                     <li><a href="<%=request.getContextPath() %>/customer_room.do">고객센터</a></li>
                 </ul>
             </nav>
-             <div class="util">
+            </div>
+             <div class="util col-xs-8 col-sm-4">
                 <ul>
                   
                     <li><a href="<%=request.getContextPath() %>/my_room_1.do"><img src="resources/images/main/mypage_icon.png" alt=""></a></li>
                     <li><a class="logout" href="<%=request.getContextPath() %>/logout.do">로그아웃</a></li>
-                    <li><p>${session.getM_nick() }님 환영합니다.</p></li>
+                    <li><p style="margin-top: 4px;">${session.getM_nick() }님 환영합니다.</p></li>
                 </ul>
             </div>
         </div>

@@ -28,4 +28,10 @@
 		set m_nick = #{m_nick}, m_name = #{m_name}, m_pwd = #{m_pwd}, m_phone = #{m_phone}
 		where m_no = #{m_no}
 	</update>
+	
+	<select id="selectMem" parameterType="com.sist.model.memDTO" resultType="com.sist.model.memDTO">
+		select *
+		from d_member
+		where m_name like #{m_name} and m_phone like #{m_phone}
+	</select>
 </mapper>

@@ -203,6 +203,12 @@ public class Controller {
 
 		return "email_find";
 	}
+	
+	@RequestMapping("/pwd_find.do")
+	public String pwd_find() {
+
+		return "pwd_find";
+	}
 
 	@RequestMapping("/rent_room_upload.do")
 	public String rent_room_update() {

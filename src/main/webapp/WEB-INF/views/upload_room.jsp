@@ -104,11 +104,9 @@
                        	<input type="hidden" name="r_btype" value="원,투룸">
                        	
                        	<c:if test="${!empty param.r_no  }">
-                       	<input type="hidden" name="r_no" value="${param.r_no }">
+                       	<input type="text" name="r_no" value="${param.r_no }">
                        	</c:if>
-                       	<c:if test="${empty param.r_no  }">
-                       	<input type="hidden" name="r_no" value="0">
-                       	</c:if>
+                       	
                        	
                             <div class="write_box write1">
                                 <table class="type1">

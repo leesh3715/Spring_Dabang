@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.dao.support.DaoSupport;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,57 @@ public class MemberController {
 
 	@Inject
 	private memService mservice;
+	
+	@Autowired
+	private JavaMailSender mailSender;
+
+	// mailSending 코드
+	
+	@RequestMapping(value = "pwd_find_ok.do")
+	public String mailSending(memDTO mdto, HttpServletResponse response) throws Exception {
+		memDTO mdto2 = new memDTO();
+		
+		if(this.mservice.selectMem(mdto)!=null) {
+			mdto2=this.mservice.selectMem(mdto);
+		}else {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			  out.println("<script>");
+			  out.println("alert('아이디와 비밀번호를 확인하세요')");
+			  out.println("history.back()");
+			  out.println("</script>");
+		}
+		
+		
+		
+		if(mdto2.getM_name()!=null)  {		
+		String setfrom = "leesh3715@naver.com";
+		String tomail = mdto2.getM_email(); // 받는 사람 이메일
+		String title = "청년다방에서 알려드립니다."; // 제목
+		String content = "안녕하세요.\r\n" + 
+				"\r\n" + 
+				"회원님의 비밀번호는 "+mdto2.getM_pwd()+" 입니다.\r\n" + 
+				"\r\n" + 
+				"혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\r\n" + 
+				""; // 내용
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message,
+					true, "UTF-8");
+			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+			messageHelper.setTo(tomail); // 받는사람 이메일
+			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+			messageHelper.setText(content); // 메일 내용
+
+			mailSender.send(message);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return "../../index";
+		
+		}
+		return null;
+	}
 
 	// 회원가입
 	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)

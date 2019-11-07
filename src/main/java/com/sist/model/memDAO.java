@@ -17,5 +17,7 @@ public interface memDAO {
 	void logout(HttpSession session);
 	
 	void updateMem(memDTO mdto);
+	
+	memDTO selectMem(memDTO mdto);
 
 }
