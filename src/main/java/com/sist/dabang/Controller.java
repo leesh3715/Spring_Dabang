@@ -135,12 +135,7 @@ public class Controller {
 		return "my_room_1";
 	}
 	
-	@RequestMapping("/my_room_2.do")
-	public String my_room_2() {
 
-		return "my_room_2";
-	}
-	
 	@RequestMapping("/my_room_3.do")
 	public String my_room_3(Model model, HttpServletRequest request, HttpSession session) throws JsonProcessingException {
 

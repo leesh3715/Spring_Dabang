@@ -199,7 +199,31 @@ public class MemberController {
 				out.println("</script>");
 			}	
 			
-			
 			return null;
+		}
+		
+		@RequestMapping(value = "delete_member.do")
+		public String delete_member(memDTO mdto, HttpServletResponse response, HttpSession session) throws Exception {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			int result = this.mservice.deleteMember(mdto);
+			 System.out.println(result);
+			if(result ==1) {
+				session.invalidate();
+				out.println("<script>");
+				out.println("alert('성공적으로 탈퇴 되었습니다.')");
+				out.println("location.href='main_room.do'");
+				out.println("</script>");
+				return null;
+				
+			} else {
+				out.println("<script>");
+				out.println("alert('이메일과 비밀번호를 다시 확인해주세요')");
+				out.println("history.back()");
+				out.println("</script>");
+				return null;
+			}
+			
 		}
 }

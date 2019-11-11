@@ -21,4 +21,6 @@ public interface memDAO {
 	memDTO findPwd(memDTO mdto);
 
 	memDTO findEmail(memDTO mdto);
+	
+	int deleteMember(memDTO mdto);
 }

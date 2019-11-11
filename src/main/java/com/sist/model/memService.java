@@ -77,4 +77,8 @@ public class memService implements memDAO{
 	public memDTO findEmail(memDTO mdto) {
 		return this.sst.selectOne("findEmail", mdto);
 	}
+	
+	public int deleteMember(memDTO mdto){
+		return this.sst.delete("deleteMember", mdto);
+	}
 }

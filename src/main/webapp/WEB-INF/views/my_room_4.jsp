@@ -19,11 +19,54 @@
 <script src="resources/js/slick.min.js"></script>
 <script src="resources/js/common.js"></script>
     <title>청춘다방</title>
+
+<script>
+function test(){
+	var inputPwd = prompt('회원님의 비밀번호를 입력하세요', '');
+	
+	alert(inputPwd);
+
+	}
+</script>
 </head>
 
 <body>
-    <!--header-->
+<!--header-->
     <%@ include file="../../resources/include/header.jsp"%>
+<!--회원탈퇴 팝업-->
+
+    <div id="DropMemberModal" data-uc-modal class="is-fade">
+        <div class="is-modal-dialog">
+            <div data-uc-panel>
+                <div class="is-panel-body">
+                    <div data-uc-colgroup="">
+                        <div class="is-col-lg4 is-align-mid is-txt-center sns-wrap">
+                            <p class="login_title">회원 탈퇴</p>
+                        </div>
+                        <div class="is-col-lg4 is-align-mid">
+                            
+                            <form data-uc-form method="post" action="<%=request.getContextPath()%>/delete_member.do">
+                                <div class="is-input-field is-mg-b_15">
+                                    <input type="text" id="input_email" name="m_email" value="" placeholder="이메일"
+                                           style="border-color: #777676;" />
+                                </div>
+                                <div class="is-input-field is-mg-b_30">
+                                    <input type="password" id="input_pwd" name="m_pwd" value="" placeholder="비밀번호"
+                                           style="border-color: #777676;" />
+                                </div>
+                                <div class=" is-mg-b_15">
+                                    <button type="submit" class="is-btn-yg1 is-mg-b_15">회원 탈퇴</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
 
     <div class="container">
         <div class="mypage my2">
@@ -36,7 +79,6 @@
             <div class="tab_menu menu4">
                  <ul>
                    <li><a href="<%=request.getContextPath() %>/my_room_1.do">찜한방</a></li>
-                   <li><a href="<%=request.getContextPath() %>/my_room_2.do">예약방</a></li>
                     <li><a href="<%=request.getContextPath() %>/my_room_3.do">나의 방 수정하기</a></li>
                     <li class="on"><a href="<%=request.getContextPath() %>/my_room_4.do">회원 정보 수정</a></li>
                 </ul>
@@ -80,14 +122,19 @@
                                 <li>
                                 <input type="submit" value="내정보 수정 완료" class="btn btn_yellow btn_submit"></li>
                                 <li>
-                                    <a href="#" class="btn btn_white">탈퇴하기</a>
+                                   <!--  <input type="button"  class="btn btn_white" value="탈퇴하기" onclick="delete()"> -->
+                                    
                                 </li>
                             </ul>
                         </div>
 
                     </form>
+                    <a href="#DropMemberModal" data-uc-click="modal">
+                    <Button class="btn btn_white" >회원 탈퇴</Button></a>
+                    
+                    
                 </div>
-
+	
             </div>
             </div>
 

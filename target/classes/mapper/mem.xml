@@ -41,5 +41,10 @@
 		where m_name like #{m_name} and m_phone like #{m_phone} and m_birth like #{m_birth}
 	</select>
 	
+	<delete id="deleteMember" parameterType="com.sist.model.memDTO">
+		delete 
+		from d_member
+		where m_email = #{m_email} and m_pwd = #{m_pwd}
+	</delete>
 	
 </mapper>

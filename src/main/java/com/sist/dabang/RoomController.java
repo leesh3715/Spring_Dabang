@@ -111,8 +111,14 @@ public class RoomController {
 	public ModelAndView searchAddress(@RequestParam("searchAddress") String searchAddress) {
 		ModelAndView mav = new ModelAndView();
 		List<RoomTotalDTO> list = this.rdao.searchAddress(searchAddress);
-		System.out.println(list);
-		/* model.addAttribute("SearchAddress", list); */
+		/* List<String> photosrc = new ArrayList<String>(); */
+		
+		for(int i = 0; i < list.size(); i++) {
+			String arr[] = list.get(i).getR_photo().split("/");
+			list.get(i).setR_photoOne(arr[0]);
+		}
+		
+
 		mav.addObject("SearchAddress",list);
 		mav.addObject("searchval", searchAddress);
 		mav.setViewName("rent_room1");
