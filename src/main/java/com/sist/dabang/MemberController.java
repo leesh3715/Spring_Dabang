@@ -31,53 +31,7 @@ public class MemberController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	// mailSending 코드
 	
-	@RequestMapping(value = "pwd_find_ok.do")
-	public String mailSending(memDTO mdto, HttpServletResponse response) throws Exception {
-		memDTO mdto2 = new memDTO();
-		
-		if(this.mservice.selectMem(mdto)!=null) {
-			mdto2=this.mservice.selectMem(mdto);
-		}else {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			  out.println("<script>");
-			  out.println("alert('아이디와 비밀번호를 확인하세요')");
-			  out.println("history.back()");
-			  out.println("</script>");
-		}
-		
-		
-		
-		if(mdto2.getM_name()!=null)  {		
-		String setfrom = "leesh3715@naver.com";
-		String tomail = mdto2.getM_email(); // 받는 사람 이메일
-		String title = "청년다방에서 알려드립니다."; // 제목
-		String content = "안녕하세요.\r\n" + 
-				"\r\n" + 
-				"회원님의 비밀번호는 "+mdto2.getM_pwd()+" 입니다.\r\n" + 
-				"\r\n" + 
-				"혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\r\n" + 
-				""; // 내용
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			MimeMessageHelper messageHelper = new MimeMessageHelper(message,
-					true, "UTF-8");
-			messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
-			messageHelper.setTo(tomail); // 받는사람 이메일
-			messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-			messageHelper.setText(content); // 메일 내용
-
-			mailSender.send(message);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return "../../index";
-		
-		}
-		return null;
-	}
 
 	// 회원가입
 	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)
@@ -166,5 +120,86 @@ public class MemberController {
 		}
 		
 	}
+	
+	// 비밀번호 찾기 코드
+	
+		@RequestMapping(value = "pwd_find_ok.do")
+		public String pwd_find_ok(memDTO mdto, HttpServletResponse response) throws Exception {
+			memDTO mdto2 = new memDTO();
+			
+			if(this.mservice.findPwd(mdto)!=null) {
+				mdto2=this.mservice.findPwd(mdto);
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				  out.println("<script>");
+				  out.println("alert('아이디와 비밀번호를 확인하세요')");
+				  out.println("history.back()");
+				  out.println("</script>");
+			}
+			
+			
+			
+			if(mdto2.getM_name()!=null)  {		
+			String setfrom = "leesh3715@naver.com";
+			String tomail = mdto2.getM_email(); // 받는 사람 이메일
+			String title = "청년다방에서 알려드립니다."; // 제목
+			String content = "안녕하세요.\r\n" + 
+					"\r\n" + 
+					"회원님의 비밀번호는 "+mdto2.getM_pwd()+" 입니다.\r\n" + 
+					"\r\n" + 
+					"혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\r\n" + 
+					""; // 내용
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper = new MimeMessageHelper(message,
+						true, "UTF-8");
+				messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+				messageHelper.setTo(tomail); // 받는사람 이메일
+				messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+				messageHelper.setText(content); // 메일 내용
 
+				mailSender.send(message);
+				
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('"+mdto2.getM_email()+"로 비밀번호를 보냈습니다.확인 후 로그인을 진행하세요')");
+				out.println("location.href='main_room.do'");
+				out.println("</script>");
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+			return null;
+			
+			}
+			return null;
+		}
+		
+		// mailSending 코드
+		
+		@RequestMapping(value = "email_find_ok.do")
+		public String email_find_ok(memDTO mdto, HttpServletResponse response) throws Exception {
+			memDTO mdto2 = new memDTO();
+			
+			if(this.mservice.findEmail(mdto)!=null) {
+				mdto2=this.mservice.findEmail(mdto);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('당신의 E-mail은 "+mdto2.getM_email()+"입니다. 로그인을 진행하세요')");
+				out.println("location.href='main_room.do'");
+				out.println("</script>");
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				out.println("alert('개인정보를 다시 확인하세요')");
+				out.println("history.back()");
+				out.println("</script>");
+			}	
+			
+			
+			return null;
+		}
 }

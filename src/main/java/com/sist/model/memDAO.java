@@ -18,6 +18,7 @@ public interface memDAO {
 	
 	void updateMem(memDTO mdto);
 	
-	memDTO selectMem(memDTO mdto);
+	memDTO findPwd(memDTO mdto);
 
+	memDTO findEmail(memDTO mdto);
 }

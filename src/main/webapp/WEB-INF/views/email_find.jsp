@@ -30,41 +30,27 @@
     <div class="container">
         <div class="member id_find">
             <div class="wrap">
-               <form action="">
+               <form method="post" action="<%=request.getContextPath()%>/email_find_ok.do">
                 <div class="inner_box">
                     
-                    <b class="title">ID 찾기</b>
+                    <b class="title">E-mail 찾기</b>
 
                     <div class="box box1">
                         <div class="radio_wrap">
                             <input type="radio" id="method1" name="method" class="type1" title="">
                             <label for="method1"><span></span>휴대폰 번호로 인증하기</label>
                         </div>
-                        <p>회원정보에 등록한 휴대전화 번호와<br>입력한 휴대전화 번호가 같아야 합니다.</p>
+                        <p>회원정보에 등록한 이름, 휴대전화 번호,<br>입력한 생년월일이 같아야 합니다.</p>
 
                         <div class="frm_wrap">
-                            <input type="text" class="type2" placeholder="이름">
+                            <input type="text" class="type2" placeholder="이름" name="m_name">
                             <div>
-                            <input type="text" class="type2" placeholder="전화번호 (- 빼고 입력)">
+                            <input type="text" class="type2" placeholder="전화번호 (- 빼고 입력)" name="m_phone">
+                            <input type="text" class="type2" placeholder="생년월일(8자리)" name="m_birth">
                             </div>
                         </div>
                     </div>
-
-                    <div class="box box2">
-                        <div class="radio_wrap">
-                            <input type="radio" id="method2" name="method" class="type1" title="">
-                            <label for="method2"><span></span>주민등록번호로 인증하기</label>
-                        </div>
-                        <div class="frm_wrap">
-                            <input type="text" class="type2" placeholder="이름">
-                            <input type="text" class="type2" placeholder="주민번호 13자리 입력 (-빼고)">
-                        </div>
-                    </div>
-                    
-                    <input type="submit" class="btn btn_submit" value="ID 찾기">
-
-
-
+                    <input type="submit" class="btn btn_submit" value="E-mail 찾기">
                 </div>
                </form> 
             </div>

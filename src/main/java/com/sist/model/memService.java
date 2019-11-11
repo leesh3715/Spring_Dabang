@@ -55,11 +55,8 @@ public class memService implements memDAO{
 	
 	// 로그인
 	public memDTO login(memDTO dto) {
-		
 		mdao = sst.getMapper(memDAO.class);
-		
-		memDTO mdto = mdao.login(dto);
-		
+		memDTO mdto = mdao.login(dto);		
 		return mdto;
 	}
 
@@ -73,7 +70,11 @@ public class memService implements memDAO{
 		this.sst.update("updateMem", mdto);
 	}
 
-	public memDTO selectMem(memDTO mdto) {
-		return this.sst.selectOne("selectMem", mdto);
+	public memDTO findPwd(memDTO mdto) {
+		return this.sst.selectOne("findPwd", mdto);
+	}
+	
+	public memDTO findEmail(memDTO mdto) {
+		return this.sst.selectOne("findEmail", mdto);
 	}
 }
