@@ -37,10 +37,10 @@
 			<img src="resources/images/main/main_img.png" alt="">
 			<div class="sch_box">
 				<div>
-					<form method="post"
-						action="<%=request.getContextPath()%>/search_room.do">
-						<input type="text" class="sch_input"> <input type="submit"
-							class="sch_submit">
+					<form method="get"
+						action="<%=request.getContextPath()%>/search_room.do?search_text=">
+						<input type="text" class="sch_input" name="search_text" placeholder="주소를 검색하세요">
+						 <input type="submit" class="sch_submit">
 					</form>
 				</div>
 			</div>

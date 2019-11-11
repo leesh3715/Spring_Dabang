@@ -15,4 +15,5 @@ public interface RoomDAO {
 	public Boolean likeView(RoomTotalDTO tdto);
 	public List<RoomTotalDTO> roomLikeAll(int m_no);
 	public List<RoomTotalDTO> myRoomList(int m_no);
+	public List<RoomTotalDTO> searchList(String search_text);
 }

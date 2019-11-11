@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,7 @@ public class Controller {
 	@Autowired
 	private RoomDAO rdao;
 	
-	/*
+	/*f
 	 * public ModelAndView view_room_map() { ModelAndView mav = new ModelAndView();
 	 * 
 	 * List<RoomDTO> list = rdao.roomSelectAll();
@@ -188,8 +189,19 @@ public class Controller {
 	}
 	
 	@RequestMapping("/search_room.do")
-	public String search_room() {
-
+	public String search_room(Model model, @RequestParam("search_text") String search_text, HttpSession session) throws JsonProcessingException {
+		List<RoomTotalDTO> list =  this.rdao.searchList(search_text);
+		System.out.println(list);
+		List<String> photosrc = new ArrayList<String>();
+		
+		for(int i = 0; i < list.size(); i++) {
+			String arr[] = list.get(i).getR_photo().split("/");
+			list.get(i).setR_photoOne(arr[0]);
+		}
+		model.addAttribute("search_text", search_text);
+		model.addAttribute("List", list);
+		model.addAttribute("Photosrc", photosrc);
+		
 		return "search_room";
 	}
 	

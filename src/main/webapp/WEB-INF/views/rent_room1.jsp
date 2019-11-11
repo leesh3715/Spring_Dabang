@@ -70,7 +70,7 @@
 				</tbody>
 			</table>
 			<br>
-			<div align="center" id="searchval" name="serachval"></div>
+			<div align="center" id="searchval" name="searchval"></div>
             <br><br>
                   
 		<c:set var="list" value="${SearchAddress}"/>

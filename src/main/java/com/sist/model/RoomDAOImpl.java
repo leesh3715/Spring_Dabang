@@ -66,4 +66,8 @@ public class RoomDAOImpl implements RoomDAO {
 	public List<RoomTotalDTO> myRoomList(int m_no){
 		return this.sqlSession.selectList("myRoomList", m_no);
 	}
+	
+	public List<RoomTotalDTO> searchList(String search_text){
+		return this.sqlSession.selectList("searchList", search_text);
+	}
 }

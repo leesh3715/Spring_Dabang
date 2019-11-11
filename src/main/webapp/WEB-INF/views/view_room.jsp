@@ -57,7 +57,7 @@
 
 <body>
 	
-	<%@ include file="../../resources/include/header2.jsp"%>	
+	<%@ include file="../../resources/include/header.jsp"%>	
 		
    <!-- 허위매물 제재 정책 팝업 -->
    <div id="fakePropertyModal" data-uc-modal class="is-fade">
@@ -88,7 +88,7 @@
 	
 	
    
-
+<!-- 
       <div class="yellow-bg is-filter-nav">
          <div class="is-frame-sm">
             <div data-uc-colgroup="row-xs">
@@ -255,7 +255,7 @@
             </div>
          </div>
       </div>
-   </header>
+   </header> -->
    <script>
       $(function () {
 

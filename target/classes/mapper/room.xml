@@ -98,4 +98,11 @@
 	where m_no = #{m_no}
 	</select>
 	
+	<select id="searchList" parameterType="String" resultType="com.sist.model.RoomTotalDTO">
+	select d_room.*, d_option.*
+		from d_room inner join d_option on d_room.r_no = d_option.r_no
+		<![CDATA[
+		where r_address like '%' || #{search_text} || '%' ]]>
+	</select>
+	
 </mapper>

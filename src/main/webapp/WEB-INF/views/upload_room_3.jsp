@@ -114,7 +114,14 @@
                         <form method="post" action="<%=request.getContextPath()%>/upload_room_ok.do" enctype="multipart/form-data">
 							
 							<input type="hidden" name="r_btype" value="셰어하우스">
-							<input type="hidden" name="r_no" value="${param.r_no }">
+							 	
+                       	<c:if test="${!empty param.r_no  }">
+                       	<input type="hidden" name="r_no" value="${param.r_no }">
+                       	</c:if>
+                       	<c:if test="${empty param.r_no  }">
+                       	<input type="hidden" name="r_no" value="0">
+                       	</c:if>
+                       	
                             <div class="write_box write1">
                                 <table class="type1">
                                     <thead>
