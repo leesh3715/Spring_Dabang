@@ -8,7 +8,7 @@
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>서브3</title>
+	<title>단기 임대</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -24,6 +24,9 @@
 	<link rel="stylesheet" href="resources/css/layout.css">
 	<link rel="stylesheet" href="resources/css/sub3.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="resources/css/uc.min.css">
+	<link rel="stylesheet" href="resources/css/style.css">	
+
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/uc.lib.min.js"></script>
@@ -39,6 +42,7 @@
 		$("#div searchadd").load("rent_room1.jsp");
 			
 </script>
+
 </head>
 
 <body>
@@ -54,19 +58,23 @@
 	            <p>단기 거주자를 위한 '청춘다방'의 1~6개월 단기임대 서비스</p>
 	        </div>
 	    </div>
-	     <table>
+                	
+	     
+	     <table class="table_test" style="margin-left: auto; margin-right: auto;">
 	  	   <tbody>
            		<tr>
                     <th></th>
                 	<td>
 						<form method="get" action="<%=request.getContextPath()%>/searchAddress.do">
-						<input type="text" size="40" id="searchAddress" name="searchAddress" placeholder="주소를 입력하세요">
-						<input type="submit" value="주소 검색" onclick="search()">
+						<input type="text" size="40" id="searchAddress" name="searchAddress" placeholder="검색할 주소를 입력하세요">
+						
+						<input type="submit" value="주소 검색" onclick="search()" class="is-btn-yg3">
 						</form>
-						</td>
+					<td>
 					</tr>
 				</tbody>
 			</table>
+					
                             
                             
             <div class="button-wrap">

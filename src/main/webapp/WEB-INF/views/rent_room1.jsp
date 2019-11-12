@@ -10,7 +10,7 @@
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>서브3</title>
+	<title>단기 임대</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -18,8 +18,6 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 	<link rel="stylesheet" href="resources/plugins/fonts/line-awesome.css">
-
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 	<link rel="stylesheet" href="resources/css/uc.min.css">
 	<link rel="stylesheet" href="resources/css/basic.css">
 	<link rel="stylesheet" href="resources/css/slick.css">
@@ -28,6 +26,9 @@
 	<link rel="stylesheet" href="resources/css/layout.css">
 	<link rel="stylesheet" href="resources/css/sub3.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="resources/css/uc.min.css">
+	<link rel="stylesheet" href="resources/css/style.css">	
+
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/uc.lib.min.js"></script>
@@ -56,26 +57,29 @@
 	            <p>단기 거주자를 위한 '청춘다방'의 1~6개월 단기임대 서비스</p>
 	        </div>
 	    </div>
-	     <table>
+	    
+	    <table class="table_test" style="margin-left: auto; margin-right: auto;">
 	  	   <tbody>
            		<tr>
                     <th></th>
-                	<td align="center">
+                	<td>
 						<form method="get" action="<%=request.getContextPath()%>/searchAddress.do">
-						<input type="text" size="40" id="searchAddress" name="searchAddress" placeholder="주소를 입력하세요">
-						<input type="submit" value="주소 검색" onclick="search()">
+						<input type="text" size="40" id="searchAddress" name="searchAddress" placeholder="검색할 주소를 입력하세요">
+						<input type="submit" value="주소 검색" onclick="search()" class="is-btn-yg3">
 						</form>
-						</td>
+					<td>
 					</tr>
 				</tbody>
 			</table>
-			<br>
+				
+			<br>		
 			<div align="center" id="searchval" name="searchval"></div>
             <br><br>
                   
 		<c:set var="list" value="${SearchAddress}"/>
       		<c:if test="${!empty list}">
-		 		<div class="sub3-slides-wrap">
+      		<c:if test="${!empty i.getR_monthlimit() eq '1~2개월'}">
+      				 		<div class="sub3-slides-wrap">
 	       			 <div class="slides-content">
 	           			 <h2>1개월 ~ 2개월</h2>
                 			<div class="slides">
@@ -87,16 +91,20 @@
                       						 <img src="${i.getR_photoOne() }" alt=""/></a>
                       							<strong>${i.getR_type()}</strong><br>
                       								<h3>월 / ${i.getR_rentfee().split("/")[1]}만원</h3><br>
+                      									<p>${i.getR_address() }</p>
                       									<p>${i.getR_movedate()} ~ ${i.getR_ritire() }</p>
             	  	  					  </div>
                     					  <c:if test="${status.last}">
                     					  </c:if>
                       				</c:if>
+                      				<c:if test="${i.getR_monthlimit() ne '1~2개월'}">
+                      				<h2 align="center">검색 결과가 없습니다.</h2>
+                      				</c:if>
                 				 </c:forEach>
 	        				</div>
 	  		  		</div>
 	    		</div>
-	    		
+	    		</c:if>
 	    		<div class="sub3-slides-wrap1">
 	       			 <div class="slides-content">
 	           			 <h2>3개월 ~ 4개월</h2>
@@ -109,10 +117,14 @@
                       						 <img src="${i.getR_photoOne() }" alt=""/></a>
                       							<strong>${i.getR_type()}</strong><br>
                       								<h3>월 / ${i.getR_rentfee().split("/")[1]}만원</h3><br>
+                      									<p><b>${i.getR_address() }</b></p>
                       									<p>${i.getR_movedate()} ~ ${i.getR_ritire() }</p>
             	  	  					  </div>
                     					  <c:if test="${status.last}">
                     					  </c:if>
+                      				</c:if>
+                      				<c:if test="${i.getR_monthlimit() ne '3~4개월'}">
+                      				<h2 align="center">검색 결과가 없습니다.</h2>
                       				</c:if>
                 				 </c:forEach>
 	        				</div>
@@ -131,10 +143,14 @@
                       						 <img src="${i.getR_photoOne() }" alt=""/></a>
                       							<strong>${i.getR_type()}</strong><br>
                       								<h3>월 / ${i.getR_rentfee().split("/")[1]}만원</h3><br>
+                      									<p><b>${i.getR_address() }</b></p>
                       									<p>${i.getR_movedate()} ~ ${i.getR_ritire() }</p>
             	  	  					  </div>
                     					  <c:if test="${status.last}">
                     					  </c:if>
+                      				</c:if>
+                      				<c:if test="${i.getR_monthlimit() ne '5~6개월'}">
+                      				<h2 align="center">검색 결과가 없습니다.</h2>
                       				</c:if>
                 				 </c:forEach>
 	        				</div>

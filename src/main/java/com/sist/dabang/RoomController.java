@@ -3,10 +3,12 @@ package com.sist.dabang;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +38,10 @@ public class RoomController {
 	@RequestMapping("/upload_room_ok.do")
 	public String upload_room_ok(RoomDTO rdto, RoomOptionDTO rodto, MultipartHttpServletRequest mtfRequest,
 			@RequestParam("r_address2") String r_address2, @RequestParam("r_rentfee2") String r_rentfee2,
-			@RequestParam("r_dimension2") String r_dimension2, @RequestParam("r_floor2") String r_floor2, HttpSession session)
-			throws UnsupportedEncodingException {
-	
+			@RequestParam("r_dimension2") String r_dimension2, @RequestParam("r_floor2") String r_floor2, HttpSession session, HttpServletResponse response)
+			throws IOException {
+		
+		if(session.getAttribute("m_no")!=null) {
 		System.out.println("세션 값 테스트 " + session.getAttribute("m_no"));
 		
 		List<MultipartFile> fileList = mtfRequest.getFiles("file");
@@ -101,10 +104,19 @@ public class RoomController {
 		System.out.println(roomNum);
 		rodto.setR_no(roomNum);
 		this.rdao.insertRoomOption(rodto);
-		
-		
 		return "redirect:/";
 		
+		} else {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			  out.println("<script>");
+			  out.println("alert('로그인 후 이용하세요')");
+			  out.println("history.back()");
+			  out.println("</script>");
+			  out.flush();
+			return null;
+		
+		}
 	}
 	
 	@RequestMapping("/searchAddress.do")
@@ -126,8 +138,11 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value = "/room_cont.do", method = RequestMethod.GET)
-	public String room_cont(@RequestParam("r_no") int r_no, Model model, HttpSession session) {
-		 RoomTotalDTO tdto = this.rdao.roomContent(r_no);
+	public String room_cont(@RequestParam("r_no") int r_no, Model model, HttpSession session,HttpServletResponse response) throws IOException {
+		
+		
+		if(session.getAttribute("m_no")!=null) { 
+		RoomTotalDTO tdto = this.rdao.roomContent(r_no);
 		 RoomTotalDTO tdto2 = new RoomTotalDTO();
 		 tdto2.setR_no(r_no); 
 		 tdto2.setM_no((int) session.getAttribute("m_no"));
@@ -140,6 +155,17 @@ public class RoomController {
 		 model.addAttribute("like", likeView);
 		 model.addAttribute("photosrc", photosrc);
 		return "view_room_cont";
+		} else {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			  out.println("<script>");
+			  out.println("alert('로그인 후 이용하세요')");
+			  out.println("history.back()");
+			  out.println("</script>");
+			  out.flush();
+			return null;
+		}
+		
 	}
 	
 	

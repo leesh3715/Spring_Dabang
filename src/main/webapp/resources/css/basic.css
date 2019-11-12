@@ -135,6 +135,23 @@ table{
     -o-border-radius: 3px;
 }
 
+.is-btn-yg3 {
+    display: block;
+    width: 10%;
+    background-color: #ffd800;
+    border: 1px solid #ffd800;
+    color: #ffffff;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+
+
+
+
 .is-txt-link {
     color: #1155cc;
     font-size: 11px;

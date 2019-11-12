@@ -10,29 +10,28 @@
 
    <title>방 올리기</title>
    <meta name="description" content="">
-   <meta name="author" content="">
+	<meta name="author" content="">
 
-   <meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
-   <link rel="stylesheet" href="resources/css/uc.min.css">
-   <link rel="stylesheet" href="resources/css/basic.css">
-   <link rel="stylesheet" href="resources/css/slick.css">
-   <link rel="stylesheet" href="resources/css/slick-theme.css">
-   <link rel="stylesheet" href="resources/css/style.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+	<link rel="stylesheet" href="resources/css/uc.min.css">
+	<link rel="stylesheet" href="resources/css/basic.css">
+	<link rel="stylesheet" href="resources/css/slick.css">
+	<link rel="stylesheet" href="resources/css/slick-theme.css">
+	<link rel="stylesheet" href="resources/css/style.css">
+	<link rel="stylesheet" href="resources/css/style_sub2_2.css">
+	<link rel="stylesheet" href="resources/css/fine-uploader-gallery.css">
+	<link rel="stylesheet" href="resources/plugins/jquery-ui/jquery-ui.css">
+	<link rel="stylesheet" href="resources/css/layout.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
-   <link rel="stylesheet" href="resources/css/fine-uploader-gallery.css">
-   <link rel="stylesheet" href="resources/plugins/jquery-ui/jquery-ui.css">
-   <link rel="stylesheet" href="resources/css/layout.css">
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-   
-   <script src="resources/js/jquery-3.3.1.min.js"></script>
-   <script src="resources/js/uc.lib.min.js"></script>
-   <script src="resources/js/uc.plugin.min.js"></script>
-   <script src="resources/js/slick.min.js"></script>
-   <script src="resources/js/common.js"></script>
-   <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
+	<script src="resources/js/uc.lib.min.js"></script>
+	<script src="resources/js/uc.plugin.min.js"></script>
+	<script src="resources/js/slick.min.js"></script>
+	<script src="resources/js/common.js"></script>
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1b51f66e54fd5e327b654103d5fc9ca1&libraries=services"></script>
 
    <!-- /* Bootstrap 3.3.2 */ -->

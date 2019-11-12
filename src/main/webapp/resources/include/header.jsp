@@ -626,11 +626,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
                             <div class="is-input-field is-mg-b_15 kk">
                                 <input type="text" id="m_email" name="m_email" value="" placeholder="* 이메일주소" />
                             </div>
-                            <div id="emailcheck" >1</div>
+                            <div id="emailcheck" ></div>
                               <div class="is-input-field is-mg-b_15">
                                 <input type="text" id="m_nick" name="m_nick" value="" placeholder="* 닉네임" />
                             </div>
-                            <div id="nickcheck" >1</div>
+                            <div id="nickcheck" ></div>
                             <div class="is-input-field is-mg-b_15">
                                 <input type="password" id="m_pwd" name="m_pwd" value="" placeholder="* 비밀번호(영문,숫자,특수문자 포함 8자리 이상)" />
                             </div>
@@ -650,11 +650,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
                                 <div data-uc-colgroup style="background-color: #eee; padding: 10px 0;">
                                     <div class="is-col-xs6 is-align-mid is-txt-center">
                                         <label class="is-chk-lab">
-                                            <input type="radio" id="m_gender" name="m_gender" value="여성" checked="checked"><span></span> 여</label>
+                                            <input type="radio" id="m_gender" name="m_gender" value="남성" checked="checked"><span></span> 남성</label>
                                     </div>
                                     <div class="is-col-xs6 is-align-mid is-txt-center">
                                         <label class="is-chk-lab">
-                                            <input type="radio" id="m_gender" name="m_gender" value="남성"><span></span> 남</label>
+                                            <input type="radio" id="m_gender" name="m_gender" value="여성"><span></span> 여성</label>
                                     </div>
                                 </div>
                             </div>

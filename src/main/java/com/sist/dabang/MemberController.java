@@ -90,11 +90,9 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/logout.do")
-	public ModelAndView logout(HttpSession session) {
+	public String logout(HttpSession session) {
 		mservice.logout(session);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("../../index");
-		return mav;
+		return "redirect:main_room.do";
 
 	}
 	
@@ -133,7 +131,7 @@ public class MemberController {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
 				  out.println("<script>");
-				  out.println("alert('아이디와 비밀번호를 확인하세요')");
+				  out.println("alert('이름과 전화번호를 확인하세요')");
 				  out.println("history.back()");
 				  out.println("</script>");
 			}

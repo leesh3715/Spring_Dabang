@@ -33,7 +33,7 @@
    
 </head>
 <body>
-      <%@ include file="../../resources/include/header2.jsp"%>
+      <%@ include file="../../resources/include/header.jsp"%>
       
    
 <c:set var="tdto" value="${cont }"/>
@@ -159,10 +159,37 @@
                               </thead>
                               <tbody>
                                  <tr>
+                                 
+                                 	<c:if test="${tdto.getR_person() ne null }">
                                     <td>${ tdto.getR_person() }</td>
+                                    </c:if>
+                                    <c:if test="${tdto.getR_person() eq null }">
+                                    <td>-</td>
+                                    </c:if>
+                                    
+                                    <c:if test="${tdto.getR_rentfee() ne null }">
                                     <td>${ tdto.getR_rentfee() } </td>
+                                    </c:if>
+                                    <c:if test="${tdto.getR_rentfee() eq null }">
+                                    <td>-</td>
+                                    </c:if>
+                                    
+                                    
+                                    <c:if test="${tdto.getR_deposit() ne null }">
                                     <td>${ tdto.getR_deposit()}</td>
+                                    </c:if>
+                                    <c:if test="${tdto.getR_deposit() eq null }">
+                                    <td>-</td>
+                                    </c:if>
+                                    
+                                    <c:if test="${tdto.getR_utility() ne null }">
                                     <td>${ tdto.getR_utility()}</td>
+                                    </c:if>
+                                    
+                                    <c:if test="${tdto.getR_utility() eq null }">
+                                    <td>-</td>
+                                    </c:if>
+                                    
                                  </tr>
                               </tbody>
                            </table>
