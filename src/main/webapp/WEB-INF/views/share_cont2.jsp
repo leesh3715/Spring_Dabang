@@ -16,7 +16,7 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 
-
+	
 	<link rel="stylesheet" href="resources/css/uc.min2.css">
 	<link rel="stylesheet" href="resources/css/basic.css">
 	<link rel="stylesheet" href="resources/css/slick.css">
@@ -35,7 +35,11 @@
 	<link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap-theme.min.css">
 	<script src="resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-	
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
+	<script src="resources/js/uc.lib.min.js"></script>
+	<script src="resources/js/uc.plugin.min.js"></script>
+	<script src="resources/js/slick.min.js"></script>
+	<script src="resources/js/common.js"></script>
 										
 </head>
 
