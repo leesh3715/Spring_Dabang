@@ -37,6 +37,10 @@ public class RoomDAOImpl implements RoomDAO {
 		return this.sqlSession.selectOne("roomCont", r_no);
 	}
 	
+	public memDTO roomContentMember(int m_no) {
+		return this.sqlSession.selectOne("roomContMember", m_no);
+	}
+	
 	public List<RoomTotalDTO> searchAddress(String searchAddress){
 		return this.sqlSession.selectList("searchAddress",searchAddress);
 	}
@@ -70,4 +74,6 @@ public class RoomDAOImpl implements RoomDAO {
 	public List<RoomTotalDTO> searchList(String search_text){
 		return this.sqlSession.selectList("searchList", search_text);
 	}
+	
+	
 }

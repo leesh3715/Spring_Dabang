@@ -27,6 +27,7 @@ import com.sist.model.RoomDAO;
 import com.sist.model.RoomDTO;
 import com.sist.model.RoomOptionDTO;
 import com.sist.model.RoomTotalDTO;
+import com.sist.model.memDTO;
 
 @Controller
 public class RoomController {
@@ -142,8 +143,11 @@ public class RoomController {
 		
 		
 		if(session.getAttribute("m_no")!=null) { 
-		RoomTotalDTO tdto = this.rdao.roomContent(r_no);
+		 RoomTotalDTO tdto = this.rdao.roomContent(r_no);
 		 RoomTotalDTO tdto2 = new RoomTotalDTO();
+		 memDTO memdto = this.rdao.roomContentMember(tdto.getM_no());
+		 System.out.println("방 올린사람 닉네임^^ => "+memdto.getM_nick());
+		 
 		 tdto2.setR_no(r_no); 
 		 tdto2.setM_no((int) session.getAttribute("m_no"));
 		 Boolean likeView = this.rdao.likeView(tdto2);
@@ -151,10 +155,12 @@ public class RoomController {
 		 System.out.println(tdto.getR_photo());
 		 String [] photosrc = tdto.getR_photo().split("/");			
 		
-		 model.addAttribute("cont", tdto); 
-		 model.addAttribute("like", likeView);
-		 model.addAttribute("photosrc", photosrc);
+		 model.addAttribute("cont", tdto);  // 방 전체 정보
+		 model.addAttribute("mem", memdto); // 방 올린 사람의 대한 정보
+		 model.addAttribute("like", likeView); // 찜 정보
+		 model.addAttribute("photosrc", photosrc); // 첫번째 사진 정보
 		return "view_room_cont";
+		
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

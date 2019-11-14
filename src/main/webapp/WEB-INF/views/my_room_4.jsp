@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="resources/css/style.css">
 <link rel="stylesheet" href="resources/css/layout.css">
 
+
 <script src="resources/js/jquery-3.3.1.min.js"></script>
 <script src="resources/js/uc.lib.min.js"></script>
 <script src="resources/js/uc.plugin.min.js"></script>

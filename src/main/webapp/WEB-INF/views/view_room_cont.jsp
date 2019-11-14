@@ -23,6 +23,9 @@
    <link rel="stylesheet" href="resources/plugins/owlCarousel/owl.theme.default.min.css">
    <link rel="stylesheet" href="resources/plugins/jquery-ui/jquery-ui.css">
    <link rel="stylesheet" href="resources/plugins/slick/slick.css">
+   
+	
+<script src="resources/plugins/slick/slick.min.js"></script>
 
   
    <script src="resources/js/jquery-3.3.1.min.js"></script>
@@ -76,10 +79,10 @@
                            <div>
                               
                               <div class="is-col-xs8">
-                              <span>#주소 #${tdto.getR_address()}</span>
+                              <span style="white-space:nowrap;">#주소 #${tdto.getR_address()}</span>
                               </div >
                               <div class="is-col-xs4" style="text-align: right; margin-bottom: 10px;">                              
-                                 <a href="#call" style="margin-right: 15px;"><img src="resources/images/sub_2_3/icon/13.png" alt="" /></a>
+                                 <a href="#call" style="margin-right: 15px;" data-uc-click="modal"><img src="resources/images/sub_2_3/icon/13.png" alt="" /></a>
                                  
 					<c:set var="likeView" value="${like}" />
 					
@@ -338,41 +341,6 @@
             </div>
          </div>
       </div>
-      
-     
-   
-       <c:forEach items="${list }" var="tdto">
-      <div id="call" >
-         <div class="is-modal-dialog">
-            <div >
-               <div class="is-panel-head is-pd-b_0">
-                  <h3>
-                     연락처보기
-                  </h3>
-                  <a href="#fakelink" ><img src="resources/images/sub_2_3/icon/15.png" alt="" /></a>
-               </div>
-               <div class="is-panel-body">
-                  <div class="is-txt-center">
-                     <img src="resources/images/sub_2_3/icon/18.png" alt="" />
-                     <p class="is-name">아정오피스</p>
-                     <p class="is-addr">충청남도 천안시 서북구 성환읍</p>
-                     <p class="is-phone">010-2985-4298</p>
-                  </div>
-               </div>
-               <div class="is-panel-foot is-pd-t_0">
-                  <div class="is-txt-left">
-                     <p class="is-ye">연락요청하기</p>
-                     <p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
-                     <div class="input-call">
-                        <input type="text" id="" name="" value="">
-                        <a href="#">연락받기</a>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      </c:forEach>
       <script type="text/javascript">
          $(function () { 
             $('.slider-nav2').slick({
@@ -426,6 +394,39 @@
          </div>
       </footer>
       <!-- 하단 끝 -->
+      
+      <!-- call modal   -->
+      <c:set var="memberdto" value="${mem}" />
+      <div id="call" data-uc-modal>
+			<div class="is-modal-dialog">
+				<div data-uc-panel>
+					<div class="is-panel-head is-pd-b_0">
+						<h3>
+							연락처보기
+						</h3>
+						<a href="#fakelink" data-uc-dismiss="modal"><img src="images/sub_2_3/icon/15.png" alt="" /></a>
+					</div>
+					<div class="is-panel-body">
+						<div class="is-txt-center">
+							<img src="images/sub_2_3/icon/18.png" alt="" />
+							<p class="is-name">${memberdto.getM_nick() }</p>
+							<p class="is-addr">${tdto.getR_address()}</p>
+							<p class="is-phone">${memberdto.getM_phone() }</p>
+						</div>
+					</div>
+					<div class="is-panel-foot is-pd-t_0">
+						<div class="is-txt-left">
+							<p class="is-ye">연락요청하기</p>
+							<p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
+							<div class="input-call">
+								<input type="text" id="" name="" value="">
+								<a href="#">연락받기</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 </body>
