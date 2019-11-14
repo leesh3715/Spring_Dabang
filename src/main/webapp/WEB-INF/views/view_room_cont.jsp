@@ -279,7 +279,7 @@
                         <li class="is-col"><img src="resources/images/sub_2_3/icon/5_1.png">                     
                            </c:if>     
                            
-                           <li class="is-col"><img src="resources/images/sub_2_3/icon/6.png">
+                           <li class="is-col"><a href="#detail" data-uc-click="modal"><img src="resources/images/sub_2_3/icon/6.png"></a>
                                                            
                            </ul>
                         </div>
@@ -395,6 +395,36 @@
       </footer>
       <!-- 하단 끝 -->
       
+      <!-- detail modal  -->
+       <div id="detail" data-uc-modal>
+			<div class="is-modal-dialog">
+				<div data-uc-panel>
+					<div class="is-panel-head is-pd-b_0">
+						<h3>
+							상세 내용
+						</h3>
+						<a href="#fakelink" data-uc-dismiss="modal"><img src="images/sub_2_3/icon/15.png" alt="" /></a>
+					</div>
+					<div class="is-panel-body">
+						<div class="is-txt-center">
+							<img src="images/sub_2_3/icon/18.png" alt="" />
+							<p class="is-addr">${tdto.getR_detail()}</p>
+						</div>
+					</div>
+					
+					<!-- <div class="is-panel-foot is-pd-t_0">
+						<div class="is-txt-left">
+							<p class="is-ye">연락요청하기</p>
+							<p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
+							<div class="input-call">
+								<input type="text" id="" name="" value="">
+								<a href="#">연락받기</a>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
       <!-- call modal   -->
       <c:set var="memberdto" value="${mem}" />
       <div id="call" data-uc-modal>
