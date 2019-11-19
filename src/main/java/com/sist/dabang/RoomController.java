@@ -26,6 +26,7 @@ import com.sist.model.RoomDAO;
 import com.sist.model.RoomDTO;
 import com.sist.model.RoomOptionDTO;
 import com.sist.model.RoomTotalDTO;
+import com.sist.model.ShareeDTO;
 import com.sist.model.memDTO;
 
 
@@ -40,15 +41,47 @@ public class RoomController {
 	@RequestMapping("/upload_room_ok.do")
 	public String upload_room_ok(RoomDTO rdto, RoomOptionDTO rodto, MultipartHttpServletRequest mtfRequest,
 			@RequestParam("r_address2") String r_address2, @RequestParam("r_rentfee2") String r_rentfee2,
-			@RequestParam("r_dimension2") String r_dimension2, @RequestParam("r_floor2") String r_floor2, HttpSession session, HttpServletResponse response)
+			@RequestParam("r_dimension2") String r_dimension2, @RequestParam("r_floor2") String r_floor2, HttpSession session, HttpServletResponse response,
+			@RequestParam("put") List<String> put)
 			throws IOException {
 		
+			
 		if(session.getAttribute("m_no")!=null) {
 		System.out.println("세션 값 테스트 " + session.getAttribute("m_no"));
 		
 		List<MultipartFile> fileList = mtfRequest.getFiles("file");
 
 		String safeFile2 = "";
+		
+		if(rdto.getR_no()==0) {
+		 String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\";
+			/*
+			 * String cheackFile = "http://localhost:8484/dabang/resources/Shereuploads/";
+			 */
+		 	RoomTotalDTO u_dto = this.rdao.roomContent(rdto.getR_no());
+			if(u_dto.getR_photo() !=null) {
+			String[] src=u_dto.getR_photo().split("/");
+			String[] pu= new String[put.size()];
+			
+			
+			for(int i=0; i<src.length; i++) {
+				
+				pu[i]=put.get(i+1).replace("http://localhost:8383/dabang/resources/Shereuploads/",
+	                     "resources\\Shereuploads\\");
+				if((src[i]).equals(pu[i])) {
+					System.out.println("하이");	
+					 File file = new File(safeFile+src[i]); 
+					 System.out.println(file);
+					 file.delete();
+						 
+				}
+				else {
+					safeFile2 +=src[i]+"/";
+				}
+			}
+			}
+		}
+		
 		/*String path = "C:\\image\\";*/
 		/*String path = "..\\..\\..\\..\\webapp\\resources\\uploads\\";*/
 		String path = "resources\\uploads\\";
@@ -63,7 +96,7 @@ public class RoomController {
 			System.out.println("originFileName : " + originFileName);
 			System.out.println("fileSize : " + fileSize);
 
-			String safeFile = "C:\\Users\\SIST075\\workspace(spring)\\dabang\\src\\main\\webapp\\" +path + System.currentTimeMillis() + originFileName+"/";
+			String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\" +path + System.currentTimeMillis() + originFileName+"/";
 			safeFile2 += path + System.currentTimeMillis() + originFileName+"/";
 			/* list.add(safeFile); */
 			
@@ -100,12 +133,22 @@ public class RoomController {
 		
 		 System.out.println("방 넘버! "+ rdto.getR_no());
 		 
+		 if(rdto.getR_no()==0) {
+			// insert 문
+				this.rdao.insertRoom(rdto);
+				int roomNum = this.rdao.roomNumSearch();
+				rodto.setR_no(roomNum);
+				this.rdao.insertRoomOption(rodto);
+				// insert 문 end
+		 } else {
+			 // update 문
+			System.out.println(safeFile2);
+			rdto.setR_photo(safeFile2);
+			 this.rdao.updateRoom(rdto);
+				/* this.rdao.updateRoomOption(rodto); */
+		 }
 		
-		this.rdao.insertRoom(rdto);
-		int roomNum = this.rdao.roomNumSearch();
-		System.out.println(roomNum);
-		rodto.setR_no(roomNum);
-		this.rdao.insertRoomOption(rodto);
+		
 		return "redirect:/";
 		
 		} else {

@@ -117,4 +117,35 @@
 	where <foreach collection="list" item="item" separator="or"> r_no = #{item} </foreach>
 	</delete>
 	
+	<update id="updateRoom" parameterType="com.sist.model.RoomDTO">
+	update d_room
+	set 
+	r_btype = #{r_btype,jdbcType=VARCHAR},
+	r_type = #{r_type,jdbcType=VARCHAR},
+	r_address = #{r_address,jdbcType=VARCHAR},
+	r_rentfee = #{r_rentfee,jdbcType=VARCHAR},
+	r_deposit = #{r_deposit,jdbcType=VARCHAR},
+	r_dimension = #{r_dimension,jdbcType=VARCHAR},
+	r_floor = #{r_floor,jdbcType=VARCHAR},
+	r_heating = #{r_heating,jdbcType=VARCHAR},
+	r_movedate = #{r_movedate,jdbcType=VARCHAR},
+	r_utility = #{r_utility,jdbcType=VARCHAR},
+	r_detail = #{r_detail,jdbcType=VARCHAR},
+	r_meal = #{r_meal,jdbcType=VARCHAR},
+	r_gender = #{r_gender,jdbcType=VARCHAR},
+	r_person = #{r_person,jdbcType=VARCHAR},
+	r_photo = #{r_photo,jdbcType=VARCHAR},
+	r_shareutility = #{r_shareutility,jdbcType=VARCHAR},
+	r_monthlimit = #{r_monthlimit,jdbcType=VARCHAR},
+	m_no = #{m_no,jdbcType=VARCHAR}
+	
+	where r_no = #{r_no}
+	</update>
+	<update id="updateRoomOption" parameterType="com.sist.model.RoomOptionDTO">
+	
+	</update>
+	
+		
+
+	
 </mapper>

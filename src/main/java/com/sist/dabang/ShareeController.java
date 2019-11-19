@@ -170,7 +170,7 @@ public class ShareeController {
 	@RequestMapping("/share_room_delete.do")
 	public String share_room_delete(ShareeDTO dto,Model model) {
 		ShareeDTO u_dto=this.dao.content(dto.getS_no());
-		String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\";
+		String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\";
 		if(u_dto.getS_src()!=null) {	
 			String[] src=u_dto.getS_src().split("/");
 			
@@ -191,7 +191,7 @@ public class ShareeController {
 		String safeFile2 ="";
 		//사진 수정
 		if(dto.getS_no()!=0) {
-			String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\";
+			String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\";
 			/*
 			 * String cheackFile = "http://localhost:8484/dabang/resources/Shereuploads/";
 			 */
@@ -231,7 +231,7 @@ public class ShareeController {
 	            System.out.println("originFileName : " + originFileName);
 	            System.out.println("fileSize : " + fileSize);
 	
-	           String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\" + path + System.currentTimeMillis() + originFileName;
+	           String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\" + path + System.currentTimeMillis() + originFileName;
 	           safeFile2 +=  path + System.currentTimeMillis() + originFileName+"/";
 	            try {
 	                mf.transferTo(new File(safeFile));

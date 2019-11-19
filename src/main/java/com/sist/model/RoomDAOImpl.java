@@ -79,4 +79,11 @@ public class RoomDAOImpl implements RoomDAO {
 		this.sqlSession.delete("deleteRoom", list);
 	}
 	
+	public void updateRoom(RoomDTO dto) {
+		this.sqlSession.update("updateRoom",dto);
+	}
+	public void updateRoomOption(RoomOptionDTO rodto) {
+		 this.sqlSession.update("updateRoomOption",rodto); 
+	}
+	
 }

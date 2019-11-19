@@ -66,20 +66,34 @@ public class Controller {
 	}
 
 	@RequestMapping("/upload_room.do")
-	public String upload_room(HttpSession session) {
-		System.out.println(session.getAttribute("m_no"));
+	public String upload_room(Model model, HttpSession session, RoomTotalDTO tdto) {
+		
+		 System.out.println(session.getAttribute("m_no"));
+		
+		  RoomTotalDTO list = this.rdao.roomContent(tdto.getR_no());
+		  model.addAttribute("tdto",list);
+		 
 		return "upload_room";
 	}
+	
 
 	@RequestMapping("/upload_room_2.do")
-	public String upload_room_2(HttpSession session) {
+	public String upload_room_2(Model model, HttpSession session, RoomTotalDTO tdto) {
 		System.out.println(session.getAttribute("m_no"));
+		
+		  RoomTotalDTO list = this.rdao.roomContent(tdto.getR_no());
+		  model.addAttribute("tdto",list);
+		 
 		return "upload_room_2";
 	}
 
 	@RequestMapping("/upload_room_3.do")
-	public String upload_room_3(HttpSession session) {
+	public String upload_room_3(Model model, HttpSession session, RoomTotalDTO tdto) {
 		System.out.println(session.getAttribute("m_no"));
+		
+		  RoomTotalDTO list = this.rdao.roomContent(tdto.getR_no());
+		  model.addAttribute("tdto",list);
+		 
 		return "upload_room_3";
 	}
 

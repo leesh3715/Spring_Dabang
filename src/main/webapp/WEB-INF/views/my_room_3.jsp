@@ -79,8 +79,8 @@
             <!--tab_menu-->
             <div class="tab_menu menu4">
                 <ul>
-                   <li><a href="<%=request.getContextPath() %>/my_room_1.do">찜한방</a></li>
-                    <li class="on"><a href="<%=request.getContextPath() %>/my_room_3.do">나의 방 수정하기</a></li>
+                   <li><a href="<%=request.getContextPath() %>/my_room_1.do">찜한 방</a></li>
+                    <li class="on"><a href="<%=request.getContextPath() %>/my_room_3.do">나의 방</a></li>
                     <li><a href="<%=request.getContextPath() %>/my_room_4.do">회원 정보 수정</a></li>
                 </ul>
             </div>

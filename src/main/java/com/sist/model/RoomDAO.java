@@ -18,4 +18,6 @@ public interface RoomDAO {
 	public List<RoomTotalDTO> searchList(String search_text);
 	public memDTO roomContentMember(int m_no);
 	public void deleteRoom(List<String> list);
+	public void updateRoom(RoomDTO rdto);
+	public void updateRoomOption(RoomOptionDTO rodto);
 }

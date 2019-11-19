@@ -47,6 +47,7 @@
 <body>
 
 
+
    
    <!-- 허위매물 제재 정책 팝업 -->
    <div id="fakePropertyModal" data-uc-modal class="is-fade">
@@ -579,31 +580,42 @@
 
 
 
-                            <div data-uc-table="sub2_2">
-					<h3>사진 등록</h3>
+                          <div data-uc-table="sub2_2" >
 					<table class="is-table-ver">
 						<colgroup>
 							<col width="100%">
-						</colgroup>
+						</colgroup>		
 						<tr>
 							<td>
-								<div class="file-up-txt">
-									<div class="inner">
-										<p>
-											<span>-</span>사진은 가로로 찍은 사진을 권장합니다.(가로 사이즈 최소 800px)
-										</p>
-										<p>
-											<span>-</span>사진 용량은 사진 한장당 10MB까지 등록이 가능합니다.
-										</p>
-										<p>
-											<span>-</span>사진은 최소 전개도 사진 1장, 방 사진 3장 이상 등록하여야 하며 최대 15장까지 권장합니다.
-											그 이상 등록할 경우 업로드 시간이 다소 지연될 수 있습니다.
-										</p>
-									</div>
+								<h3>사진 등록</h3>
+							</td>
+						</tr>
+						<tr> 
+							<td>
+								<c:set var="chc" value="0"/>
+								<input type="hidden" name="put" value="">
+
+								<div class="imgs_wrap" style="display: inline; float: left;">
+								<c:if test="${empty tdto.getR_photo()}">
+								<div class="is-txt-center gallery is-clearfix " align="center" style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px; width: 100;">
+								<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" /></div></c:if>
+								
+								<c:if test="${!empty tdto.getR_photo() }">
+									<c:forTokens items="${tdto.getR_photo() }" delims="/" var="i" varStatus="st">
+										<c:set var="chc" value="${chc+1 }"/>
+										<img id="img${chc }" alt="" width="100" height="100" src="${i }">
+										<a onclick="aaa(${chc})" style="text-decoration: none;">
+										<img id="close${chc }" src="resources/images/close.png" width="15" height="15" style="vertical-align: top; opacity: 0.7; "></a>
+										<input type="hidden" id="put${chc}" value="" name="put">&nbsp;	
+									</c:forTokens>
+										<input type="hidden" id="end" value="${chc }">
+								</c:if>
 								</div>
-								<div class="is-txt-center gallery is-clearfix">
-									<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" />
-								</div>
+								<div class="imgs_wrap2"  style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px;">
+									&nbsp;
+								</div>		
+							<tr>
+								<td>
 								<div class="is-txt-center">
 									<input multiple="multiple" name="file" type='file' id="gallery-photo-add" />
 									<label for="gallery-photo-add"><img src="resources/images/sub_2_2/btn4.png" alt="" /></label>  
@@ -708,7 +720,62 @@
 			</div>
 		</footer>
 		<!-- 하단 끝 -->
+<script>
+            var sel_files = [];
+             
+              $(document).ready(function() {
+                  $("#input_imgs").on("change", handleImgsFilesSelect);
+              }); 
+       
+              function handleImgsFilesSelect(e) {
+                 
+                 
+                  var files = e.target.files;
+                  var filesArr = Array.prototype.slice.call(files);
+                  if(files.length<1){
+                      console.log('cancel was pressed');
+                      $(".imgs_wrap2").empty();
+                      $(".gallery").show();
+                  }else{
+                     var sel_files = [];
+                  $(".imgs_wrap2").empty();
+                  $(".gallery").hide(); 
+                  
+                  var a=parseInt($('#end').val());
+                  var b=parseInt($('#chc').val());
+               var c=a;
+                
+                  filesArr.forEach(function(f) {
+                      
+       
+                      sel_files.push(f);
+       
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+            
+                         var img_html ="";
+                         a+=1;
+                         img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
+                       
+                          $('#end').val(a); 
+                          $(".imgs_wrap2").append(img_html);
 
+                      }
+                      reader.readAsDataURL(f);
+                  });
+                  }
+              }
+            
+                function aaa(i) {
+                      var a= document.getElementById("img"+i);
+                   
+                     $("#put"+i).val(a.src);
+                  
+                     $("#img"+i+"").remove();
+                     $("#close"+i+"").remove(); 
+                     
+                  }
+            </script>
 
 
 </body>
