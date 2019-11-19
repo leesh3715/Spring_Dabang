@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+
 <link rel="stylesheet" href="resources/css/uc.min.css">
 <link rel="stylesheet" href="resources/css/basic.css">
 <link rel="stylesheet" href="resources/css/slick.css">
@@ -20,7 +22,46 @@
 <script src="resources/js/common.js"></script>
     <title>청춘다방</title>
 </head>
+<script>
+	function delete_room(){
+  	 var checkBoxArr = [];
+  	
+  	  	  	 
+     $("input[name=checkbox]:checked").each(function(i){
+     checkBoxArr.push($(this).val());
+     });  
+     console.log(checkBoxArr);
 
+     var objParams = {
+             "checkBoxArr" : checkBoxArr        //과일배열 저장
+         };
+     
+	//ajax 호출
+		$.ajax({
+			url : "delete_room.do",
+			dataType : "json",
+			contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+			type : "post",
+			data : objParams,
+			success : function(objParams) {
+				 alert("성공");
+	             location.replace("${pageContext.request.contextPath}/main_room.do");
+			},
+			error : function(data) {
+				console.log(data);
+				if(data){
+					
+				alert("삭제 완료");
+				location.replace("${pageContext.request.contextPath}/my_room_3.do");
+				} else if(data===""){
+					alert("삭제 실패");
+					location.replace("${pageContext.request.contextPath}/my_room_3.do");
+					}
+			}
+		});
+  	  	 
+	}
+</script>
 <body>
     <!--header-->
     <%@ include file="../../resources/include/header.jsp"%>
@@ -48,6 +89,7 @@
             <div class="tab_content">
                 <div id="tab1">
                    <div class="wrap">
+            <%-- <form method="post" action="<%=request.getContextPath()%> /delete_room.do"> --%>
                        <table>
                            <thead>
                                <tr>
@@ -62,7 +104,8 @@
                            <c:forEach items="${list }" var="tdto" varStatus="status">
                                <tr>
                                    <td>
-                                       <input type="checkbox" id="ck1" name="agreement" class="type3" title="">
+                                       <input type="checkbox"  name="checkbox"  title="" value="${tdto.getR_no() }">
+                                       <c:out value="${tdto.getR_no() }"/>
                             <label for="ck1"><span></span></label>
                                    </td>
                                    <td>
@@ -98,8 +141,10 @@
                                </c:forEach>
                            </tbody>
                        </table>
+                       <!-- <input type="submit" class="btn btn_yellow btn_delete" value="삭제하기"> -->
+                       <a onclick="delete_room()" class="btn btn_yellow btn_delete">삭제하기</a>
                        
-                       <a href="#" class="btn btn_yellow btn_delete">삭제하기</a>
+                       <!-- </form> -->
                 </div>
                 </div>
             </div>

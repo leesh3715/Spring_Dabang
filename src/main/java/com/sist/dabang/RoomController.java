@@ -4,7 +4,6 @@ package com.sist.dabang;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +28,7 @@ import com.sist.model.RoomOptionDTO;
 import com.sist.model.RoomTotalDTO;
 import com.sist.model.memDTO;
 
+
 @Controller
 public class RoomController {
 	
@@ -36,6 +36,7 @@ public class RoomController {
 	@Autowired
 	private RoomDAO rdao;
 	
+
 	@RequestMapping("/upload_room_ok.do")
 	public String upload_room_ok(RoomDTO rdto, RoomOptionDTO rodto, MultipartHttpServletRequest mtfRequest,
 			@RequestParam("r_address2") String r_address2, @RequestParam("r_rentfee2") String r_rentfee2,
@@ -208,4 +209,24 @@ public class RoomController {
 		jo.addProperty("count", result2);
 		return jo.toString();
 	}
+	
+	
+	
+
+	@ResponseBody
+	@RequestMapping("/delete_room.do")
+	public String delete_room(@RequestParam(value="checkBoxArr[]") List<String> checkboxList, HttpServletResponse response) throws IOException {
+		
+		List<String> list = new ArrayList<>();
+        for(String checkbox : checkboxList) {
+            list.add(checkbox);
+        }
+        System.out.println(list);
+		/* this.rdao.deleteRoom(list); */  
+		
+		return null;
+		
+	}
+	
+  
 }

@@ -7,6 +7,11 @@
 <head>
  <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
     <link rel="stylesheet" href="resources/css/uc.min.css">
 	<link rel="stylesheet" href="resources/css/basic.css">
 	<link rel="stylesheet" href="resources/css/slick.css">
@@ -20,6 +25,7 @@
 	<script src="resources/js/slick.min.js"></script>
 	<script src="resources/js/common.js"></script>
     
+   
     <title>청춘다방</title>
 </head>
 
@@ -57,8 +63,8 @@
                               내가 찜한 매물 <span>(${list.size()})</span>
                           </b>
                           <ul class="btns">
-                              <li><a href="#">선택삭제</a></li>
-                              <li><a href="#">전체삭제</a></li>
+                           <!--    <li><a href="#">선택삭제</a></li>
+                              <li><a href="#">전체삭제</a></li> -->
                           </ul>
                       
                        <table>
@@ -67,7 +73,7 @@
                            <c:forEach items="${list }" var="tdto" varStatus="status">
                                <tr>
                                    <td>
-                                       <input type="checkbox" id="ck1" name="agreement" class="type3" title="">
+                                      <!--  <input type="checkbox" id="ck1" name="agreement" title=""> -->
                             <label for="ck1"><span></span></label>
                                    </td>
                                    <td>

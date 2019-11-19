@@ -13,6 +13,23 @@ public class ShareeDTO {
     private int s_step; 
     private int s_indent;
     private String s_src;
+    private int s_Comments_count;
+    private int s_check;
+    
+    
+    
+	public int getS_check() {
+		return s_check;
+	}
+	public void setS_check(int s_check) {
+		this.s_check = s_check;
+	}
+	public int getS_Comments_count() {
+		return s_Comments_count;
+	}
+	public void setS_Comments_count(int s_Comments_count) {
+		this.s_Comments_count = s_Comments_count;
+	}
 	public int getS_no() {
 		return s_no;
 	}

@@ -403,11 +403,11 @@
 						<h3>
 							상세 내용
 						</h3>
-						<a href="#fakelink" data-uc-dismiss="modal"><img src="images/sub_2_3/icon/15.png" alt="" /></a>
+						<a href="#fakelink" data-uc-dismiss="modal"><img src="resources/images/sub_2_3/icon/15.png" alt="" /></a>
 					</div>
 					<div class="is-panel-body">
 						<div class="is-txt-center">
-							<img src="images/sub_2_3/icon/18.png" alt="" />
+							
 							<p class="is-addr">${tdto.getR_detail()}</p>
 						</div>
 					</div>
@@ -432,15 +432,15 @@
 				<div data-uc-panel>
 					<div class="is-panel-head is-pd-b_0">
 						<h3>
-							연락처보기
+							연락처 보기
 						</h3>
-						<a href="#fakelink" data-uc-dismiss="modal"><img src="images/sub_2_3/icon/15.png" alt="" /></a>
+						<a href="#fakelink" data-uc-dismiss="modal"><img src="resources/images/sub_2_3/icon/15.png" alt="" /></a>
 					</div>
 					<div class="is-panel-body">
 						<div class="is-txt-center">
-							<img src="images/sub_2_3/icon/18.png" alt="" />
+							<img src="resources/images/sub_2_3/icon/18.png" alt="" />
 							<p class="is-name">${memberdto.getM_nick() }</p>
-							<p class="is-addr">${tdto.getR_address()}</p>
+							<p class="is-addr" style="white-space:nowrap;">${tdto.getR_address()}</p>
 							<p class="is-phone">${memberdto.getM_phone() }</p>
 						</div>
 					</div>

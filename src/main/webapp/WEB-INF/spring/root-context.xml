@@ -29,8 +29,8 @@
 	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl"
     p:host="smtp.naver.com"
     p:port="465"
-    p:username="leesh3715"
-    p:password="1q2w3e4r!!">
+    p:username=""
+    p:password="">
     <property name="javaMailProperties">
     <props>
       <prop key="mail.smtp.starttls.enable">true</prop>

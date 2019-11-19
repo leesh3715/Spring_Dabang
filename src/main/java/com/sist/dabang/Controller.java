@@ -149,7 +149,7 @@ public class Controller {
 		for(int i = 0; i < list.size(); i++) {
 			String arr[] = list.get(i).getR_photo().split("/");
 			list.get(i).setR_photoOne(arr[0]);
-			System.out.println(list.get(i).getR_btype());
+			/* System.out.println(list.get(i).getR_btype()); */
 		}
 
 		model.addAttribute("List", list);

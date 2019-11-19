@@ -51,7 +51,7 @@
 			<ul>
 				<li><a href="<%=request.getContextPath()%>/con4_1.do">실생활 팁</a></li>
 				<li><a href="<%=request.getContextPath()%>/con4_2.do">인테리어 팁</a></li>
-				<li class="on"><a href="<%=request.getContextPath()%>/con4_3.do">가전가구 나눔</a></li>
+				<li class="on"><a href="<%=request.getContextPath()%>/share_room.do">가전가구 나눔</a></li>
 			</ul>
 		</div>
 
@@ -107,7 +107,7 @@
 						<col width="10%">
 						<col width="10%">
 						<col width="10%">
-						<col width="10%">
+						
 					</colgroup>
 					<thead>
 						<tr>
@@ -116,7 +116,7 @@
 							<th>작성자</th>
 							<th>작성일</th>
 							<th>조회수</th>
-							<th>파일</th>
+							
 						</tr>
 					</thead>
 					<tbody id="noticeCollapse" data-uc-collapse>
@@ -125,12 +125,28 @@
 					<c:forEach items="${list }" var="dto">
 						<tr>
 							<td>${dto.getS_no() }</td>
-							<td><a href="share_cont.do?s_no=${dto.getS_no() }">
-									${dto.getS_title() }</a></td>
+							<td>
+							<div align="left" style="padding-left: 250px;">
+							<c:if test="${dto.getS_check()==0 }">
+							<c:forEach begin="1" end="${dto.getS_indent() }">&nbsp;&nbsp;&nbsp;</c:forEach>
+							<c:if test="${dto.getS_indent()>0 }">┗</c:if>
+							</c:if>
+							<c:if test="${dto.getS_check()==1 }">[원글이 삭제된 답글]</c:if>
+							<a href="share_cont.do?s_no=${dto.getS_no() }">
+									${dto.getS_title() }</a>
+							<c:if test="${dto.getS_src() != null }">
+								<img alt="" src="resources/images/img.jpg" width="25" height="25" style="opacity: 0.5;">
+							</c:if>		
+							
+							<c:if test="${dto.getS_Comments_count() !=0}">		
+									&nbsp;
+							<a href="share_cont.do?s_no=${dto.getS_no() }">
+									<font color="red" style="font-weight: bolder;">[${dto.getS_Comments_count() }]</font></a></c:if>		
+									</div></td>
 							<td>${dto.getS_writer() }</td>
 							<td>${dto.getS_date().substring(0,10) }</td>
 							<td>${dto.getS_hit() }</td>
-							<td>&nbsp;</td>
+							
 						</tr>
 					</c:forEach>
 					</c:if>
@@ -141,34 +157,80 @@
 							</td>
 						</tr>
 					</c:if>
+					<tr>
+						<td colspan="5" align="center">
+						
+						<c:if test="${page > block }"> <!-- 페이지가 블럭 3 보다 클 경우  이전으로 가는 버튼 생성 -->
+							<c:if test="${empty find_name }">
+								[<a href="share_room.do?page=1">◀◀</a>] <!-- 무조건 첫번째 페이지로 보내 줌  -->
+								[<a href="share_room.do?page=${startBlock - 1 }">◀</a>] <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
+							</c:if>
+							<c:if test="${!empty find_name }">
+								[<a href="share_search.do?page=1&find_field=${find_field}&find_name=${find_name}">◀◀</a>] <!-- 무조건 첫번째 페이지로 보내 줌  -->
+								[<a href="share_search.do?page=${startBlock - 1 }&find_field=${find_field}&find_name=${find_name}"">◀</a>] <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
+							</c:if>
+						</c:if>
+						
+						<c:forEach begin="${startBlock }" end="${endBlock }" var="i">
+							<c:if test="${i == page }"> <!-- 현재 페이지랑 i랑 같을때는 언더라인, 굵게 표시  -->
+								<u><b>[${i }]</b></u>
+							</c:if>
+							
+							<c:if test="${!(i == page )}"> <!-- 현재 페이지랑 i가 다를 때는 연결할수 있게 링크를 걸어줌, i 에 해당하는 페이지 변수를 받아서  -->
+								<c:if test="${empty find_name }">
+									[<a href="share_room.do?page=${i }">${i }</a>]
+								</c:if>
+								<c:if test="${!empty find_name }">
+									[<a href="share_search.do?page=${i }&find_field=${find_field}&find_name=${find_name}"">${i }</a>]
+								</c:if>
+							</c:if>				
+						</c:forEach>
+						
+						<c:if test="${endBlock < allPage }"> <!-- 전체 페이지가 마지막 블럭보다 클 경우 다음으로 가는 버튼 생성 -->
+							<c:if test="${empty find_name }">
+								[<a href="share_room.do?page=${endBlock + 1 }">▶</a>] <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
+								[<a href="share_room.do?page=${allPage }">▶▶</a>] <!-- 마지막 페이지의 끝으로 이동  -->
+							</c:if>
+							<c:if test="${!empty find_name }">
+								[<a href="share_search.do?page=${endBlock + 1 }&find_field=${find_field}&find_name=${find_name}"">▶</a>] <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
+								[<a href="share_search.do?page=${allPage }&find_field=${find_field}&find_name=${find_name}"">▶▶</a>] <!-- 마지막 페이지의 끝으로 이동  -->
+							</c:if>
+						</c:if>
+						</td>
+						 
+						
+					</tr>
 					</tbody>
 				</table>
 			</div>
 
-			<form data-uc-form class="is-mg-t_20">
+			<form data-uc-form class="is-mg-t_20"  method="post" action="<%=request.getContextPath() %>/share_search.do">
+			
 				<div data-uc-colgroup>
 					<div class="is-col-md4 is-offset-md8">
 						<div data-uc-colgroup="row-xs">
 							<div class="is-col-xs3">
 								<div class="is-input-field">
-									<select>
-										<option>제목</option>
-										<option>작성자</option>
+									<select name="find_field">
+										<option value="title">제목</option>
+										<option value="cont">내용</option>
+										<option value="title+cont">제목+내용</option>
+										<option value="writer">작성자</option>
 									</select>
 								</div>
 							</div>
 							<div class="is-col-xs9">
 								<div class="is-input-field">
-									<input type="text" name="" id="" value="" />
-									<a href="" style="position: absolute; top: 10px; right: 10px;"><img
-											src="resources/images/sub_2/search.png" alt=""></a>
+									<input type="text" name="find_name" id="" value="" />
+									<input type="image" src="resources/images/sub_2/search.png" style="position: absolute; top: 10px; right: 10px; margin-top: 5px;">
+									
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
-
+			
 		</div>
 		<div class="is-empty-xs120"></div>
 		<!-- 하단 시작 -->

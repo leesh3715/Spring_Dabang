@@ -40,23 +40,190 @@ public class ShareeController {
 	
 
 	@RequestMapping("/share_room.do")
-	public String share_room(Model model) {
-		List<ShareeDTO> list = this.dao.getList();
+	public String share_room(Model model,HttpSession session, HttpServletRequest request) {
+		int rowsize = 15; // 페이지당 보여질 게시물의 수
+		int block = 10; // 아래 보여질 페이지 최대 수 - 예)[1][2][3] / [4][5][6]
+		int totalRecord = 0; // DB상의 레코드 전체 게시글의 수
+		int allPage = 0; // 전체 페이지 수
+		
+		int page = 0; 
+		
+		if(request.getParameter("page")!=null){
+			page = Integer.parseInt(request.getParameter("page"));  // board_list 페이지에서 page 값을 받아온다.
+		} else {
+			// 처음으로 리스트 페이지에 들어온 경우
+			page = 1;
+		}
+		// 해당 페이지에서의 시작 번호
+		int startNo = (page * rowsize) - (rowsize - 1);
+		// 해당 페이지에서의 끝 번호
+		int endNo = (page * rowsize);
+
+		// 해당 페이지의 시작 블럭
+		int startBlock = (((page - 1) / block) * block) + 1;
+		// 해당 페이지의 끝 블럭
+		int endBlock = (((page - 1) / block) * block) + block;
+		
+		totalRecord = dao.getcount();
+		
+		allPage = (int)(Math.ceil(totalRecord / (double)rowsize));  // ceil 함수는 나머지가 발생하면 자동으로 올림해주는 메서드
+		
+		if (endBlock > allPage) {
+			endBlock = allPage;
+		}
+		
+		List<ShareeDTO> list = this.dao.getList(page, rowsize);
+		for(int i=0; i<list.size(); i++) {
+			list.get(i).setS_Comments_count((this.dao.S_Comments_count(list.get(i).getS_no())));
+		}
+		request.setAttribute("page", page);
+		request.setAttribute("rowsize", rowsize);
+		request.setAttribute("block", block);
+		request.setAttribute("totalRecord", totalRecord);
+		request.setAttribute("allPage", allPage);
+		request.setAttribute("startNo", startNo);
+		request.setAttribute("endNo", endNo);
+		request.setAttribute("startBlock", startBlock);
+		request.setAttribute("endBlock", endBlock);
+		request.setAttribute("nick", session.getAttribute("m_nick"));
+		
 		model.addAttribute("List",list);
+		
 		return "share_room";
 	}
 	
 	@RequestMapping("/share_room_upload.do")
-	public String share_room_upload() {
-
+	public String share_room_upload(HttpSession session,ShareeDTO dto,Model model) {
+		System.out.println("세션 값 테스트 " + session.getAttribute("m_no"));
+		System.out.println("세션 값 테스트 " + session.getAttribute("m_nick"));
+		ArrayList<String> list2= new ArrayList();
+		if(dto.getS_no()!=0) {
+			ShareeDTO u_dto=this.dao.content(dto.getS_no());
+			model.addAttribute("cont",u_dto);
+		}
+		if(dto.getS_group()!=0) {
+			model.addAttribute("reply",dto);
+		}
 		return "share_room_upload";
 	}
-	@RequestMapping("/share_ok.do")
-	public String share_room_ok(ShareeDTO dto,Model model,MultipartHttpServletRequest mtfRequest) throws UnsupportedEncodingException {
-		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+	@RequestMapping("/share_search.do")
+	public String share_room_search(HttpSession session,ShareeDTO dto,Model model,HttpServletRequest request) {
+		String find_field = request.getParameter("find_field").trim();
+		String find_name =  request.getParameter("find_name").trim();
+		
+		//	페이징 처리s
+		int rowsize = 15; // 페이지당 보여질 게시물의 수
+		int block = 10; // 아래 보여질 페이지 최대 수 - 예)[1][2][3] / [4][5][6]
+		int totalRecord = 0; // DB상의 레코드 전체 게시글의 수
+		int allPage = 0; // 전체 페이지 수
+		
+		int page = 0; 
+		
+		if(request.getParameter("page")!=null){
+			page = Integer.parseInt(request.getParameter("page"));  // board_list 페이지에서 page 값을 받아온다.
+		} else {
+			// 처음으로 리스트 페이지에 들어온 경우
+			page = 1;
+		}
+		// 해당 페이지에서의 시작 번호
+		int startNo = (page * rowsize) - (rowsize - 1);
+		// 해당 페이지에서의 끝 번호
+		int endNo = (page * rowsize);
+	
+		// 해당 페이지의 시작 블럭
+		int startBlock = (((page - 1) / block) * block) + 1;
+		// 해당 페이지의 끝 블럭
+		int endBlock = (((page - 1) / block) * block) + block;
 
-        String path = "C:\\image\\";
-        String safeFile2 ="";
+	
+		totalRecord = dao.getSearchcount(find_field, find_name); // 전체 게시글의 수를 저장해 줌
+	
+		// 전체 게시글의 수를 한 페이지당 보여질 게시물의 수로 나누어준다.
+		// 이러한 작업을 거치면 전체 페이지가 나온다.
+		// 전체 페이지가 나올 때 나머지가 있으면 무조건 올려주어야 한다.
+	
+		allPage = (int)(Math.ceil(totalRecord / (double)rowsize));  // ceil 함수는 나머지가 발생하면 자동으로 올림해주는 메서드
+		
+		if (endBlock > allPage) {
+			endBlock = allPage;
+		}
+
+		List<ShareeDTO> list = dao.getSearchlist(find_field, find_name, page, rowsize);
+		
+		request.setAttribute("page", page);
+		request.setAttribute("rowsize", rowsize);
+		request.setAttribute("block", block);
+		request.setAttribute("totalRecord", totalRecord);
+		request.setAttribute("allPage", allPage);
+		request.setAttribute("startNo", startNo);
+		request.setAttribute("endNo", endNo);
+		request.setAttribute("startBlock", startBlock);
+		request.setAttribute("endBlock", endBlock);
+		request.setAttribute("find_field", find_field);
+		request.setAttribute("find_name", find_name);
+
+		model.addAttribute("List",list);
+		
+		return "share_room";
+	}
+	
+	@RequestMapping("/share_room_delete.do")
+	public String share_room_delete(ShareeDTO dto,Model model) {
+		ShareeDTO u_dto=this.dao.content(dto.getS_no());
+		String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\";
+		if(u_dto.getS_src()!=null) {	
+			String[] src=u_dto.getS_src().split("/");
+			
+			for(int i=0; i<src.length; i++) {
+				File file = new File(safeFile+src[i]);
+				System.out.println(file);
+				file.delete();
+			}
+			
+		}
+		dao.deleteBoard(dto.getS_no());
+		
+		return "redirect:share_room.do";
+	}
+	@RequestMapping("/share_ok.do")
+	public String share_room_ok(ShareeDTO dto,Model model,MultipartHttpServletRequest mtfRequest,HttpSession session,@RequestParam("put") List<String> put) throws UnsupportedEncodingException {
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+		String safeFile2 ="";
+		//사진 수정
+		if(dto.getS_no()!=0) {
+			String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\";
+			/*
+			 * String cheackFile = "http://localhost:8484/dabang/resources/Shereuploads/";
+			 */
+			ShareeDTO u_dto=this.dao.content(dto.getS_no());
+			if(u_dto.getS_src() !=null) {
+			String[] src=u_dto.getS_src().split("/");
+			String[] pu= new String[put.size()];
+			
+			
+			for(int i=0; i<src.length; i++) {
+				
+				pu[i]=put.get(i+1).replace("http://localhost:8383/dabang/resources/Shereuploads/",
+	                     "resources\\Shereuploads\\");
+				if((src[i]).equals(pu[i])) {
+					System.out.println("하이");	
+					 File file = new File(safeFile+src[i]); 
+					 System.out.println(file);
+					 file.delete();
+						 
+				}
+				else {
+					safeFile2 +=src[i]+"/";
+				}
+			}
+			}
+		}
+		
+		System.out.println(dto.getS_no());
+        String path = "resources\\Shereuploads\\";
+   
+		/* path.replace("\\", "\" "); */
+        
         for (MultipartFile mf : fileList) {
             String originFileName = mf.getOriginalFilename(); // 원본 파일 명
             long fileSize = mf.getSize(); // 파일 사이즈
@@ -64,7 +231,7 @@ public class ShareeController {
 	            System.out.println("originFileName : " + originFileName);
 	            System.out.println("fileSize : " + fileSize);
 	
-	           String safeFile =  path + System.currentTimeMillis() + originFileName;
+	           String safeFile = "C:\\NCS_웹과정\\workspace(spring)\\dabang\\src\\main\\webapp\\" + path + System.currentTimeMillis() + originFileName;
 	           safeFile2 +=  path + System.currentTimeMillis() + originFileName+"/";
 	            try {
 	                mf.transferTo(new File(safeFile));
@@ -79,31 +246,66 @@ public class ShareeController {
         }
 		System.out.println(safeFile2);
 		dto.setS_src(safeFile2);
-		this.dao.insertBoard(dto);
-		
+		dto.setS_writer((String)session.getAttribute("m_nick"));
+		if(dto.getS_no()!=0) {
+			this.dao.updateBoard(dto);
+		}else if(dto.getS_group()!=0) {
+			this.dao.replyinsertBoard(dto);
+		}else {
+			this.dao.insertBoard(dto);
+		}
 		return "redirect:share_room.do";
 	}
 	
 	@RequestMapping("/share_cont.do")
-	public String share_cont(@RequestParam("s_no") int s_no,Model model) {
+	public String share_cont(@RequestParam("s_no") int s_no,Model model,HttpSession session) {
+		this.dao.readCount(s_no);
 		ShareeDTO dto=this.dao.content(s_no);
+		ShareeDTO next=this.dao.S_next_Board(s_no);
+		ShareeDTO pre=this.dao.S_pre_Board(s_no);
 		List<CommentsDTO> List=this.dao.List_s_Comments(s_no);
 		
+		String a=(String)session.getAttribute("m_nick");
+		System.out.println(a);
+		/*
+		 * ArrayList<String> list2= new ArrayList(); if(dto.getS_src()!=null) { String[]
+		 * src=dto.getS_src().split("/"); for(int i=0; i<src.length; i++) {
+		 * System.out.println(src[i]); list2.add(src[i]); }
+		 * 
+		 * } model.addAttribute("src",list2);
+		 */
+		
+		
 		model.addAttribute("cont",dto);
+		model.addAttribute("next",next);
+		model.addAttribute("pre",pre);
 		model.addAttribute("comment",List);
+		
+		model.addAttribute("ses",a);
+		
 		return "share_cont2";
 	}
-	
+
+	/*
+	 * @RequestMapping("/share_cont.do") public String
+	 * share_cont(@RequestParam("s_no") int s_no,Model model,HttpSession session) {
+	 * ShareeDTO dto=this.dao.content(s_no); List<CommentsDTO>
+	 * List=this.dao.List_s_Comments(s_no);
+	 * 
+	 * String a=(String)session.getAttribute("m_nick"); System.out.println(a);
+	 * model.addAttribute("cont",dto); model.addAttribute("comment",List);
+	 * model.addAttribute("ses",a);
+	 * 
+	 * return "share_cont2"; }
+	 */	
 	 @RequestMapping(value="/s_comment_add.do")
 	    @ResponseBody
-	    public String ajax_addComment(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request) throws Exception{
+	    public String ajax_addComment(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request,HttpSession session) throws Exception{
 	        
-	        HttpSession session = request.getSession();
-		// CommentsDTO loginVO = (CommentsDTO)session.getAttribute("loginVO");
-	        
+		 	
 	        try{
 	        
-			// dto.setC_id(loginVO.getUser_id()); 
+	        	dto.setC_id((String)session.getAttribute("m_nick")); 
 	            this.dao.insert_s_Comments(dto);
 	            
 	        } catch (Exception e){
@@ -115,13 +317,13 @@ public class ShareeController {
 	
 	@RequestMapping(value="/s_comment.do", produces="application/json; charset=utf8")
 	@ResponseBody
-	public ResponseEntity share_commnet(@ModelAttribute("CommentsDTO") CommentsDTO dto,HttpServletRequest request) throws Exception  {
+	public ResponseEntity share_commnet(@ModelAttribute("CommentsDTO") CommentsDTO dto,HttpServletRequest request,HttpSession session) throws Exception  {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		ArrayList<HashMap> hmlist = new ArrayList<HashMap>();
 		
 		List<CommentsDTO> c_DTO = this.dao.List_s_Comments(dto.getS_no());
-		
+		ShareeDTO dto2=this.dao.content(dto.getS_no());
 		if(c_DTO.size()>0) {
 			for(int i=0; i<c_DTO.size(); i++) {
 				HashMap hm = new HashMap();
@@ -136,6 +338,8 @@ public class ShareeController {
 		             hm.put("c_indent", c_DTO.get(i).getC_indent());
 		             hm.put("c_check1", c_DTO.get(i).getC_check1());
 		             hm.put("c_replyid", c_DTO.get(i).getC_replyid());
+		             hm.put("session", (String)session.getAttribute("m_nick"));
+		             hm.put("s_writer", dto2.getS_writer());
 		             hmlist.add(hm);
 	            }
 	            
@@ -150,7 +354,7 @@ public class ShareeController {
 	
 	 @RequestMapping(value="/s_comment_dele.do")
 	 @ResponseBody
-	 public String s_commnet_del(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request) throws Exception{
+	 public String s_commnet_del(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request,HttpSession session) throws Exception{
 	        
  	//  HttpSession session = request.getSession(); 
   	//  CommentsDTO loginVO = (CommentsDTO)session.getAttribute("loginVO"); 
@@ -174,7 +378,7 @@ public class ShareeController {
 	
 	 @RequestMapping(value="/s_comment_update.do")
 	 @ResponseBody
-	 public String s_commnet_update(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request) throws Exception{
+	 public String s_commnet_update(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request,HttpSession session) throws Exception{
 	        
  	 // HttpSession session = request.getSession(); 
   	 // CommentsDTO loginVO = (CommentsDTO)session.getAttribute("loginVO"); 
@@ -194,15 +398,14 @@ public class ShareeController {
 
 	 @RequestMapping(value="/s_replycomment_update.do")
 	 @ResponseBody
-	 public String s_replycommnet_insert(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request) throws Exception{
+	 public String s_replycommnet_insert(@ModelAttribute("CommentsDTO") CommentsDTO dto, HttpServletRequest request,HttpSession session) throws Exception{
 		 
-		 // HttpSession session = request.getSession(); 
-		 // CommentsDTO loginVO = (CommentsDTO)session.getAttribute("loginVO"); 
+
 		 
 		 try{
 			 
-			 // dto.setC_id(loginVO.getUser_id()); 
-			 
+			
+			 dto.setC_id((String)session.getAttribute("m_nick")); 
 			 this.dao.insert_s_replyComments(dto);
 			 
 		 } catch (Exception e){

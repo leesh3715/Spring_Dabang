@@ -111,4 +111,10 @@
 		where r_address like '%' || #{search_text} || '%' ]]>
 	</select>
 	
+	<delete id="deleteRoom" parameterType="java.util.ArrayList">
+	delete
+	from d_room
+	where <foreach collection="list" item="item" separator="or"> r_no = #{item} </foreach>
+	</delete>
+	
 </mapper>

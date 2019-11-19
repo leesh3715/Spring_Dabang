@@ -35,6 +35,8 @@
 	<script src="resources/js/uc.plugin.min.js"></script>
 	<script src="resources/js/slick.min.js"></script>
 	<script src="resources/js/common.js"></script>
+	
+
 </head>
 
 <body>
@@ -57,11 +59,24 @@
 			<ul>
 				<li><a href="<%=request.getContextPath()%>/con4_1.do">실생활 팁</a></li>
 				<li><a href="<%=request.getContextPath()%>/con4_2.do">인테리어 팁</a></li>
-				<li class="on"><a href="<%=request.getContextPath()%>/con4_3.do">가전가구 나눔</a></li>
+				<li class="on"><a href="<%=request.getContextPath()%>/share_room.do">가전가구 나눔</a></li>
 			</ul>
 		</div>
-
+		
+		
 		<form name="fileForm" method="post" action="<%=request.getContextPath() %>/share_ok.do" enctype="multipart/form-data" >
+		<c:if test="${!empty cont }">
+			<c:set var="dto" value="${cont }"/>
+			<input type="hidden" value="${dto.getS_no() }" name="s_no">
+			<%-- <c:set var="s_src" value="${src }"/> --%>
+		</c:if>
+		<c:if test="${!empty reply }">
+			<c:set var="dto" value="${reply }"/>
+			<input type="hidden" value="${dto.getS_group() }" name="s_group">
+			<input type="hidden" value="${dto.getS_step() }" name="s_step">
+			<input type="hidden" value="${dto.getS_indent() }" name="s_indent">
+			
+		</c:if>
 		<div class="is-frame-md">
 		    <div class="section table-wrap">
 		        <table border="1">
@@ -69,41 +84,26 @@
 		            <tr>
 		                <th>제목</th>
 		                <td>
-		                    <input type="text" name="s_title" placeholder="예) 옷장 2개 나눔해요">
+		                    <input type="text" name="s_title" placeholder="예) 옷장 2개 나눔해요" value="${dto.getS_title() }">
 		                </td>
 		            </tr>
 		            <tr>
-		                <th>상세 설명</th>
+		                <th>상세 내용</th>
 		                <td>
 		                    <textarea name="s_cont" cols="80" rows="5" placeholder="예) 이삿짐 정리하면서 옷장이 불필요하게 되어 나눔하려고 합니다.
 		                        
 가전가구 나눔과 관련없는 홍보성 정보는 입력하실수 없습니다.
-*상세설명 주의사항 위반시 허위글로 간주되어 글 삭제 및 이용의 제한이 있을 수 있습니다."></textarea>
+*상세설명 주의사항 위반시 허위글로 간주되어 글 삭제 및 이용의 제한이 있을 수 있습니다.">${dto.getS_cont() }</textarea>
 		                </td>
 		            </tr>
 		            <tr>
 		                <th>비공개 메모</th>
 		                <td>
-		                    <input type="text" name="s_memo" placeholder="외부에 공개되지 않으며, 등록자에게만 보이는 메모입니다.">
+		                    <input type="text" name="s_memo" placeholder="외부에 공개되지 않으며, 등록자에게만 보이는 메모입니다." value="${dto.getS_memo() }">
 		                </td>
 		            </tr>
 		        </table>
 		    </div>
-		  <!--   <div class="section table-wrap2">
-		        <table>
-		            <caption>사진등록</caption>
-                    <tr>
-                        <td>
-                            <div class="box-wrap">
-                                <p>실 사진 최소 3장 이상 등록 하셔야 하며, 가로 사진을 권장합니다.</p>
-                                <p>여기방 로고를 제외한 불필요한 정보(워터마크,상호,전화번호 등)가 있는 매물은 비공개 처리 됩니다.</p>
-                            </div>
-                            <button type="button">사진 등록</button>
-                        </td>
-                    </tr>
-		        </table>
-		    </div>
-		     -->
 		     <div>
 		     <br><br><br>
 		     </div>
@@ -119,45 +119,100 @@
 						</tr>
 						<tr> 
 							<td>
-								<div class="is-txt-center gallery is-clearfix">
-									<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" />
+								<c:set var="chc" value="0"/>
+								<input type="hidden" name="put" value="">
+
+								<div class="imgs_wrap" style="display: inline; float: left;">
+								<c:if test="${empty dto.getS_src() }">
+								<div class="is-txt-center gallery is-clearfix " align="center" style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px; width: 100;">
+								<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" /></div></c:if>
+								
+								<c:if test="${!empty dto.getS_src() }">
+									<c:forTokens items="${dto.getS_src() }" delims="/" var="i" varStatus="st">
+										<c:set var="chc" value="${chc+1 }"/>
+										<img id="img${chc }" alt="" width="100" height="100" src="${i }">
+										<a onclick="aaa(${chc})" style="text-decoration: none;">
+										<img id="close${chc }" src="resources/images/close.png" width="15" height="15" style="vertical-align: top; opacity: 0.7; "></a>
+										<input type="hidden" id="put${chc}" value="" name="put">&nbsp;	
+									</c:forTokens>
+										<input type="hidden" id="end" value="${chc }">
+								</c:if>
 								</div>
-								<div class="is-txt-center">
-									<input type='file' id="gallery-photo-add" name="file" multiple="multiple" />
-									
-									
+								<div class="imgs_wrap2"  style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px;">
+									&nbsp;
+								</div>		
+								
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<div class="is-txt-center" align="center">
+									<label> 파일추가
+										<input type='file' id="input_imgs" name="file" multiple="multiple" style="display: none;"/>
+									</label	>	
 								</div>
 							</td>
 						</tr>
 					</table>
 				</div>
 				<script>
-					$(function () {
-						// Multiple images preview in browser
-						var imagesPreview = function (input, placeToInsertImagePreview) {
-							$('.gallery').html('');
-							if (input.files) {
-								var filesAmount = input.files.length;
+				var sel_files = [];
+				 
+		        $(document).ready(function() {
+		            $("#input_imgs").on("change", handleImgsFilesSelect);
+		        }); 
+		 
+		        function handleImgsFilesSelect(e) {
+		        	
+		        	
+		            var files = e.target.files;
+		            var filesArr = Array.prototype.slice.call(files);
+		            if(files.length<1){
+		            	 console.log('cancel was pressed');
+		            	 $(".imgs_wrap2").empty();
+		            	 $(".gallery").show();
+		            }else{
+		            	var sel_files = [];
+						$(".imgs_wrap2").empty();
+						$(".gallery").hide(); 
+		            
+		            var a=parseInt($('#end').val());
+		            var b=parseInt($('#chc').val());
+					var c=a;
+					 
+		            filesArr.forEach(function(f) {
+		                
+		 
+		                sel_files.push(f);
+		 
+		                var reader = new FileReader();
+		                reader.onload = function(e) {
+		      
+		                	var img_html ="";
+		                	a+=1;
+		                	img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
+		                 
+		                    $('#end').val(a); 
+		                    $(".imgs_wrap2").append(img_html);
 
-								for (i = 0; i < filesAmount; i++) {
-									var reader = new FileReader();
-
-									reader.onload = function (event) {
-										$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
-											placeToInsertImagePreview);
-									}
-
-									reader.readAsDataURL(input.files[i]);
-								}
-							}
-
-						};
-
-						$('#gallery-photo-add').on('change', function () {
-							imagesPreview(this, 'div.gallery');
-						});
-					});
+		                }
+		                reader.readAsDataURL(f);
+		            });
+		            }
+		        }
+				
+					 function aaa(i) {
+						 	var a= document.getElementById("img"+i);
+						 
+							$("#put"+i).val(a.src);
+						
+							$("#img"+i+"").remove();
+							$("#close"+i+"").remove(); 
+							
+						}
 				</script>
+				
 		    <div class="check-wrap">
 		        <input type="checkbox"><label>입력한 정보는 실제 내용과 다름이 없습니다.</label> <br>
 		        <div class="btn-wrap">
@@ -202,4 +257,4 @@
 
 </body>
 
-</html>
+</html>	

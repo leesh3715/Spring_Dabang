@@ -642,8 +642,113 @@
 		</footer>
 		<!-- 하단 끝 -->
 
+<%-- 
+<div data-uc-table="sub2_2" >
+               <table class="is-table-ver">
+                  <colgroup>
+                     <col width="100%">
+                  </colgroup>      
+                  <tr>
+                     <td>
+                        <h3>사진 등록</h3>
+                     </td>
+                  </tr>
+                  <tr> 
+                     <td>
+                        <c:set var="chc" value="0"/>
+                        <input type="hidden" name="put" value="">
 
+                        <div class="imgs_wrap" style="display: inline; float: left;">
+                        <c:if test="${empty dto.getS_src() }">
+                        <div class="is-txt-center gallery is-clearfix " align="center" style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px; width: 100;">
+                        <img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" /></div></c:if>
+                        
+                        <c:if test="${!empty dto.getS_src() }">
+                           <c:forTokens items="${dto.getS_src() }" delims="/" var="i" varStatus="st">
+                              <c:set var="chc" value="${chc+1 }"/>
+                              <img id="img${chc }" alt="" width="100" height="100" src="${i }">
+                              <a onclick="aaa(${chc})" style="text-decoration: none;">
+                              <img id="close${chc }" src="resources/images/close.png" width="15" height="15" style="vertical-align: top; opacity: 0.7; "></a>
+                              <input type="hidden" id="put${chc}" value="" name="put">&nbsp;   
+                           </c:forTokens>
+                              <input type="hidden" id="end" value="${chc }">
+                        </c:if>
+                        </div>
+                        <div class="imgs_wrap2"  style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px;">
+                           &nbsp;
+                        </div>      
+                        
+                        
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <div class="is-txt-center" align="center">
+                           <label> 파일추가
+                              <input type='file' id="input_imgs" name="file" multiple="multiple" style="display: none;"/>
+                           </label   >   
+                        </div>
+                     </td>
+                  </tr>
+               </table>
+            </div>
+            <script>
+            var sel_files = [];
+             
+              $(document).ready(function() {
+                  $("#input_imgs").on("change", handleImgsFilesSelect);
+              }); 
+       
+              function handleImgsFilesSelect(e) {
+                 
+                 
+                  var files = e.target.files;
+                  var filesArr = Array.prototype.slice.call(files);
+                  if(files.length<1){
+                      console.log('cancel was pressed');
+                      $(".imgs_wrap2").empty();
+                      $(".gallery").show();
+                  }else{
+                     var sel_files = [];
+                  $(".imgs_wrap2").empty();
+                  $(".gallery").hide(); 
+                  
+                  var a=parseInt($('#end').val());
+                  var b=parseInt($('#chc').val());
+               var c=a;
+                
+                  filesArr.forEach(function(f) {
+                      
+       
+                      sel_files.push(f);
+       
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+            
+                         var img_html ="";
+                         a+=1;
+                         img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
+                       
+                          $('#end').val(a); 
+                          $(".imgs_wrap2").append(img_html);
 
+                      }
+                      reader.readAsDataURL(f);
+                  });
+                  }
+              }
+            
+                function aaa(i) {
+                      var a= document.getElementById("img"+i);
+                   
+                     $("#put"+i).val(a.src);
+                  
+                     $("#img"+i+"").remove();
+                     $("#close"+i+"").remove(); 
+                     
+                  }
+            </script>
+             --%>
 </body>
 
 </html>

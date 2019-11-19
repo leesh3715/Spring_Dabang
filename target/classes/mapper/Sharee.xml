@@ -5,24 +5,50 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.sist.model.ShareeDAO">
-	<select id="list" resultType="com.sist.model.ShareeDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
-		select * from sharee order by s_no desc	
+	 <select id="s_countlist" resultType="Integer">
+  		select count(*) from sharee
+  	</select>
+
+	<select id="s_comments_count" parameterType="int" resultType="int">
+  		select count(*) from comments where s_no= #{s_no}
+  	</select>
+
+	<select id="s_list" resultType="com.sist.model.ShareeDTO" parameterType="int"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>	
 	</select>
 	
-	<insert id="add" parameterType="com.sist.model.ShareeDTO">
-		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},'작성자', sysdate, default, sharee_SEQ.currval, 0, 0, #{s_src})	
+	<select id="s_list2" resultType="com.sist.model.ShareeDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		select * from sharee order by s_group desc,s_step	
+	</select>
+	
+	<insert id="s_add" parameterType="com.sist.model.ShareeDTO"><!--  -->
+		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, sharee_SEQ.currval, 0, 0, #{s_src},0)	
 	</insert>
 	
-  	<update id="count" parameterType="int">
-  		update board set board_hit = board_hit + 1 where board_no = #{no}
+  	<update id="s_replyup" parameterType="com.sist.model.ShareeDTO">
+  		update sharee set  s_step = s_step+1 where s_group=#{s_group} and s_step > #{s_step} 
   	</update>
   	
-  	<select id="cont" parameterType="int" resultType="com.sist.model.ShareeDTO">
+	<insert id="s_replyadd" parameterType="com.sist.model.ShareeDTO"><!--  -->
+		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, #{s_group}, #{s_step}+1, #{s_indent}+1, #{s_src},0)	
+	</insert>
+	
+  	<update id="s_count" parameterType="int">
+  		update sharee set s_hit = s_hit + 1 where s_no = #{s_no}
+  	</update>
+  	
+  	<select id="s_cont" parameterType="int" resultType="com.sist.model.ShareeDTO">
   		select * from sharee where s_no = #{s_no}
   	</select>
   	
+  	<delete id="s_delete" parameterType="int">
+  		delete from sharee where s_no = #{s_no}
+  	</delete>
+  	<update id="s_update" parameterType="com.sist.model.ShareeDTO">
+  		update sharee set  s_date = sysdate, s_cont = #{s_cont}, s_memo = #{s_memo}, s_src = #{s_src}, s_title=#{s_title} where s_no = #{s_no} 
+  	</update>
   	<insert id="c_add" parameterType="com.sist.model.CommentsDTO">
-		insert into comments values(comments_SEQ.nextval, #{s_no}, '작성자', #{c_cont}, sysdate, comments_SEQ.currval, 0, 0, 0,'')	
+		insert into comments values(comments_SEQ.nextval, #{s_no}, #{c_id}, #{c_cont}, sysdate, comments_SEQ.currval, 0, 0, 0,'')	
 	</insert>
   	
   	<delete id="c_delete" parameterType="int">
@@ -37,6 +63,8 @@
   		select count(*) from comments where c_group= #{c_no}
   	</select>
   	
+  	
+  	
   	<select id="c_check" parameterType="int" resultType="com.sist.model.CommentsDTO">
   		select c_no,c_step from comments where c_no=(select min(c_no) from comments where c_group= #{c_group})
   	</select>
@@ -49,20 +77,42 @@
   	</update>
   
 	<insert id="c_radd" parameterType="com.sist.model.CommentsDTO">
-		insert into comments values(comments_SEQ.nextval, #{s_no}, '작성자', #{c_cont}, sysdate, #{c_group} ,(select max(c_step) from comments where c_group = #{c_group})+1 , #{c_indent}+1,0,#{c_replyid})	
+		insert into comments values(comments_SEQ.nextval, #{s_no}, #{c_id}, #{c_cont}, sysdate, #{c_group} ,(select max(c_step) from comments where c_group = #{c_group})+1 , #{c_indent}+1,0,#{c_replyid})	
 	</insert>
   	
-  	<select id="title" parameterType="String" resultType="com.sist.model.ShareeDTO">
-  		select * from board where board_title like '%'||#{name}||'%' order by board_no desc
+  	<select id="s_title" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_title like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
   	</select>
-  	<select id="content" parameterType="String" resultType="com.sist.model.ShareeDTO">
-  		select * from board where board_cont like '%'||#{name}||'%' order by board_no desc
+  	<select id="s_content" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.ShareeDTO">
+	  	<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_cont like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
   	</select>
-  	<select id="title_cont" parameterType="String" resultType="com.sist.model.ShareeDTO">
-  		select * from board where board_title like '%'||#{name}||'%' or board_cont like '%'||#{name}||'%' order by board_no desc
+  	<select id="s_title_cont" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_title like '%'||#{find_name}||'%' or s_cont like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
   	</select>
-  	<select id="writer" parameterType="String" resultType="com.sist.model.ShareeDTO">
-  		select * from board where board_writer like '%'||#{name}||'%' order by board_no desc
+  	<select id="s_writer" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_writer like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  	</select>
+  	 
+  	 <select id="s_titlecount" resultType="Integer" parameterType="String">
+  		select count(*) from sharee where s_title like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="s_contentcount" resultType="Integer" parameterType="String">
+  		select count(*) from sharee where s_cont like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="s_title_contcount" resultType="Integer" parameterType="String">
+  		select count(*) from sharee where s_title like '%'||#{find_name}||'%' or s_cont like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="s_writercount" resultType="Integer" parameterType="String">
+  		select count(*) from sharee where s_writer like '%'||#{find_name}||'%'
   	</select>
   	
+  	<select id="s_next" parameterType="int" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[select * from sharee where s_no=(select max(s_no) from sharee where s_step=0 and s_no<#{s_no})]]>
+  	</select>
+  	<select id="s_pre" parameterType="int" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[select * from sharee where s_no=(select min(s_no) from sharee where s_step=0 and s_no>#{s_no})]]>
+  	</select>
 </mapper>

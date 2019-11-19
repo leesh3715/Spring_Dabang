@@ -16,7 +16,7 @@
 
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
 
-	
+
 	<link rel="stylesheet" href="resources/css/uc.min2.css">
 	<link rel="stylesheet" href="resources/css/basic.css">
 	<link rel="stylesheet" href="resources/css/slick.css">
@@ -32,21 +32,17 @@
 	
 	<!-- /* Bootstrap 3.3.2 */ -->
 	
-	<link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap-theme.min.css">
-	<script src="resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery-3.3.1.min.js"></script>
-	<script src="resources/js/uc.lib.min.js"></script>
-	<script src="resources/js/uc.plugin.min.js"></script>
-	<script src="resources/js/slick.min.js"></script>
-	<script src="resources/js/common.js"></script>
+	<!-- <link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap.min.css"> -->
+<!-- 	<link rel="stylesheet" href="resources/plugins/bootstrap/css/bootstrap-theme.min.css"> -->
+	<!-- <script src="resources/plugins/bootstrap/js/bootstrap.min.js"></script> -->
+	
 										
 </head>
 
 <body>
 
 <%@ include file="../../resources/include/header.jsp" %>
-
+	
 
 	<div class="content_wrap">
 		<div class="gongyu">
@@ -64,7 +60,7 @@
 			<ul>
 				<li><a href="<%=request.getContextPath()%>/con4_1.do">실생활 팁</a></li>
 				<li><a href="<%=request.getContextPath()%>/con4_2.do">인테리어 팁</a></li>
-				<li class="on"><a href="<%=request.getContextPath()%>/con4_3.do">가전가구 나눔</a></li>
+				<li class="on"><a href="<%=request.getContextPath()%>/share_room.do">가전가구 나눔</a></li>
 			</ul>
 		</div>
 
@@ -114,9 +110,10 @@
 
 			<div data-uc-table>
 				<c:set var="dto" value="${cont }"/>
+				<c:set var="nick" value="${ses }"></c:set>
 				<div style="margin: 10px; border:1px solid; padding:10px;"> <!-- inbox -->
-					<div class="row" > <!-- tit-box -->
-						<div class="col-xs-8 col-sm-9"> <!-- fl -->
+					<div > <!-- tit-box -->
+						<div style="display: inline; float: left;" > <!-- fl -->
 							<table role="presentation" cellspacing="0" cellpadding="0" border="0">
 								<tbody>
 									<tr valign="top">
@@ -127,7 +124,7 @@
 								</tbody>
 							</table>
 						</div>
-						<div  class="col-xs-4 col-sm-3" align="right"> <!-- fr -->
+						<div align="right"> <!-- fr -->
 							<table role="presentation" cellspacing="0" cellpadding="0" border="0">
 								<tbody>
 									<tr>
@@ -141,12 +138,13 @@
 					</div>
 					<div style="border-top:1px dashed; margin-top: 2px;"></div>
 					<div><!-- etc-box -->
-						<div class="row" > <!-- tit-box -->
-						<div class="col-xs-8 col-sm-9" style="margin-top: 20px;"> <!-- fl -->
+						<div > <!-- tit-box -->
+						<div style="margin-top: 20px;"> <!-- fl -->
 							<table role="presentation" cellspacing="0" cellpadding="0" border="0">
 								<tbody>
 									<tr valign="top">
 										<td>
+											<input type="hidden" id="s_writer" value="${dto.getS_writer() }">
 											<span style="font-weight: bold;">${dto.getS_writer() }</span>
 										</td>
 									</tr>
@@ -159,21 +157,37 @@
 						</div>
 						<div style="padding-left: 43px; padding-right: 43px; margin-top: 30px"><!-- 내용 -->
 							<div>
-								<c:if test="${empty dto }">
+								
+								<c:if test="${nick eq dto.getS_writer()}">
 									${dto.getS_memo() }
 								</c:if>
-								<c:if test="${!empty dto }">
+								<c:if test="${nick ne dto.getS_writer() }">
 									&nbsp;
 								</c:if>
 							</div>
 						</div>
+						<%-- <c:set var="s_src" value="${src }"/> --%>
+						<%-- <c:if test="${!empty s_src }"> --%>
+						<c:if test="${dto.getS_src() !=null }">
+						
+						<div style="padding-left: 43px; padding-right: 43px; margin-top: 30px; width: 100%; overflow: hidden;"><!-- 내용 -->
+							<c:forTokens items="${dto.getS_src() }" delims="/" var="i" varStatus="st">
+								<div style="float: left; width: 33%;">
+								<input type="image" src="${i }" width="100%" height="300">&nbsp;&nbsp;
+								<!-- <img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" /> -->
+								</div>
+							</c:forTokens>
+								
+						</div>
+						
+						</c:if>
 						<table  cellspacing="0" cellpadding="0" border="0" style="margin-top: 20px;">
 							<tbody>
 								<tr>
 									<td width="1500">
 										&nbsp;
 									</td>
-									<td width="300" align="right"><ins><font size="1em">이 작성자의 게시글 더보기</font></ins></td>
+									<td width="300" align="right"><ins><font size="2em">이 작성자의 게시글 더보기</font></ins></td>
 								</tr>
 							</tbody>
 						</table>
@@ -213,9 +227,11 @@
 						
 						</ul>
      				   </div>
+     				   
 						<form id="comments" name="comments">
 							<input type="hidden" value="${dto.getS_no() }" name="s_no">
 							
+     				 	 	<c:if test="${!empty session }">
 							<table  cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
 								<tbody>
 									<tr >
@@ -236,8 +252,11 @@
 									</tr>
 								</tbody>
 							</table>
+							</c:if>
 						</form>
+						
 					</div>
+					
 				</div>
 				<script>
 					$("textarea.autosize").on('keydown keyup', function () {
@@ -247,7 +266,69 @@
 						} 
 					});
 				</script>
-
+				<script>
+					
+				</script>
+				
+				<div align="right" style="margin: 0px 10px 10px; padding:0px 10px 10px;"> 
+					<input type="button" value="글쓰기" onclick="location.href='share_room_upload.do'"> 
+					<input type="button" value="답글" onclick="location.href='share_room_upload.do?s_group=${dto.getS_group()}&s_title=${dto.getS_title() }&s_step=${dto.getS_step() }&s_indent=${dto.getS_indent() }'"> 
+					<c:if test="${dto.getS_writer()==nick }">
+						<input type="button" value="수정" onclick="location.href='share_room_upload.do?s_no=${dto.getS_no()}'"> 
+						<input type="button" value="삭제" onclick="deleteShere(${dto.getS_no() })"> 
+					</c:if>
+					<input type="button" value="목록" onclick="location.href='share_room.do'"> 
+				</div>
+				
+				<!-- <div data-uc-table class="is-scroll-x"> -->
+				<c:set var="next" value="${next }"></c:set>
+				<c:set var="pre" value="${pre }"></c:set>
+				<table class="is-table-hor">
+					<colgroup>
+						<col width="10%">
+						<col width="*">
+						<col width="10%">
+						<col width="10%">
+					</colgroup>
+					<tbody id="noticeCollapse" data-uc-collapse>
+					<tr>
+						<td colspan="4">&nbsp;
+						</td>
+					</tr>
+					<tr>
+						<c:if test="${!empty pre }">
+							<td>
+								<a href="share_cont.do?s_no=${pre.getS_no() }"><font>이전글</font></a>
+							</td>
+							<td>
+								<a href="share_cont.do?s_no=${pre.getS_no() }">${pre.getS_title() }</a>
+							</td>
+							<td>
+								<font>${pre.getS_writer() }</font>
+							</td>
+							<td>
+								<font>${pre.getS_date().substring(0,10)  }</font>								
+							</td>
+						</c:if>
+						</tr>
+						<tr>
+						<c:if test="${!empty next }">
+							<td>
+								<a href="share_cont.do?s_no=${next.getS_no() }"><font>다음글</font></a>
+							</td>
+							<td>
+								<a href="share_cont.do?s_no=${next.getS_no() }">${next.getS_title() }</a>
+							</td>
+							<td>
+								<font>${next.getS_writer() }</font>
+							</td>
+							<td>
+								<font>${next.getS_date().substring(0,10)  }</font>								
+							</td>
+						</c:if>
+						</tr>
+					</tbody>
+				</table>
 		</div>
 		<div class="is-empty-xs120"></div>
 		<!-- 하단 시작 -->

@@ -75,5 +75,8 @@ public class RoomDAOImpl implements RoomDAO {
 		return this.sqlSession.selectList("searchList", search_text);
 	}
 	
+	public void deleteRoom(List<String> list) {
+		this.sqlSession.delete("deleteRoom", list);
+	}
 	
 }

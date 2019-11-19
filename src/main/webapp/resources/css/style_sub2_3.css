@@ -412,7 +412,7 @@ header .nav .mypage {
 
 [data-uc-modal]#detail .is-modal-dialog {
     max-width: 300px;
-    top:150px;
+    top: 180px;
 }
 
 [data-uc-modal]#detail .is-modal-dialog .is-panel-head {
@@ -479,7 +479,7 @@ header .nav .mypage {
 }
 
 [data-uc-modal]#call .is-modal-dialog {
-    max-width: 230px;
+    max-width: 300px;
     top: 60px;
 }
 
@@ -544,12 +544,12 @@ header .nav .mypage {
 }
 
 .input-call a {
-    display: inline-block;
+      display: inline-block;
     position: absolute;
-    right: 2px;
+    right: 0px;
     top: 2px;
-    width: 50px;
-    font-size: 13px;
+    width: 48px;
+    font-size: 12px;
     line-height: 24px;
     background-color: #ffd800;
 }
