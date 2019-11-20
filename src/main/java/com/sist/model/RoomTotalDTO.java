@@ -43,8 +43,23 @@ public class RoomTotalDTO {
 	private String r_photoOne; // 첫번째 이미지 경로를 저장하기 위해 선언
 	private String r_monthlimit; //  단기임대를 위한 개월수
 	private int m_no;
+	private String r_date; // 방 등록 날짜
+	private String r_sharedues;
+
 	
 	 
+	public String getR_sharedues() {
+		return r_sharedues;
+	}
+	public void setR_sharedues(String r_sharedues) {
+		this.r_sharedues = r_sharedues;
+	}
+	public String getR_date() {
+		return r_date;
+	}
+	public void setR_date(String r_date) {
+		this.r_date = r_date;
+	}
 	public int getM_no() {
 		return m_no;
 	}
@@ -296,5 +311,23 @@ public class RoomTotalDTO {
 	}
 	public void setOu_water(String ou_water) {
 		this.ou_water = ou_water;
-	}	
+	}
+	@Override
+	public String toString() {
+		return "RoomTotalDTO [r_no=" + r_no + ", r_btype=" + r_btype + ", r_type=" + r_type + ", r_address=" + r_address
+				+ ", r_rentfee=" + r_rentfee + ", r_deposit=" + r_deposit + ", r_dimension=" + r_dimension
+				+ ", r_floor=" + r_floor + ", r_heating=" + r_heating + ", r_movedate=" + r_movedate + ", r_utility="
+				+ r_utility + ", r_detail=" + r_detail + ", r_meal=" + r_meal + ", r_gender=" + r_gender + ", r_person="
+				+ r_person + ", r_shareutility=" + r_shareutility + ", r_ritire=" + r_ritire + ", r_location1="
+				+ r_location1 + ", r_location2=" + r_location2 + ", r_photo=" + r_photo + ", o_tv=" + o_tv + ", o_desk="
+				+ o_desk + ", o_bed=" + o_bed + ", o_stove=" + o_stove + ", o_closet=" + o_closet + ", o_ac=" + o_ac
+				+ ", o_micro=" + o_micro + ", o_laundry=" + o_laundry + ", o_refri=" + o_refri + ", o_parking="
+				+ o_parking + ", o_elevator=" + o_elevator + ", o_balcony=" + o_balcony + ", o_pet=" + o_pet
+				+ ", ou_net=" + ou_net + ", ou_tv=" + ou_tv + ", ou_clean=" + ou_clean + ", ou_gas=" + ou_gas
+				+ ", ou_electric=" + ou_electric + ", ou_water=" + ou_water + ", r_photoOne=" + r_photoOne
+				+ ", r_monthlimit=" + r_monthlimit + ", m_no=" + m_no + ", r_date=" + r_date + "]";
+	}
+	
+	
+	
 }

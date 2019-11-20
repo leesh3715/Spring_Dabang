@@ -45,15 +45,16 @@ public class RoomController {
 			@RequestParam("put") List<String> put)
 			throws IOException {
 		
+		List<MultipartFile> fileList = mtfRequest.getFiles("file");
+		String safeFile2 = "";
 			
 		if(session.getAttribute("m_no")!=null) {
 		System.out.println("세션 값 테스트 " + session.getAttribute("m_no"));
 		
-		List<MultipartFile> fileList = mtfRequest.getFiles("file");
 
-		String safeFile2 = "";
 		
-		if(rdto.getR_no()==0) {
+		// 사진 수정하는 조건문
+		if(rdto.getR_no()!=0) {
 		 String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\";
 			/*
 			 * String cheackFile = "http://localhost:8484/dabang/resources/Shereuploads/";
@@ -66,10 +67,9 @@ public class RoomController {
 			
 			for(int i=0; i<src.length; i++) {
 				
-				pu[i]=put.get(i+1).replace("http://localhost:8383/dabang/resources/Shereuploads/",
-	                     "resources\\Shereuploads\\");
+				pu[i]=put.get(i+1).replace("http://localhost:8383/dabang/resources/uploads/",
+	                     "resources\\uploads\\");
 				if((src[i]).equals(pu[i])) {
-					System.out.println("하이");	
 					 File file = new File(safeFile+src[i]); 
 					 System.out.println(file);
 					 file.delete();
@@ -86,21 +86,18 @@ public class RoomController {
 		/*String path = "..\\..\\..\\..\\webapp\\resources\\uploads\\";*/
 		String path = "resources\\uploads\\";
 		path.replace("\\", "\" ");
-		ArrayList<String> list = new ArrayList<String>();
 
 		for (MultipartFile mf : fileList) {
 			System.out.println("mf : " + mf);
 			String originFileName = mf.getOriginalFilename(); // 원본 파일 명
 			long fileSize = mf.getSize(); // 파일 사이즈
-
+            if(fileSize>0) {
 			System.out.println("originFileName : " + originFileName);
 			System.out.println("fileSize : " + fileSize);
 
-			String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\" +path + System.currentTimeMillis() + originFileName+"/";
+			String safeFile = "C:\\Users\\leeseokho\\Documents\\SpringDabang\\src\\main\\webapp\\" +path + System.currentTimeMillis() + originFileName;
 			safeFile2 += path + System.currentTimeMillis() + originFileName+"/";
 			/* list.add(safeFile); */
-			
-
 			try {
 				mf.transferTo(new File(safeFile));
 			} catch (IllegalStateException e) {
@@ -109,30 +106,28 @@ public class RoomController {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+				}
+            }
 		}
-		rdto.setR_address(rdto.getR_address() +" "+ r_address2);
+		rdto.setR_address(rdto.getR_address() +","+ r_address2);
 		
 		System.out.println("test rentfee1 "+ rdto.getR_rentfee());
 		
 		rdto.setR_rentfee((rdto.getR_rentfee()+ "," + r_rentfee2).replace(",", "/"));
 		System.out.println("test rentfee2 "+ rdto.getR_rentfee());
 		
-		rdto.setR_dimension((rdto.getR_dimension() + r_dimension2).replace(",", "/"));
+		rdto.setR_dimension((rdto.getR_dimension()+ "," +r_dimension2).replace(",", "/"));
 		System.out.println("test dimention "+ rdto.getR_dimension());
 		
-		rdto.setR_floor((rdto.getR_floor() + r_floor2).replace(",", "/"));
+		rdto.setR_floor((rdto.getR_floor()+ "," +r_floor2).replace(",", "/"));
 		
 		rdto.setR_photo(safeFile2);
 		rdto.setM_no((int)session.getAttribute("m_no"));
 		
 		System.out.println("=====================================");
-		/*
-		 * System.out.println(rdto.toString()); System.out.println(rodto.toString());
-		 */
+		System.out.println("사진 링크 테스트 =>>"+rdto.getR_photo());
+	 
 		
-		 System.out.println("방 넘버! "+ rdto.getR_no());
-		 
 		 if(rdto.getR_no()==0) {
 			// insert 문
 				this.rdao.insertRoom(rdto);
@@ -141,11 +136,9 @@ public class RoomController {
 				this.rdao.insertRoomOption(rodto);
 				// insert 문 end
 		 } else {
-			 // update 문
-			System.out.println(safeFile2);
-			rdto.setR_photo(safeFile2);
+			 // update 문			
 			 this.rdao.updateRoom(rdto);
-				/* this.rdao.updateRoomOption(rodto); */
+			 this.rdao.updateRoomOption(rodto); 
 		 }
 		
 		

@@ -37,7 +37,6 @@
 </head>
 
 <body>
-<c:out value="${tdto.getR_no() }"></c:out>
 <c:set var="tdto" value="${tdto }"/>
 
 	<!-- 허위매물 제재 정책 팝업 -->
@@ -126,17 +125,30 @@
                                                 <div class="btn_yellow">
                                                     <input type="radio" id="radio1_1" name="r_type" class="type1" title="" value="원룸">
                                                     <label for="radio1_1">원룸</label>
+                                                    
                                                 </div>
                                                 <div class="btn_yellow">
                                                     <input type="radio" id="radio1_2" name="r_type" class="type1" title="" value="투룸">
                                                     <label for="radio1_2">투룸</label>
                                                 </div>
-                                            </td>
+                                          
+                                              <c:if test="${tdto.getR_type() eq '원룸'}">
+                            					<script>
+                                                    $("input:radio[name='r_type']:radio[value='원룸']").prop('checked', true); // 선택하기
+                                                 </script>
+                                                </c:if>
+                                                <c:if test="${tdto.getR_type() eq '투룸'}">
+                                                 <script>
+                                                    $("input:radio[name='r_type']:radio[value='투룸']").prop('checked', true); // 선택하기
+                                                 </script>
+                                                 </c:if>
+                                                  </td>
                                         </tr>
-                                        
+                                     
                                     </tbody>
                                 </table>
                             </div>
+                            			
 
 
                             <div class="write_box write2">
@@ -156,16 +168,16 @@
                                             <td>
                                             
                                             <c:if test="${!empty tdto.getR_address() }">                                            	
-                                                <input type="text" size="40" id="sample5_address" name="r_address" placeholder="${tdto.getR_address().split(",")[0]}" readonly >
+                                                <input type="text" size="40" id="sample5_address" name="r_address" value="${tdto.getR_address().split(",")[0]}" >
 												<input type="button" onclick="find_map()" value="주소 검색"><br><br>
-												<input type="text" size="40" id="sample5_address_2" name="r_address2" placeholder="${tdto.getR_address().split(",")[1]}" >
+												<input type="text" size="40" id="sample5_address_2" name="r_address2" value="${tdto.getR_address().split(",")[1]}" >
 												<input type="hidden" size="40" id="map_location1" name="r_location1" placeholder="location1" value="${tdto.getR_location1() }">
 												<input type="hidden" size="40" id="map_location2" name="r_location2" placeholder="location2" value="${tdto.getR_location2() }">
 											</c:if>
 											 <c:if test="${empty tdto.getR_address() }">                                             	
                                                 <input type="text" size="40" id="sample5_address" name="r_address" placeholder="주소를 검색하세요" readonly >
 												<input type="button" onclick="find_map()" value="주소 검색"><br><br>
-												<input type="text" size="40" id="sample5_address_2" name="r_address2" placeholder="상세주소를 입력하세요" >
+												<input type="text" size="40" id="sample5_address_2" name="r_address2" placeholder="상세 주소를 입력하세요" >
 												<input type="hidden" size="40" id="map_location1" name="r_location1" placeholder="location1">
 												<input type="hidden" size="40" id="map_location2" name="r_location2" placeholder="location2">
 											</c:if>
@@ -277,6 +289,7 @@
                                                     $("input:radio[name='radio3']:radio[value='월세']").prop('checked', true); // 선택하기
                                                     </script>
                                                 </c:if>
+                                                
                                                 <c:if test="${tdto.getR_deposit() ne null }">
                                                 <div class="btn_yellow">
                                                     <input type="radio" id="radio3_1" name="radio3" class="type1" title="">
@@ -520,7 +533,7 @@
                                             </c:if>
                                             
                                         </tr>
-                                        
+                                        <tr>
                                             <th>주차 여부</th>
                                             <td>
                                                 <div class="btn_yellow">
@@ -725,7 +738,7 @@
                                     </tbody>
                                 </table>
                             </div>
- <div data-uc-table="sub2_2" >
+ 				<div data-uc-table="sub2_2" >
 					<table class="is-table-ver">
 						<colgroup>
 							<col width="100%">
@@ -772,6 +785,7 @@
 									</label	>	
 								</div>
 							</td>
+							</tr>
 								
 								<tr>
 								<td>

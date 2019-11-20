@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
 <html>
@@ -46,8 +47,7 @@
 </head>
 
 <body>
-
-
+<c:set var="tdto" value="${tdto }"/>
 
 	
 	<!-- 허위매물 제재 정책 팝업 -->
@@ -139,16 +139,24 @@
                                         <tr>
                                             <th>주소</th>
                                             <td>
-                                                   <input type="text" size="40" id="sample5_address" name="r_address" placeholder="주소를 검색하세요" readonly>
+                                                   <c:if test="${!empty tdto.getR_address() }">                                            	
+                                                <input type="text" size="40" id="sample5_address" name="r_address" value="${tdto.getR_address().split(",")[0]}" >
 												<input type="button" onclick="find_map()" value="주소 검색"><br><br>
-												<input type="text" size="40" id="sample5_address_2" name="r_address2" placeholder="상세주소를 입력하세요" >
-												
-												<input type="hidden" id="r_address10" name="r_address">
+												<input type="text" size="40" id="sample5_address_2" name="r_address2" value="${tdto.getR_address().split(",")[1]}" >
+												<input type="hidden" size="40" id="map_location1" name="r_location1" placeholder="location1" value="${tdto.getR_location1() }">
+												<input type="hidden" size="40" id="map_location2" name="r_location2" placeholder="location2" value="${tdto.getR_location2() }">
+											</c:if>
+											 <c:if test="${empty tdto.getR_address() }">                                             	
+                                                <input type="text" size="40" id="sample5_address" name="r_address" placeholder="주소를 검색하세요" readonly >
+												<input type="button" onclick="find_map()" value="주소 검색"><br><br>
+												<input type="text" size="40" id="sample5_address_2" name="r_address2" placeholder="상세 주소를 입력하세요" >
+												<input type="hidden" size="40" id="map_location1" name="r_location1" placeholder="location1">
+												<input type="hidden" size="40" id="map_location2" name="r_location2" placeholder="location2">
+											</c:if>
 												
 												<div id="map" style="width:600px;height:300px;margin-left:10px; margin-top:10px;display:none "></div>
 												<%-- 찍는 곳의 좌표 위,경도 값 / hidden으로 받을 것 --%>
-												<input type="hidden" size="40" id="map_location1" name="r_location1" placeholder="location1">
-												<input type="hidden" size="40" id="map_location2" name="r_location2" placeholder="location2">
+									
 												
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -230,19 +238,28 @@
                                         <tr>
                                            <th rowspan="3">거래 종류</th>
                                             <td>
-
-                                                <div class="info">
+                                             	<c:if test="${tdto.getR_deposit() eq null }">
+												
+                                            	 <div class="info">
                                                     <span>보증금 / 월세 </span>
-                                                    <input type="text" class="type1" name="r_rentfee">
+                                                    <input type="text" class="type1" name="r_rentfee" value="${tdto.getR_rentfee().split("/")[0]}">
                                                     &nbsp;&nbsp;/&nbsp;&nbsp;
-                                                    <input type="text" class="type1" name="r_rentfee2">
-                                                    
-                                                    
+                                                    <input type="text" class="type1" name="r_rentfee2" value="${tdto.getR_rentfee().split("/")[1]}">
                                                 </div>
+                                                </c:if>
+                                               <c:if test="${tdto.getR_deposit() ne null }">
+                                               <div class="info">
+                                                    <span>보증금 / 월세 </span>
+                                                    <input type="text" class="type1" name="r_rentfee" value="">
+                                                    &nbsp;&nbsp;/&nbsp;&nbsp;
+                                                    <input type="text" class="type1" name="r_rentfee2" value="">
+                                                </div>
+                                               </c:if>
                                             </td>
                                             </tr>
                                             <tr>
                                         	<td>
+                                        	<c:if test="${tdto.getR_meal() eq null }">
                                                 <div class="btn_yellow">
                                                     <label for="radio3_2">식비  </label>
                                                 </div>
@@ -250,6 +267,16 @@
                                                     <input type="text" class="type1" name="r_meal">
                                                     &nbsp;&nbsp;만원
                                                 </div>
+                                                </c:if>
+                                                <c:if test="${tdto.getR_meal() ne null }">
+                                                <div class="btn_yellow">
+                                                    <label for="radio3_2">식비  </label>
+                                                </div>
+                                                <div class="info">
+                                                    <input type="text" class="type1" name="r_meal" value="${tdto.getR_meal() }">
+                                                    &nbsp;&nbsp;만원
+                                                </div>
+                                                </c:if>
                                             </td>
                                             </tr>
                                         <!-- <tr>
@@ -268,159 +295,8 @@
                                 </table>
                             </div>
 
-
-                            <!-- <div class="write_box write4">
-                                <table class="type1">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4">기본 정보</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>건물 크기<br>(1p=3.3058)</th>
-                                            <td colspan="3">
-                                                <ul>
-                                                    <li>
-                                                        공급 면적&nbsp;&nbsp;
-                                                        <input type="text" class="type1">&nbsp;&nbsp;평
-                                                    </li>
-                                                    <li>
-                                                        전용 면적&nbsp;&nbsp;
-                                                        <input type="text" class="type1">&nbsp;&nbsp;평
-                                                    </li>
-                                                </ul>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>건물 층수</th>
-                                            <td colspan="3">
-                                                <ul>
-                                                    <li>
-                                                        건물 층수&nbsp;&nbsp;
-                                                        <input type="text" class="type1">&nbsp;&nbsp;층
-                                                    </li>
-                                                    <li>
-                                                        해당 층수&nbsp;&nbsp;
-                                                        <input type="text" class="type1">&nbsp;&nbsp;층
-                                                    </li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <th>난방 종류</th>
-                                            <td>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio4_1" name="radio4" class="type1" title="">
-                                                    <label for="radio4_1">개별 난방</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio4_2" name="radio4" class="type1" title="">
-                                                    <label for="radio4_2">중앙 난방</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio4_3" name="radio4" class="type1" title="">
-                                                    <label for="radio4_3">지방 난방</label>
-                                                </div>
-                                            </td>
-                                            <th>입주 가능일</th>
-                                            <td>
-                                                <div class="is-input-field">
-					                              <input type="text" name="" value="" class="datepicker">
-					                           </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>주차 여부</th>
-                                            <td>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio7_1" name="radio7" class="type1" title="">
-                                                    <label for="radio7_1">없음</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio7_2" name="radio7" class="type1" title="">
-                                                    <label for="radio7_2">있음</label>
-                                                </div>
-                                            </td>
-                                            
-                                            <th>엘레베이터</th>
-                                            <td>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio9_1" name="radio9" class="type1" title="">
-                                                    <label for="radio9_1">없음</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="radio" id="radio9_2" name="radio9" class="type1" title="">
-                                                    <label for="radio9_2">있음</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>옵션 항목</th>
-                                            <td colspan="3">
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_1" name="check2" class="type1" title="">
-                                                    <label for="check2_1">TV</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_2" name="check2" class="type1" title="">
-                                                    <label for="check2_2">책상</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_3" name="check2" class="type1" title="">
-                                                    <label for="check2_3">침대</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_4" name="check2" class="type1" title="">
-                                                    <label for="check2_4">인덕션</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_5" name="check2" class="type1" title="">
-                                                    <label for="check2_5">옷장</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_6" name="check2" class="type1" title="">
-                                                    <label for="check2_6">에어컨</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_7" name="check2" class="type1" title="">
-                                                    <label for="check2_7">전자레인지</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_8" name="check2" class="type1" title="">
-                                                    <label for="check2_8">세탁기</label>
-                                                </div>
-                                                <div class="btn_yellow">
-                                                    <input type="checkbox" id="check2_9" name="check2" class="type1" title="">
-                                                    <label for="check2_9">냉장고</label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-					<script>
-						 $(function() {
-							$(".datepicker").datepicker({
-								dateFormat: 'yy-mm-dd' //Input Display Format 변경
-		                            ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-		                            ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
-		                            ,changeYear: true //콤보박스에서 년 선택 가능
-		                            ,changeMonth: true //콤보박스에서 월 선택 가능
-		                            ,yearSuffix: "년" //달력의 년도 부분 뒤에 붙는 텍스트
-		                            ,monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'] //달력의 월 부분 텍스트
-		                            ,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] //달력의 월 부분 Tooltip 텍스트
-		                            ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
-		                            ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
-		                            ,minDate: "0" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-		                            ,maxDate: "+3Y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
-							    });
-							});
-						 </script> -->
 						 
-						   <div class="write_box write4">
+						      <div class="write_box write4">
                                 <table class="type1">
                                     <thead>
                                         <tr>
@@ -432,17 +308,27 @@
                                             <th>건물 크기<br>(1p=3.3058)</th>
                                             <td colspan="3">
                                                 <ul>
+                                                <c:if test="${tdto.getR_dimension() ne null }">
                                                     <li>
-                                                        전용 면적&nbsp;&nbsp;
+                                                       전용 면적&nbsp;&nbsp;
+                                                        <input type="text" class="type1" name="r_dimension" value="${tdto.getR_dimension().split("/")[0]}">m²
+                                                    </li>
+                                                    <li>
+                                                        평수&nbsp;&nbsp;
+                                                        <input type="text" class="type1" name="r_dimension2"  value="${tdto.getR_dimension().split("/")[1]}">평
+                                                    </li>
+                                                    </c:if>
+                                                     <c:if test="${tdto.getR_dimension() eq null }">
+                                                    <li>
+                                                       전용 면적&nbsp;&nbsp;
                                                         <input type="text" class="type1" name="r_dimension">&nbsp;&nbsp;m²
                                                     </li>
                                                     <li>
                                                         평수&nbsp;&nbsp;
                                                         <input type="text" class="type1" name="r_dimension2">&nbsp;&nbsp;평
                                                     </li>
-                                                </ul>
-										<input type="hidden"  name="r_dimension"> <!-- 공급면적 + 전용면적 -->
-										
+                                                    </c:if>
+                                                </ul>										
                                             </td>
                                         </tr>
                                         
@@ -450,23 +336,39 @@
                                             <th>건물 층수</th>
                                             <td colspan="3">
                                                 <ul>
+                                                     <c:if test="${tdto.getR_floor() ne null }">
+                                                    <li>
+                                                        건물 층수&nbsp;&nbsp;
+                                                        <input type="text" class="type1" name="r_floor"  value="${tdto.getR_floor().split("/")[0]}">&nbsp;&nbsp;층
+                                                    </li>
+                                                   
+                                                    <li>
+                                                        해당 층수&nbsp;&nbsp;
+                                                        <input type="text" class="type1" name="r_floor2"  value="${tdto.getR_floor().split("/")[1]}">&nbsp;&nbsp;층
+                                                    </li>
+                                                     </c:if>
+                                                </ul>
+                                                      <ul>
+                                                     <c:if test="${tdto.getR_floor() eq null }">
                                                     <li>
                                                         건물 층수&nbsp;&nbsp;
                                                         <input type="text" class="type1" name="r_floor">&nbsp;&nbsp;층
                                                     </li>
+                                                   
                                                     <li>
                                                         해당 층수&nbsp;&nbsp;
                                                         <input type="text" class="type1" name="r_floor2">&nbsp;&nbsp;층
                                                     </li>
+                                                     </c:if>
                                                 </ul>
-										<input type="hidden"  name="r_floor"> <!-- 건물 층수 + 해당 층수 -->
+										
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <th>난방 종류</th>
                                             <td>
-                                            
+                                         
                                                 <div class="btn_yellow">
                                                     <input type="radio" id="radio4_1" name="r_heating" class="type1" title="" value="개별난방">
                                                     <label for="radio4_1">개별 난방</label>
@@ -480,15 +382,37 @@
                                                     <label for="radio4_3">지방 난방</label>
                                                 </div>
                                             </td>
+                                            <c:if test="${tdto.getR_heating() eq '개별난방'}">
+                                            <script>
+                                            $("input:radio[name='r_heating']:radio[value='개별난방']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
+                                             <c:if test="${tdto.getR_heating() eq '중앙난방'}">
+                                            <script>
+                                            $("input:radio[name='r_heating']:radio[value='중앙난방']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
+                                             <c:if test="${tdto.getR_heating() eq '지방난방'}">
+                                            <script>
+                                            $("input:radio[name='r_heating']:radio[value='지방난방']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
                                             <th>입주 가능일</th>
                                             <td>
+                                           	  <c:if test="${tdto.getR_movedate() ne null }">
+                                                <div class="is-input-field">
+					                              <input type="text" name="r_movedate" class="datepicker" value="${tdto.getR_movedate() }">
+					                           </div>
+					                           </c:if>
+					                           <c:if test="${tdto.getR_movedate() eq null }">
                                                 <div class="is-input-field">
 					                              <input type="text" name="r_movedate" value="" class="datepicker">
 					                           </div>
+					                           </c:if>
                                             </td>
                                         </tr>
 
-                                        <tr>
+      										 <tr>
                                             <th>주차 여부</th>
                                             <td>
                                                 <div class="btn_yellow">
@@ -500,6 +424,11 @@
                                                     <label for="radio7_2">있음</label>
                                                 </div>
                                             </td>
+                                            <c:if test="${tdto.getO_parking() eq 'on'}">
+                                            <script>
+                                            $("input:radio[name='o_parking']:radio[value='on']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
                                             
                                            <th>엘레베이터</th>
                                             <td>
@@ -512,45 +441,96 @@
                                                     <label for="radio9_2">있음</label>
                                                 </div>
                                             </td>
+                                            <c:if test="${tdto.getO_pet() eq 'on'}">
+                                            <script>
+                                            $("input:radio[name='o_elevator']:radio[value='on']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
                                         </tr>
-                                        <tr>
+                                        
+                               <tr>
                                             <th>옵션 항목</th>
                                             <td colspan="3">
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_1" name="o_tv" class="type1" title="">
                                                     <label for="check2_1">TV</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_tv() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_1").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_2" name="o_desk" class="type1" title="">
                                                     <label for="check2_2">책상</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_desk() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_2").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_3" name="o_bed" class="type1" title="">
                                                     <label for="check2_3">침대</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_bed() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_3").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_4" name="o_stove" class="type1" title="">
                                                     <label for="check2_4">인덕션</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_stove() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_4").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_5" name="o_closet" class="type1" title="">
                                                     <label for="check2_5">옷장</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_closet() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_5").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_6" name="o_ac" class="type1" title="">
                                                     <label for="check2_6">에어컨</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_ac() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_6").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_7" name="o_micro" class="type1" title="">
                                                     <label for="check2_7">전자레인지</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_micro() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_7").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_8" name="o_laundry" class="type1" title="">
                                                     <label for="check2_8">세탁기</label>
                                                 </div>
+                                                 <c:if test="${tdto.getO_laundry() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_8").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 <div class="btn_yellow">
                                                     <input type="checkbox" id="check2_9" name="o_refri" class="type1" title="">
                                                     <label for="check2_9">냉장고</label>
+                                                     <c:if test="${tdto.getO_refri() eq 'on'}">
+                                            	<script>
+                                            	$("#check2_9").prop('checked', true);
+                                            	</script>
+                                            	</c:if>
                                                 </div>
                                             </td>
                                         </tr>
@@ -586,8 +566,16 @@
 
                                         <tr>
                                             <th>상세 설명</th>
+                                             <c:if test="${tdto.getR_detail() ne null}">
                                             <td>
+                                                 <textarea name="r_detail" id="" cols="30" rows="30"  class="type1 detail_box">${tdto.getR_detail()}</textarea>
+                                               </td>
+                                               </c:if>
+                                               <c:if test="${tdto.getR_detail() eq null}">
+                                                <td>
                                                <textarea name="r_detail" id="" cols="30" rows="30"  class="type1 detail_box" placeholder="상세 설명은 3600자 이내로 작성 부탁드립니다."></textarea>
+                                               </td>
+                                               </c:if>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -628,45 +616,83 @@
 								<div class="imgs_wrap2"  style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px;">
 									&nbsp;
 								</div>		
-								
+								<tr>
+							<td>
+								<div class="is-txt-center" align="center">
+									<label> 파일추가
+										<input type='file' id="input_imgs" name="file" multiple="multiple" style="display: none;"/>
+									</label	>	
+								</div>
+							</td>
+							</tr>
 								
 							<tr>
 								<td>
-								<div class="is-txt-center">
+								<!-- <div class="is-txt-center">
 									<input multiple="multiple" name="file" type='file' id="gallery-photo-add" />
 									<label for="gallery-photo-add"><img src="resources/images/sub_2_2/btn4.png" alt="" /></label>  
-								</div>
+								</div> -->
 							</td>
 						</tr>
 					</table>
 				</div>
 				<script>
-					$(function () {
-						// Multiple images preview in browser
-						var imagesPreview = function (input, placeToInsertImagePreview) {
-							$('.gallery').html('');
-							if (input.files) {
-								var filesAmount = input.files.length;
+            var sel_files = [];
+             
+              $(document).ready(function() {
+                  $("#input_imgs").on("change", handleImgsFilesSelect);
+              }); 
+       
+              function handleImgsFilesSelect(e) {
+                 
+                 
+                  var files = e.target.files;
+                  var filesArr = Array.prototype.slice.call(files);
+                  if(files.length<1){
+                      console.log('cancel was pressed');
+                      $(".imgs_wrap2").empty();
+                      $(".gallery").show();
+                  }else{
+                     var sel_files = [];
+                  $(".imgs_wrap2").empty();
+                  $(".gallery").hide(); 
+                  
+                  var a=parseInt($('#end').val());
+                  var b=parseInt($('#chc').val());
+               var c=a;
+                
+                  filesArr.forEach(function(f) {
+                      
+       
+                      sel_files.push(f);
+       
+                      var reader = new FileReader();
+                      reader.onload = function(e) {
+            
+                         var img_html ="";
+                         a+=1;
+                         img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
+                       
+                          $('#end').val(a); 
+                          $(".imgs_wrap2").append(img_html);
 
-								for (i = 0; i < filesAmount; i++) {
-									var reader = new FileReader();
-
-									reader.onload = function (event) {
-										$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
-											placeToInsertImagePreview);
-									}
-
-									reader.readAsDataURL(input.files[i]);
-								}
-							}
-
-						};
-
-						$('#gallery-photo-add').on('change', function () {
-							imagesPreview(this, 'div.gallery');
-						});
-					});
-				</script>
+                      }
+                      reader.readAsDataURL(f);
+                  });
+                  }
+              }
+            
+                function aaa(i) {
+                      var a= document.getElementById("img"+i);
+                   
+                     $("#put"+i).val(a.src);
+                  
+                     $("#img"+i+"").remove();
+                     $("#close"+i+"").remove(); 
+                     
+                  }
+            </script>
+					
                    <div class="clearfix"></div>
 				<div data-uc-table="sub2_2" style="margin-top:-40px;border:none;">
 					<table class="is-table-ver" style="border:none !important;">
@@ -736,62 +762,7 @@
 			</div>
 		</footer>
 		<!-- 하단 끝 -->
-<script>
-            var sel_files = [];
-             
-              $(document).ready(function() {
-                  $("#input_imgs").on("change", handleImgsFilesSelect);
-              }); 
-       
-              function handleImgsFilesSelect(e) {
-                 
-                 
-                  var files = e.target.files;
-                  var filesArr = Array.prototype.slice.call(files);
-                  if(files.length<1){
-                      console.log('cancel was pressed');
-                      $(".imgs_wrap2").empty();
-                      $(".gallery").show();
-                  }else{
-                     var sel_files = [];
-                  $(".imgs_wrap2").empty();
-                  $(".gallery").hide(); 
-                  
-                  var a=parseInt($('#end').val());
-                  var b=parseInt($('#chc').val());
-               var c=a;
-                
-                  filesArr.forEach(function(f) {
-                      
-       
-                      sel_files.push(f);
-       
-                      var reader = new FileReader();
-                      reader.onload = function(e) {
-            
-                         var img_html ="";
-                         a+=1;
-                         img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
-                       
-                          $('#end').val(a); 
-                          $(".imgs_wrap2").append(img_html);
 
-                      }
-                      reader.readAsDataURL(f);
-                  });
-                  }
-              }
-            
-                function aaa(i) {
-                      var a= document.getElementById("img"+i);
-                   
-                     $("#put"+i).val(a.src);
-                  
-                     $("#img"+i+"").remove();
-                     $("#close"+i+"").remove(); 
-                     
-                  }
-            </script>
 
 
 </body>

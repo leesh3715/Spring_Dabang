@@ -24,10 +24,29 @@ public class RoomDTO {
    private String r_photo;
    private String r_monthlimit;
    private int m_no; // 회원 넘버
+   private String r_date; // 방 등록 날짜
+   private String r_sharedues;
    
    
    
-   public int getM_no() {
+
+   public String getR_sharedues() {
+	return r_sharedues;
+}
+
+public void setR_sharedues(String r_sharedues) {
+	this.r_sharedues = r_sharedues;
+}
+
+public String getR_date() {
+	return r_date;
+}
+
+public void setR_date(String r_date) {
+	this.r_date = r_date;
+}
+
+public int getM_no() {
 	return m_no;
 }
 

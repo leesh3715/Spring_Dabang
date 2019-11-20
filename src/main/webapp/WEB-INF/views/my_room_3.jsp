@@ -95,7 +95,7 @@
                                <tr>
                                    <th width="70px;"></th>
                                    <th>제목</th>
-                                   <th>상태</th>
+                                   <!-- <th>상태</th> -->
                                    <th>등록일</th>
                                </tr>
                            </thead>
@@ -135,8 +135,8 @@
                                        </div>
                                    </td>
                                    <!-- 거래 여부, 날짜 보류  -->
-                                   <td>거래중</td>
-                                   <td>2019-3-20 </td>
+                                  <!--  <td>거래중</td> -->
+                                   <td>${tdto.getR_date().substring(2,10) } </td>
                                </tr>
                                </c:forEach>
                            </tbody>

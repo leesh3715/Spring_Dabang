@@ -71,6 +71,7 @@ public class Controller {
 		 System.out.println(session.getAttribute("m_no"));
 		
 		  RoomTotalDTO list = this.rdao.roomContent(tdto.getR_no());
+
 		  model.addAttribute("tdto",list);
 		 
 		return "upload_room";
@@ -82,6 +83,7 @@ public class Controller {
 		System.out.println(session.getAttribute("m_no"));
 		
 		  RoomTotalDTO list = this.rdao.roomContent(tdto.getR_no());
+		  
 		  model.addAttribute("tdto",list);
 		 
 		return "upload_room_2";
