@@ -631,6 +631,11 @@
                                             $("input:radio[name='o_pet']:radio[value='on']").prop('checked', true); 
                                             </script>
                                             </c:if>
+                                            <c:if test="${tdto.getO_pet() ne 'on'}">
+                                            <script>
+                                            $("input:radio[name='o_pet']:radio[value='null']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
                                             
                                         </tr>
 
@@ -651,7 +656,7 @@
                                             $("input:radio[name='o_elevator']:radio[value='on']").prop('checked', true); 
                                             </script>
                                              </c:if>
-                                             
+                                            
                                             <th>베란다/발코니</th>
                                             <td>
                                                 <div class="btn_yellow">
@@ -666,6 +671,11 @@
 											<c:if test="${tdto.getO_balcony() eq 'on'}">
                                             <script>
                                             $("input:radio[name='o_balcony']:radio[value='on']").prop('checked', true); 
+                                            </script>
+                                            </c:if>
+                                            <c:if test="${tdto.getO_balcony() ne 'on'}">
+                                            <script>
+                                            $("input:radio[name='o_balcony']:radio[value='null']").prop('checked', true); 
                                             </script>
                                             </c:if>
                                             

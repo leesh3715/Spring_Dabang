@@ -941,7 +941,7 @@ for(var i = 0; i < json.length; i++) {
         '           </div>' + 
         '            <div class="r_desc">' + 
         '                <div class="r_ellipsis">'+ json[i].r_address + 
-        '                <div class="r_jibun ellipsis">방타입:'+json[i].r_btype+'&nbsp;&nbsp;&nbsp;&nbsp; 가격: '+json[i].r_rentfee +'</div>' + 
+        '                <div class="r_jibun ellipsis">방타입: '+json[i].r_btype+'&nbsp;&nbsp;&nbsp;&nbsp; 가격: '+json[i].r_rentfee +'</div>' + 
         '                <div><a href="room_cont.do?r_no='+json[i].r_no+'" class="r_link">자세히 보기</a></div>' + 
         '            </div>' + 
         '        </div>' + 

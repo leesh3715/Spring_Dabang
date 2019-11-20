@@ -2,6 +2,7 @@ package com.sist.dabang;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.mail.internet.MimeMessage;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sist.api.Coolsms;
 import com.sist.model.memDTO;
 import com.sist.model.memService;
 
@@ -222,6 +225,44 @@ public class MemberController {
 				out.println("</script>");
 				return null;
 			}
+			
+		}
+		
+		@RequestMapping(value = "smsSend.do")
+		public String sms_send(memDTO dto, HttpSession session) {
+			System.out.println(session.getAttribute("m_no"));
+
+		    String api_key = "NCSMB9OARN3QHQ6I";
+		    String api_secret = "LI8M3AF6VGRZF7CSBFIPACUARXAXD7PC";
+		    Coolsms coolsms = new Coolsms(api_key, api_secret);
+
+		    HashMap<String, String> set = new HashMap<String, String>();
+		    set.put("to", "01033006512"); // 수신번호
+
+		    set.put("from", "01051573715"); // 발신번호
+		    set.put("text", "반갑습니다 테스트 입니다~ 청년다방!!"); // 문자내용
+		    set.put("type", "sms"); // 문자 타입
+
+		    System.out.println(set);
+
+		    org.json.simple.JSONObject result = coolsms.send(set); // 보내기&전송결과받기
+
+		    if ((boolean)result.get("status") == true) {
+		      // 메시지 보내기 성공 및 전송결과 출력
+		      System.out.println("성공");
+		      System.out.println(result.get("group_id")); // 그룹아이디
+		      System.out.println(result.get("result_code")); // 결과코드
+		      System.out.println(result.get("result_message")); // 결과 메시지
+		      System.out.println(result.get("success_count")); // 메시지아이디
+		      System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
+		    } else {
+		      // 메시지 보내기 실패
+		      System.out.println("실패");
+		      System.out.println(result.get("code")); // REST API 에러코드
+		      System.out.println(result.get("message")); // 에러메시지
+		    }
+
+		    return "redirect:/";
 			
 		}
 }

@@ -96,7 +96,6 @@ public class ShareeController {
 	public String share_room_upload(HttpSession session,ShareeDTO dto,Model model) {
 		System.out.println("세션 값 테스트 " + session.getAttribute("m_no"));
 		System.out.println("세션 값 테스트 " + session.getAttribute("m_nick"));
-		ArrayList<String> list2= new ArrayList();
 		if(dto.getS_no()!=0) {
 			ShareeDTO u_dto=this.dao.content(dto.getS_no());
 			model.addAttribute("cont",u_dto);

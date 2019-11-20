@@ -187,8 +187,7 @@
 <%@ include file="../../resources/include/header.jsp"%>	
 
 
-<c:out value="${List}"/>	
-<br>
+<%-- <c:out value="${List}"/>	 --%>
 
   <c:set var="list" value="${List }"/>	
    <li class="content_wrap">
@@ -196,7 +195,7 @@
       <div align="center"><b><c:out value="${search_text}"/></b> (으)로 검색한 결과 입니다.</div>
          <ul class="is-tab-nav">
             <li class="is-active">
-            <a href="#prdList1" data-uc-click="tab">이지역 핫한 방 </a></li>
+            <a href="#prdList1" data-uc-click="tab"><b>핫한 방</b> </a></li>
          </ul>
          <div class="is-tab-content">
             <div id="prdList1" class="is-tab-pane is-active is-show">

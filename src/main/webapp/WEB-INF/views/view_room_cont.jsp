@@ -444,24 +444,28 @@
 							<p class="is-phone">${memberdto.getM_phone() }</p>
 						</div>
 					</div>
+					<form method="post" action="<%=request.getContextPath()%>/smsSend.do">
 					<div class="is-panel-foot is-pd-t_0">
 						<div class="is-txt-left">
 							<p class="is-ye">연락요청하기</p>
 							<p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
 							<div class="input-call">
-								<input type="text" id="" name="" value="">
-								<a href="#">연락받기</a>
+								<input type="text" id="" name="text" value="">
+								<!-- <a href="#">연락받기</a> -->
 							</div>
+								<input type="hidden" value="${memberdto.getM_nick() }">
+								<input type="submit" value="문자 전송">
 						</div>
 					</div>
+					</form>
 				</div>
 			</div>
 		</div>
 
-
 </body>
 <script src="resources/plugins/owlCarousel/owl.carousel.min.js"></script>
 <script>
+
    $('.owl-carousel').owlCarousel({
       loop: true,
       margin: 10,
