@@ -26,7 +26,6 @@ import com.sist.model.RoomDAO;
 import com.sist.model.RoomDTO;
 import com.sist.model.RoomOptionDTO;
 import com.sist.model.RoomTotalDTO;
-import com.sist.model.ShareeDTO;
 import com.sist.model.memDTO;
 
 

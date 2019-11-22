@@ -17,7 +17,7 @@ public class RoomTotalDTO {
 	private String r_gender;
 	private String r_person;
 	private String r_shareutility;
-	private String r_ritire;
+	private String r_ritire; 
 	private double r_location1;
 	private double r_location2;
 	private String r_photo;
@@ -44,7 +44,7 @@ public class RoomTotalDTO {
 	private String r_monthlimit; //  단기임대를 위한 개월수
 	private int m_no;
 	private String r_date; // 방 등록 날짜
-	private String r_sharedues;
+	private String r_sharedues; // 셰어하우스 세금
 
 	
 	 

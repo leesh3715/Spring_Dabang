@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sist.api.AESCrypto;
 import com.sist.api.Coolsms;
 import com.sist.model.memDTO;
 import com.sist.model.memService;
@@ -35,11 +36,14 @@ public class MemberController {
 	private JavaMailSender mailSender;
 
 	
+	private AESCrypto crypto;
+	
+	
 
 	// 회원가입
 	@RequestMapping(value = "/signup.do", method = RequestMethod.POST)
-	public String signup(memDTO mdto) {
-
+	public String signup(memDTO mdto) throws Exception {
+		 mdto.setM_pwd(AESCrypto.encrypt(mdto.getM_pwd())); 		
 		mservice.insertmem(mdto);
 		return "redirect:/";
 	}
@@ -64,11 +68,12 @@ public class MemberController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public ModelAndView modify(@RequestParam("input_email") String input_email,
 			@RequestParam("input_pwd") String input_pwd, HttpServletRequest request, HttpServletResponse response)
-			throws IOException {
+			throws Exception {
 
 		memDTO mdto = new memDTO();
 		mdto.setM_email(input_email);
-		mdto.setM_pwd(input_pwd);
+		mdto.setM_pwd(AESCrypto.encrypt(input_pwd));
+		/* System.out.println(mdto.getM_pwd()); */
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		memDTO mem = mservice.login(mdto);
@@ -207,7 +212,7 @@ public class MemberController {
 		public String delete_member(memDTO mdto, HttpServletResponse response, HttpSession session) throws Exception {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			
+			mdto.setM_pwd(AESCrypto.encrypt(mdto.getM_pwd()));
 			int result = this.mservice.deleteMember(mdto);
 			 System.out.println(result);
 			if(result ==1) {
@@ -229,40 +234,66 @@ public class MemberController {
 		}
 		
 		@RequestMapping(value = "smsSend.do")
-		public String sms_send(memDTO dto, HttpSession session) {
-			System.out.println(session.getAttribute("m_no"));
+	      public String sms_send(HttpSession session, @RequestParam("send_text") String send_text,@RequestParam("send_nick") String send_nick, @RequestParam("send_phone") String send_phone, HttpServletResponse response) throws Exception {
+	         
+		  System.out.println(session.getAttribute("m_no"));
+	      System.out.println("문자 보낼 내용 : "+send_text);
+	      System.out.println("문자 수신인: "+ send_nick);
+	      System.out.println("문자 수신 번호: "+ send_phone);
+	      System.out.println("문자 발신인: "+session.getAttribute("m_nick"));
+	      
+	     
+	    	    String value = "password1"; 
+	    	    String valueEnc = AESCrypto.encrypt(value); 
+	    	    String valueDec = AESCrypto.decrypt(valueEnc); 
 
-		    String api_key = "NCSMB9OARN3QHQ6I";
-		    String api_secret = "LI8M3AF6VGRZF7CSBFIPACUARXAXD7PC";
-		    Coolsms coolsms = new Coolsms(api_key, api_secret);
-
-		    HashMap<String, String> set = new HashMap<String, String>();
-		    set.put("to", "01033006512"); // 수신번호
-
-		    set.put("from", "01051573715"); // 발신번호
-		    set.put("text", "반갑습니다 테스트 입니다~ 청년다방!!"); // 문자내용
-		    set.put("type", "sms"); // 문자 타입
-
-		    System.out.println(set);
-
-		    org.json.simple.JSONObject result = coolsms.send(set); // 보내기&전송결과받기
-
-		    if ((boolean)result.get("status") == true) {
-		      // 메시지 보내기 성공 및 전송결과 출력
-		      System.out.println("성공");
-		      System.out.println(result.get("group_id")); // 그룹아이디
-		      System.out.println(result.get("result_code")); // 결과코드
-		      System.out.println(result.get("result_message")); // 결과 메시지
-		      System.out.println(result.get("success_count")); // 메시지아이디
-		      System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수
-		    } else {
-		      // 메시지 보내기 실패
-		      System.out.println("실패");
-		      System.out.println(result.get("code")); // REST API 에러코드
-		      System.out.println(result.get("message")); // 에러메시지
-		    }
-
-		    return "redirect:/";
-			
-		}
+	    	    System.out.println("Plain Text : " + value); 
+	    	    System.out.println("Encrypted : " + valueEnc); 
+	    	    System.out.println("Decrypted : " + valueDec); 
+	    	
+	    
+		/*
+		 * String test2 = cryptor.encryptBase64(test); System.out.println("복호화된 문자열 = "
+		 * +test2);
+		 */
+	      
+		/*
+		 * String api_key = "NCSMB9OARN3QHQ6I"; String api_secret
+		 * ="LI8M3AF6VGRZF7CSBFIPACUARXAXD7PC"; Coolsms coolsms = new Coolsms(api_key,
+		 * api_secret);
+		 * 
+		 * 
+		 * System.out.println(send_address);
+		 * 
+		 * HashMap<String, String> set = new HashMap<String, String>(); set.put("to",
+		 * dto.getM_phone()); // 수신번호 set.put("from", "01051573715"); // 발신번호
+		 * set.put("text", send_text); // 문자내용 set.put("type", "sms"); // 문자 타입
+		 * 
+		 * System.out.println(set);
+		 * 
+		 * 
+		 * org.json.simple.JSONObject result = coolsms.send(set); // 보내기&전송결과받기
+		 * 
+		 * if ((boolean)result.get("status") == true) { // 메시지 보내기 성공 및 전송결과 출력
+		 * System.out.println("성공"); System.out.println(result.get("group_id")); //그룹아이디
+		 * System.out.println(result.get("result_code")); // 결과코드
+		 * System.out.println(result.get("result_message")); // 결과 메시지
+		 * System.out.println(result.get("success_count")); // 메시지아이디
+		 * System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수 } else {
+		 * // 메시지 보내기 실패 System.out.println("실패");
+		 * System.out.println(result.get("code")); // REST API 에러코드
+		 * System.out.println(result.get("message")); // 에러메시지 }
+		 * 
+		 * 
+		 * }
+		  */
+		    response.setContentType("text/html;charset=UTF-8");
+	        PrintWriter out =  response.getWriter();
+	     	out.println("<script>");
+			out.println("alert('SMS 전송 완료')");
+			out.println("history.back()");
+			out.println("</script>");
+	      
+	        return null;
+	      }
 }

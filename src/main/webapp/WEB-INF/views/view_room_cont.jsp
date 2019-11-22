@@ -412,56 +412,50 @@
 						</div>
 					</div>
 					
-					<!-- <div class="is-panel-foot is-pd-t_0">
-						<div class="is-txt-left">
-							<p class="is-ye">연락요청하기</p>
-							<p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
-							<div class="input-call">
-								<input type="text" id="" name="" value="">
-								<a href="#">연락받기</a>
-							</div>
-						</div>
-					</div> -->
+				
 				</div>
 			</div>
 		</div>
       <!-- call modal   -->
+      
       <c:set var="memberdto" value="${mem}" />
-      <div id="call" data-uc-modal>
-			<div class="is-modal-dialog">
-				<div data-uc-panel>
-					<div class="is-panel-head is-pd-b_0">
-						<h3>
-							연락처 보기
-						</h3>
-						<a href="#fakelink" data-uc-dismiss="modal"><img src="resources/images/sub_2_3/icon/15.png" alt="" /></a>
-					</div>
-					<div class="is-panel-body">
-						<div class="is-txt-center">
-							<img src="resources/images/sub_2_3/icon/18.png" alt="" />
-							<p class="is-name">${memberdto.getM_nick() }</p>
-							<p class="is-addr" style="white-space:nowrap;">${tdto.getR_address()}</p>
-							<p class="is-phone">${memberdto.getM_phone() }</p>
-						</div>
-					</div>
-					<form method="post" action="<%=request.getContextPath()%>/smsSend.do">
-					<div class="is-panel-foot is-pd-t_0">
-						<div class="is-txt-left">
-							<p class="is-ye">연락요청하기</p>
-							<p>연락처를 남겨주시면, 확인 후 연락드립니다.</p>
-							<div class="input-call">
-								<input type="text" id="" name="text" value="">
-								<!-- <a href="#">연락받기</a> -->
-							</div>
-								<input type="hidden" value="${memberdto.getM_nick() }">
-								<input type="submit" value="문자 전송">
-						</div>
-					</div>
-					</form>
-				</div>
-			</div>
-		</div>
 
+      <div id="call" data-uc-modal>
+            <div class="is-modal-dialog">
+                <div data-uc-panel>
+                    <div class="is-panel-head is-pd-b_0">
+                        <h3>
+                            연락처 보기
+                        </h3>
+                        <a href="#fakelink" data-uc-dismiss="modal"><img src="resources/images/sub_2_3/icon/15.png" alt="" /></a>
+                    </div>
+                    <div class="is-panel-body">
+                        <div class="is-txt-center">
+                            <img src="resources/images/sub_2_3/icon/18.png" alt="" />
+                           <p class="is-name">${memberdto.getM_nick() }</p>
+                     <p class="is-addr" style="white-space:nowrap;">${tdto.getR_address()}</p>
+                     <p class="is-phone">${memberdto.getM_phone() }</p>
+                        </div>
+                    </div>
+                    <form method="post" action="<%=request.getContextPath()%>/smsSend.do">
+                    <div class="is-panel-foot is-pd-t_0">
+                        <div class="is-txt-left">
+                            <p class="is-ye">연락 요청</p>
+                            <p>하실 말씀을 남겨주시면, 확인 후 연락드립니다.</p>
+                               <input type="text" name="send_text" style="width: 65%">
+                                <input type="submit" value="문자 전송">
+                            <div class="input-call">
+                               <input type="hidden" value="${tdto.getR_address() }" name="send_address">
+                        		<input type="hidden" value="${memberdto.getM_phone() }" name="send_phone">
+                                <input type="hidden" value="${memberdto.getM_nick() }" name="send_nick">
+                                <!-- <a href="#">연락받기</a> -->
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 </body>
 <script src="resources/plugins/owlCarousel/owl.carousel.min.js"></script>
 <script>

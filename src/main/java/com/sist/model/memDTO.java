@@ -70,6 +70,12 @@ public class memDTO {
 	public void setM_count(int m_count) {
 		this.m_count = m_count;
 	}
+	@Override
+	public String toString() {
+		return "memDTO [m_no=" + m_no + ", m_email=" + m_email + ", m_nick=" + m_nick + ", m_pwd=" + m_pwd + ", m_name="
+				+ m_name + ", m_birth=" + m_birth + ", m_gender=" + m_gender + ", m_phone=" + m_phone + ", m_count="
+				+ m_count + "]";
+	}
 	
 	
 }

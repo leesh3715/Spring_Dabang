@@ -1,6 +1,7 @@
 package com.sist.dabang;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -55,7 +56,13 @@ public class Controller {
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonText = mapper.writeValueAsString(list);
 		model.addAttribute("json", jsonText);
-		/* System.out.println(jsonText); */
+		
+		
+		
+		/*
+		 * Random random = new Random(); System.out.println(random.nextInt(9999));
+		 */
+		
 		return "view_room";
 	}
 

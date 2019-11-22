@@ -924,7 +924,6 @@ function removeAllChildNods(el) {
     }
 }
 
-
 var positions = [];
 for(var i = 0; i < json.length; i++) {
 	var Photosrc = json[i].r_photo.split('/');
@@ -937,7 +936,7 @@ for(var i = 0; i < json.length; i++) {
         '        </div>' + 
         '        <div class="r_body">' + 
         '            <div class="r_img">' +
-        '                <img src="'+Photosrc[0]+'" width="73" height="70">' +
+        '                <img src="'+Photosrc[0]+'" style="width:100%; height:100%">' +
         '           </div>' + 
         '            <div class="r_desc">' + 
         '                <div class="r_ellipsis">'+ json[i].r_address + 
