@@ -9,13 +9,18 @@
 	<!-- id는 아까 daoimpl에서 지정한 list라는 이름. -->
 								<!-- DTO타입으로 리턴된다. -->
     <select id="qnaList" resultType="com.sist.model.QNADTO">
-		select * from myqna order by myqna_no desc
+		select * from myqna where myqna_id = #{myqna_id} order by myqna_no desc 
+	</select>
+	
+	<select id="qnaList2" resultType="com.sist.model.QNADTO">
+		select * from myqna order by myqna_no desc 
 	</select>
 	
 	<insert id="qnaAdd" parameterType="com.sist.model.QNADTO">
 		insert into myqna 
 		values(myqna_seq.nextval, #{myqna_qtype}, 
-		 '작성자',#{myqna_title}, #{myqna_cont}, sysdate, 0, 0, 0, null) 
+		 '작성자',#{myqna_title}, #{myqna_cont}, sysdate, 
+		0, '답변 미완료', 0, null,#{myqna_id}) 
 	</insert> 
 	
 	<select id="qnaCont" parameterType="int" resultType="com.sist.model.QNADTO">
@@ -32,6 +37,43 @@
 	</delete>
 	
 	
+	
+	<insert id="qnaReplyAdd" parameterType="com.sist.model.REPLYDTO">
+		insert into reply(reply_no, reply_writer, reply_pwd, reply_regdate, reply_cont,myqna_reanswer)
+		values
+		(
+		reply_SEQ.nextval, 
+		'관리자',
+		#{reply_pwd},
+		sysdate,
+		#{reply_cont},
+		#{reply_no}
+		)
+	</insert>
+	
+	<update id="qnaReplycomplete" parameterType="int">
+		update myqna set myqna_recomplete='답변완료' where myqna_no=#{reply_no}
+	</update>
+	
+	<select id="qnaIsAnswer" parameterType="int" resultType="int">
+		select count(*) from reply where MYQNA_REANSWER=#{no}
+	</select>
+	
+	<select id="qnaReplylist" parameterType="int" resultType="com.sist.model.REPLYDTO">
+	select * from reply where MYQNA_REANSWER=#{no}
+	</select>
+		
+	<select id="qnaReplyCont" parameterType="int" resultType="com.sist.model.REPLYDTO">
+		select * from reply where MYQNA_REANSWER = #{reply_no}
+	</select>
+	
+	<update id="qnaReplyUpdate" parameterType="com.sist.model.REPLYDTO" >
+		update reply set reply_cont = #{reply_cont} where myqna_reanswer = #{reply_no}
+	</update>
+	
+	<delete id="qnaReplyDelete" parameterType="int">
+		delete from reply where myqna_reanswer = #{reply_no}
+	</delete>
 	
 	
 	<!-- 

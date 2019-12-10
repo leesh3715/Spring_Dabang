@@ -407,7 +407,7 @@
       <div class="is-frame-md is-pd-y_50" data-uc-tab>
          <ul class="is-tab-nav">
             <li class="is-active">
-            <a href="#prdList1" data-uc-click="tab">이지역 핫한 방 </a></li>
+            <a href="#prdList1" data-uc-click="tab">최신 핫한 방 </a></li>
          </ul>
          <div class="is-tab-content">
             <div id="prdList1" class="is-tab-pane is-active is-show">
@@ -708,7 +708,8 @@
     </div>
 </div>
 <div>   
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1b51f66e54fd5e327b654103d5fc9ca1&libraries=services"></script>
+<!-- 카카오  -->
+<script src=""></script>
 <script>
 var json = ${json};
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  

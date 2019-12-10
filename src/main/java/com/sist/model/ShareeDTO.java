@@ -15,9 +15,22 @@ public class ShareeDTO {
     private String s_src;
     private int s_Comments_count;
     private int s_check;
+    private String s_checkno;
+    private String s_head;
     
     
-    
+	public String getS_head() {
+		return s_head;
+	}
+	public void setS_head(String s_head) {
+		this.s_head = s_head;
+	}
+	public String getS_checkno() {
+		return s_checkno;
+	}
+	public void setS_checkno(String s_checkno) {
+		this.s_checkno = s_checkno;
+	}
 	public int getS_check() {
 		return s_check;
 	}

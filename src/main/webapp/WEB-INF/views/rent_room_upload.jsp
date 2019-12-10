@@ -73,7 +73,7 @@
 <div class="container">
 <div class="gongyu my1 my1-4">
 
-		<div style="background-image: url(resources/images/sub_2_2/2_2.jpg); background-position: center center; height: 170px;">
+		<div style="background-image: url(resources/images/sub_2_2/3.jpg); background-position: center center; height: 170px;background-repeat: no-repeat; background-size: cover;">
 			<div class="is-frame-md is-relative" style="height: 100%;">
 				<b class="title">단기 임대</b>
 
@@ -118,15 +118,15 @@
                                             <th>개월 선택</th>
                                             <td>
                                                 <div class="btn_yellow">
-                                                    <input type="radio" id="radio2_1" name="r_period" class="type1" title="" value="1~2개월">
+                                                    <input type="radio" id="radio2_1" name="r_monthlimit" class="type1" title="" value="1~2개월">
                                                     <label for="radio2_1">1~2개월</label>
                                                 </div>
                                                 <div class="btn_yellow">
-                                                    <input type="radio" id="radio2_2" name="r_period" class="type1" title="" value="3~4개월">
+                                                    <input type="radio" id="radio2_2" name="r_monthlimit" class="type1" title="" value="3~4개월">
                                                     <label for="radio2_2">3~4개월</label>
                                                 </div>
                                                 <div class="btn_yellow">
-                                                    <input type="radio" id="radio2_3" name="r_period" class="type1" title="" value="5~6개월">
+                                                    <input type="radio" id="radio2_3" name="r_monthlimit" class="type1" title="" value="5~6개월">
                                                     <label for="radio2_3">5~6개월</label>
                                                 </div>
                                             </td>
@@ -511,57 +511,115 @@
 						</colgroup>
 						<tr>
 							<td>
-								<div class="file-up-txt">
-									<div class="inner">
-										<p>
-											<span>-</span>사진은 가로로 찍은 사진을 권장합니다.(가로 사이즈 최소 800px)
-										</p>
-										<p>
-											<span>-</span>사진 용량은 사진 한장당 10MB까지 등록이 가능합니다.
-										</p>
-										<p>
-											<span>-</span>사진은 최소 전개도 사진 1장, 방 사진 3장 이상 등록하여야 하며 최대 15장까지 권장합니다.
-											그 이상 등록할 경우 업로드 시간이 다소 지연될 수 있습니다.
-										</p>
-									</div>
+								<h3>사진 등록</h3>
+							</td>
+						</tr>
+						<tr> 
+							<td>
+								<c:set var="chc" value="0"/>
+								<input type="hidden" name="put" value="">
+
+								<div class="imgs_wrap" style="display: inline; float: left;">
+								<c:if test="${empty tdto.getR_photo()}">
+								<div class="is-txt-center gallery is-clearfix " align="center" style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px; width: 100;">
+								<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" /></div></c:if>
+								
+								<c:if test="${!empty tdto.getR_photo() }">
+									<c:forTokens items="${tdto.getR_photo() }" delims="/" var="i" varStatus="st">
+										<c:set var="chc" value="${chc+1 }"/>
+										<img id="img${chc }" alt="" width="100" height="100" src="${i }">
+										<a onclick="aaa(${chc})" style="text-decoration: none;">
+										<img id="close${chc }" src="resources/images/close.png" width="15" height="15" style="vertical-align: top; opacity: 0.7; "></a>
+										<input type="hidden" id="put${chc}" value="" name="put">&nbsp;	
+									</c:forTokens>
+										<input type="hidden" id="end" value="${chc }">
+								</c:if>
 								</div>
-								<div class="is-txt-center gallery is-clearfix">
-									<img src="resources/images/sub_2_2/fileupload.png" alt="" style="width: 100%;" />
+								<div class="imgs_wrap2"  style="padding-left: 43px; padding-right: 43px; margin-top: 30px; margin-left:30px;">
+									&nbsp;
+								</div>		
+								
+								
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<div class="is-txt-center" align="center">
+									<label> 파일추가
+										<input type='file' id="input_imgs" name="file" multiple="multiple" style="display: none;"/>
+									</label	>	
 								</div>
+							</td>
+							</tr>
+								
+								<tr>
+								<td>
 								<div class="is-txt-center">
-									<img src="resources/images/sub_2_2/btn4.png" onclick="file.click()">
-									<input multiple="multiple" name="file" type='file' id="gallery-photo-add" hidden />
+									<!-- <input multiple="multiple" name="file" type='file' id="gallery-photo-add" />
+									<label for="gallery-photo-add"><img src="resources/images/sub_2_2/btn4.png" alt="" /></label> -->  
 								</div>
 							</td>
 						</tr>
 					</table>
 				</div>
 				<script>
-					$(function () {
-						// Multiple images preview in browser
-						var imagesPreview = function (input, placeToInsertImagePreview) {
-							$('.gallery').html('');
-							if (input.files) {
-								var filesAmount = input.files.length;
+				var sel_files = [];
+				 
+		        $(document).ready(function() {
+		            $("#input_imgs").on("change", handleImgsFilesSelect);
+		        }); 
+		 
+		        function handleImgsFilesSelect(e) {
+		        	
+		        	
+		            var files = e.target.files;
+		            var filesArr = Array.prototype.slice.call(files);
+		            if(files.length<1){
+		            	 console.log('cancel was pressed');
+		            	 $(".imgs_wrap2").empty();
+		            	 $(".gallery").show();
+		            }else{
+		            	var sel_files = [];
+						$(".imgs_wrap2").empty();
+						$(".gallery").hide(); 
+		            
+		            var a=parseInt($('#end').val());
+		            var b=parseInt($('#chc').val());
+					var c=a;
+					 
+		            filesArr.forEach(function(f) {
+		                
+		 
+		                sel_files.push(f);
+		 
+		                var reader = new FileReader();
+		                reader.onload = function(e) {
+		      
+		                	var img_html ="";
+		                	a+=1;
+		                	img_html += "<img id='img"+a+"' alt='' width='100' height='100' src='" + e.target.result + "'>&nbsp;";
+		                 
+		                    $('#end').val(a); 
+		                    $(".imgs_wrap2").append(img_html);
 
-								for (i = 0; i < filesAmount; i++) {
-									var reader = new FileReader();
+		                }
+		                reader.readAsDataURL(f);
+		            });
+		            }
+		        }
+				
+					 function aaa(i) {
+						 	var a= document.getElementById("img"+i);
+						 
+							$("#put"+i).val(a.src);
+						
+							$("#img"+i+"").remove();
+							$("#close"+i+"").remove(); 
+							
+						}
 
-									reader.onload = function (event) {
-										$($.parseHTML('<img>')).attr('src', event.target.result).appendTo(
-											placeToInsertImagePreview);
-									}
-
-									reader.readAsDataURL(input.files[i]);
-								}
-							}
-
-						};
-
-						$('#gallery-photo-add').on('change', function () {
-							imagesPreview(this, 'div.gallery');
-						});
-					});
+					
 				</script>
                    <div class="clearfix"></div>
 				<div data-uc-table="sub2_2" style="margin-top:-40px;border:none;">

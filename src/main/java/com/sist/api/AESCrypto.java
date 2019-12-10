@@ -11,7 +11,7 @@ import sun.misc.BASE64Encoder;
 public class AESCrypto { 
 
     private static final String ALGORITHM  = "AES"; 
-    private static final String myEncryptionKey = "ThisIsFoundation"; 
+    private static final String myEncryptionKey = "LEESEOKHO1234567"; // 키 생성 로직 짜볼것
     private static final String UNICODE_FORMAT = "UTF8"; 
 
     public static String encrypt(String valueToEnc) throws Exception { 

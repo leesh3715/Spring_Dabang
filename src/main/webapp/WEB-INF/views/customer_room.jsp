@@ -46,7 +46,7 @@
 			<div class="custom-top-list is-mg-y_20 is-pd-b_20" data-uc-colgroup="row-lg">
 				<ul class="columns-xs1 columns-lg3">
 					<li class="is-col is-align-mid is-mg-b_15 width323">
-						<a href="<%=request.getContextPath()%>/customer_room.do">
+						<a href="<%=request.getContextPath()%>/notice_room.do?b_head=공지사항">
 							<div class="is-col-inner">
 								<div class="is-icon">
 									<img src="resources/images/sub_3/customer-center/11.png" />

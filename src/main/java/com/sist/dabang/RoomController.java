@@ -167,6 +167,7 @@ public class RoomController {
 			list.get(i).setR_photoOne(arr[0]);
 		}
 		
+		System.out.println(list.toString());
 
 		mav.addObject("SearchAddress",list);
 		mav.addObject("searchval", searchAddress);

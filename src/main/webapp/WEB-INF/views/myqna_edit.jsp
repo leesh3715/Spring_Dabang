@@ -12,7 +12,7 @@
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>방보기</title>
+	<title>QNA EDIT</title>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
@@ -23,7 +23,13 @@
 	<link rel="stylesheet" href="resources/css/slick.css">
 	<link rel="stylesheet" href="resources/css/slick-theme.css">
 	<link rel="stylesheet" href="resources/css/style_sub3.css">
-	<link rel="stylesheet" href="resources/css/layout.css">
+	<link rel="stylesheet" href="resources/css/layout.css">	
+
+	<link rel="stylesheet" href="resources/css/style.css">
+	<link rel="stylesheet" href="resources/css/style_sub2_nanum.css">	
+	<link rel="stylesheet" href="resources/css/fine-uploader-gallery.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/uc.lib.min.js"></script>
@@ -31,24 +37,25 @@
 	<script src="resources/js/slick.min.js"></script>
 	<script src="resources/js/common.js"></script>
 	
+	<script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+	
 <title>수정값</title>
 </head>
 <body>
 
 <%@ include file="../../resources/include/header.jsp" %>
 
-	<div class="content_wrap">
-
-		<div class="is-frame-md">
-			<div class="is-title-wrap is-txt-center">
-				<h2>수정 폼 페이지</h2>
-			</div>	
-	</div>
 		
 	<div align="center">
 		
 	<form method="post" action="<%=request.getContextPath() %>/myqna_edit_ok.do">
-		<table border="2"  width="400" cellspacing="0">
+	<div class="content_wrap">
+
+		<div class="is-frame-md">
+		    <div class="section table-wrap">
+		<table border="1">
+				<caption>수정 폼 페이지</caption>
+
 			<c:set var="dto" value="${modify}"></c:set>
 			<c:if test="${!empty dto }">
 		<tr>
@@ -62,14 +69,14 @@
 		<tr>	
 			<th>내용</th>
 			<td>
-				<textarea rows="8" cols="30" name="myqna_cont">${dto.getMyqna_cont()}</textarea>
+				<textarea rows="8" cols="80" name="myqna_cont">${dto.getMyqna_cont()}</textarea>
 			</td>
 		</tr>			
 		<tr>
 			<td colspan="2" align="center">
-				<input type="submit" value="수정완료">
-				<input type="reset" value="취소">
-				<input type="button" value="돌아가기" onclick="location.href='myqna_room.do'">
+				<input class="is-btn-yellow" type="submit" value="수정완료">
+				<input class="is-btn-yellow" type="reset" value="취소">
+				<input class="is-btn-yellow" type="button" value="돌아가기" onclick="location.href='myqna_room.do'">
 			</td>
 		</tr>	
 	

@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="resources/css/slick.css">
 	<link rel="stylesheet" href="resources/css/slick-theme.css">
 	<link rel="stylesheet" href="resources/css/style_sub3.css">
-	<link rel="stylesheet" href="resources/css/layout.css">
+	<link rel="stylesheet" href="resources/css/layout.css">	
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/uc.lib.min.js"></script>
@@ -84,6 +84,7 @@
 			<li><a href="<%=request.getContextPath() %>/qna_room.do">문의하기</a></li>
 			<li class="is-active"><a href="<%=request.getContextPath() %>/myqna_room.do">나의 문의 내역</a></li>
 		</ul>
+		<div align="center"> <b>*문의 번호를 클릭하세요*</b></div>
 		<form method="get" action="<%=request.getContextPath() %>/no1.do">
 		<div class="is-frame-md">
 			<div data-uc-table class="is-scroll-x">

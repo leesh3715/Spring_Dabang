@@ -85,7 +85,7 @@
 <div class="container">
 <div class="gongyu my1 my1-4">
 
-		<div style="background-image: url(resources/images/sub_2_2/2_2.jpg); background-position: center center; height: 170px;">
+		<div style="background-image: url(resources/images/sub_2_2/2_2.jpg); background-position: center center; height: 170px;background-repeat: no-repeat; background-size: cover;">
 			<div class="is-frame-md is-relative" style="height: 100%;">
 				<b class="title">방 올리기</b>
 

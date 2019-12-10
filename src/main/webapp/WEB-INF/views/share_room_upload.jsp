@@ -41,7 +41,7 @@
 
 <body>
 
-<%@ include file="../../resources/include/header2.jsp"%>
+<%@ include file="../../resources/include/header.jsp"%>
 
 	<div class="content_wrap">
 		<div class="gongyu">
@@ -84,13 +84,13 @@
 		            <tr>
 		                <th>제목</th>
 		                <td>
-		                    <input type="text" name="s_title" placeholder="예) 옷장 2개 나눔해요" value="${dto.getS_title() }">
+		                    <input type="text" name="s_title" id="s_title" placeholder="예) 옷장 2개 나눔해요" value="${dto.getS_title() }">
 		                </td>
 		            </tr>
 		            <tr>
 		                <th>상세 내용</th>
 		                <td>
-		                    <textarea name="s_cont" cols="80" rows="5" placeholder="예) 이삿짐 정리하면서 옷장이 불필요하게 되어 나눔하려고 합니다.
+		                    <textarea name="s_cont" id="s_cont" cols="80" rows="5" placeholder="예) 이삿짐 정리하면서 옷장이 불필요하게 되어 나눔하려고 합니다.
 		                        
 가전가구 나눔과 관련없는 홍보성 정보는 입력하실수 없습니다.
 *상세설명 주의사항 위반시 허위글로 간주되어 글 삭제 및 이용의 제한이 있을 수 있습니다.">${dto.getS_cont() }</textarea>
@@ -212,14 +212,36 @@
 							
 						}
 				</script>
-				
+			
 		    <div class="check-wrap">
-		        <input type="checkbox"><label>입력한 정보는 실제 내용과 다름이 없습니다.</label> <br>
+		        <input type="checkbox" id="yes"><label for="yes">입력한 정보는 실제 내용과 다름이 없습니다.</label> <br>
 		        <div class="btn-wrap">
-		            <button type="submit">글 올리기</button>
+		            <button type="submit" class="s_up">글 올리기</button>
 		           <button type="button">취소</button>
 		        </div>
 		    </div>
+		    <script type="text/javascript">
+ 		    $(".s_up").click(function() {
+				if ($("#yes").prop("checked")){}
+				else {
+					alert("모든 항목에 동의해주세요.");
+					return false;
+				}
+				var title=$("#s_title").val();
+				var cont=$("#s_cont").val();
+				
+				if (title.length==0){
+					alert("제목을 입력하세요.");
+					return false;
+				} 
+				if (cont.length==0){
+					alert("내용을 입력하세요.");
+					return false;
+				}
+				 
+			}); 
+
+		    </script>	
 		</div>
 		</form>
 		<div class="is-empty-xs120"></div>

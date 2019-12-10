@@ -152,7 +152,7 @@ input[type=text].type1:-ms-input-placeholder,input[type=password].type1:-ms-inpu
 
 
 /*sub 공통*/
-.sub_top{height: 155px; margin-bottom: 54px; overflow: hidden;}
+.sub_top{height: 155px; overflow: hidden;}
 .sub_top .title{margin-top: 45px; font-size: 36px; color: black; text-align: center; letter-spacing: 0.04em; display: block; text-align: center; margin-bottom: 10px;}
 .sub_top div{text-align: center;}
 .sub_top div span{display: inline-block; color: #3d3d3d; font-size: 18px; font-weight: bold;}
@@ -170,7 +170,6 @@ input[type=text].type1:-ms-input-placeholder,input[type=password].type1:-ms-inpu
 .sub_top.top4{background: url(../images/sub/sub4_top.jpg) no-repeat center center; background-size:cover;}
 
 /*write*/
-.gongyu{padding-bottom: 80px;}
 .gongyu .write_box{box-sizing: border-box; border: 1px solid #d9d9d9;}
 .gongyu table.type1{border: 0; width: 100%;}
 .gongyu table.type1 thead tr th{height: 50px;border-bottom: 1px solid #aeaeae; font-size: 17px;}
@@ -228,6 +227,7 @@ input[type=text].type1:-ms-input-placeholder,input[type=password].type1:-ms-inpu
 .id_find .radio_wrap{width: 230px; margin: 0 auto; text-align: left; margin-bottom: 15px;}
 .id_find  p{font-size: 17px; margin-bottom: 20px;}
 .id_find input.type2{display: block; width: 230px; height: 38px; line-height: 38px; box-sizing: border-box; border: 1px solid #7c7b7b; border-radius: 5px; box-sizing: border-box; padding: 5px 10px; margin: 0 auto; margin-bottom: 10px; font-size:17px;}
+.id_find input.type3{display: block; width: 230px; height: 38px; line-height: 38px; box-sizing: border-box; border: 1px solid #7c7b7b; border-radius: 5px; box-sizing: border-box; padding: 5px 10px; margin: 0 auto; margin-bottom: 10px; font-size:17px;}
 .id_find .frm_wrap{}
 .id_find .frm_wrap>div{position: relative; width: 230px; margin: 0 auto;}
 .id_find .frm_wrap .btn2{position: absolute; right: -140px; top: 0; width: 130px; display: block; height: 38px; border: 1px solid #7c7b7b; border-radius: 5px; background: white; cursor: pointer;font-size:17px;}

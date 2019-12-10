@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sist.model.BoardDAO">
+	 <select id="b_countlist" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_head = #{b_head}
+  	</select>
+
+	 <select id="b_countlist2" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_head = #{b_head}
+  	</select>
+  	
+	<select id="b_Comments_count" parameterType="int" resultType="int">
+  		select count(*) from b_comments where b_no= #{b_no}
+  	</select>
+
+	<select id="b_list" resultType="com.sist.model.BoardDTO" parameterType="com.sist.model.SearchDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p  where b_head=#{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>	
+	</select>
+	<select id="b_list2" resultType="com.sist.model.BoardDTO" parameterType="com.sist.model.SearchDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p  where not b_head=#{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>	
+	</select>
+	
+	<select id="b_grouplist" resultType="com.sist.model.BoardDTO" parameterType="int"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		select * from board where b_group = #{b_group} order by b_step	
+	</select>
+	
+	<insert id="b_add" parameterType="com.sist.model.BoardDTO"><!--  -->
+		insert into board values(board_SEQ.nextval, #{b_title}, #{b_cont},#{b_writer}, sysdate, default, board_SEQ.currval, 0, 0, #{b_src},0,#{b_head})	
+	</insert>
+	
+  	<update id="b_replyup" parameterType="com.sist.model.BoardDTO">
+  		update board set  b_step = b_step+1 where b_group=#{b_group} and b_step > #{b_step} 
+  	</update>
+  	
+	<insert id="b_replyadd" parameterType="com.sist.model.BoardDTO"><!--  -->
+		insert into board values(board_SEQ.nextval, #{b_title}, #{b_cont},#{b_writer}, sysdate, default, #{b_group}, #{b_step}+1, #{b_indent}+1, #{b_src},0, #{b_head})	
+	</insert>
+	
+  	<update id="b_count" parameterType="int">
+  		update board set b_hit = b_hit + 1 where b_no = #{b_no}
+  	</update>
+  	
+  	<select id="b_cont" parameterType="int" resultType="com.sist.model.BoardDTO">
+  		select * from board where b_no = #{b_no}
+  	</select>
+  	
+  	<delete id="b_delete" parameterType="int">
+  		delete from board where b_no = #{b_no}
+  	</delete>
+  	<delete id="b_delete2" parameterType="java.util.ArrayList">
+		delete from board where <foreach collection="list" item="b_no" separator="or"> b_no = #{b_no} </foreach>
+	</delete>
+  	
+  	<update id="b_update" parameterType="com.sist.model.BoardDTO">
+  		update board set  b_date = sysdate, b_cont = #{b_cont}, b_src = #{b_src}, b_title=#{b_title} where b_no = #{b_no} 
+  	</update>
+  	<insert id="bc_add" parameterType="com.sist.model.BCommentsDTO">
+		insert into b_comments values(b_comments_SEQ.nextval, #{b_no}, #{bc_id}, #{bc_cont}, sysdate, b_comments_SEQ.currval, 0, 0, 0,'')	
+	</insert>
+  	
+  	<delete id="bc_delete" parameterType="int">
+  		delete from b_comments where bc_no = #{bc_no}
+  	</delete>
+  	
+  	<update id="bc_delete2" parameterType="int">
+  		update b_comments set bc_check1= 1 where bc_no = (select min(bc_no) from b_comments where bc_group= #{bc_group})
+  	</update>
+  	
+  	<select id="bc_deletecheck" parameterType="int" resultType="int">
+  		select count(*) from b_comments where bc_group= #{bc_no}
+  	</select>
+  	
+  	
+  	
+  	<select id="bc_check" parameterType="int" resultType="com.sist.model.BCommentsDTO">
+  		select bc_no,bc_step from b_comments where bc_no=(select min(bc_no) from b_comments where bc_group= #{bc_group})
+  	</select>
+  	
+  	<select id="bc_list" parameterType="int" resultType="com.sist.model.BCommentsDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		<![CDATA[select * from (select p.*,row_number() over(order by bc_group, bc_step) rnum from b_comments p where b_no=#{s_no}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+	</select>
+<!--   	<select id="c_list" parameterType="int" resultType="com.sist.model.CommentsDTO"> 이름이 list이고, 리턴은 BOARDDTO 타입으로 
+		select * from comments where b_no=#{b_no} order by c_group, c_step
+	</select> -->
+  	<update id="bc_update" parameterType="com.sist.model.BoardDTO">
+  		update b_comments set  bc_date = sysdate, bc_cont = #{bc_cont} where bc_no = #{bc_no} 
+  	</update>
+  
+	<insert id="bc_radd" parameterType="com.sist.model.BoardDTO">
+		insert into b_comments values(b_comments_SEQ.nextval, #{b_no}, #{bc_id}, #{bc_cont}, sysdate, #{bc_group} ,(select max(bc_step) from b_comments where bc_group = #{bc_group})+1 , #{bc_indent}+1,0,#{bc_replyid})	
+	</insert>
+  	
+  	<select id="b_title" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_title like '%'||#{find_name}||'%' and b_head = #{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  			
+  	</select>
+  	<select id="b_content" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+	  	<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_cont like '%'||#{find_name}||'%' and b_head = #{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
+  	</select>
+  	<select id="b_title_cont" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_title like '%'||#{find_name}||'%' or b_cont like '%'||#{find_name}||'%' and b_head = #{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
+  	</select>
+  	<select id="b_writer" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_writer like '%'||#{find_name}||'%' and b_head = #{b_head}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  	</select>
+  	 
+  	 <select id="b_titlecount" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_title like '%'||#{find_name}||'%' and b_head = #{b_head}
+  	</select>
+  	 <select id="b_contentcount" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_cont like '%'||#{find_name}||'%' and b_head = #{b_head}
+  	</select>
+  	 <select id="b_title_contcount" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_title like '%'||#{find_name}||'%' or b_cont like '%'||#{find_name}||'%' and b_head = #{b_head}
+  	</select>
+  	 <select id="b_writercount" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_writer like '%'||#{find_name}||'%' and b_head = #{b_head}
+  	</select>
+  	
+  	<select id="b_title2" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_title like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  			
+  	</select>
+  	<select id="b_content2" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+	  	<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_cont like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
+  	</select>
+  	<select id="b_title_cont2" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_title like '%'||#{find_name}||'%' or b_cont like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  		
+  	</select>
+  	<select id="b_writer2" parameterType="com.sist.model.SearchDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[ select * from(select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_writer like '%'||#{find_name}||'%') where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
+  	</select>
+  	 
+  	 <select id="b_titlecount2" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_title like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="b_contentcount2" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_cont like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="b_title_contcount2" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_title like '%'||#{find_name}||'%' or b_cont like '%'||#{find_name}||'%'
+  	</select>
+  	 <select id="b_writercount2" resultType="Integer" parameterType="String">
+  		select count(*) from board where b_writer like '%'||#{find_name}||'%'
+  	</select>
+  	
+  	<select id="b_next" parameterType="int" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_group=(select max(b_group) from (select b_group from board where b_group<#{b_group})))where rnum=1]]>
+  	</select>
+  	<select id="b_pre" parameterType="int" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_group=(select min(b_group) from (select b_group from board where b_group>#{b_group})))where rnum=1]]>
+  	</select>
+  	<select id="b_next2" parameterType="com.sist.model.BoardDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_group=(select max(b_group) from (select b_group from board where b_group<#{b_group} and b_head=#{b_head})))where rnum=1]]>
+  	</select>
+  	<select id="b_pre2" parameterType="com.sist.model.BoardDTO" resultType="com.sist.model.BoardDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by b_group desc,b_step) rnum from board p where b_group=(select min(b_group) from (select b_group from board where b_group>#{b_group} and b_head=#{b_head})))where rnum=1]]>
+  	</select>
+  	
+<!--   	<select id="b_next" parameterType="int" resultType="com.sist.model.boardDTO">
+  		<![CDATA[select * from board where b_no=(select max(b_no) from board where b_step=0 and b_no<#{b_no})]]>
+  	</select>
+  	<select id="b_pre" parameterType="int" resultType="com.sist.model.boardDTO">
+  		<![CDATA[select * from board where b_no=(select min(b_no) from board where b_step=0 and b_no>#{b_no})]]>
+  	</select> -->
+  	
+  	 <select id="b_groupcount" resultType="int" parameterType="int">
+  		select count(*) from board where b_group=#{b_group}
+  	</select>
+  	<update id="b_replyupdate" parameterType="com.sist.model.BoardDTO">
+  		<![CDATA[update board set b_check=1 where  b_group= #{b_group} and b_indent=#{b_indent}+1 and b_step>#{b_step} and b_step<(select min(b_nextstep) from (select lead(b_step) over(order by b_group desc, b_step) b_nextstep from board where b_group= #{b_group} and b_indent=#{b_indent} order by b_group desc,b_step))]]> 
+  	</update>
+  	<update id="b_replyupdate2" parameterType="com.sist.model.BoardDTO">
+  		<![CDATA[update board set b_check=1 where  b_group= #{b_group} and b_indent=#{b_indent}+1 and b_step>#{b_step}]]>  
+  	</update>
+  	<select id="b_replycheck" parameterType="com.sist.model.BoardDTO" resultType="String">
+  		select min(b_nextstep) from (select lead(b_step) over(order by b_group desc, b_step) b_nextstep from board where b_group= #{b_group} and b_indent=#{b_indent} order by b_group desc,b_step)
+  	</select>
+  	
+</mapper>

@@ -17,12 +17,12 @@
 		<![CDATA[ select * from(select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>	
 	</select>
 	
-	<select id="s_list2" resultType="com.sist.model.ShareeDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
-		select * from sharee order by s_group desc,s_step	
+	<select id="s_grouplist" resultType="com.sist.model.ShareeDTO" parameterType="int"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
+		select * from sharee where s_group = #{s_group} order by s_step	
 	</select>
 	
 	<insert id="s_add" parameterType="com.sist.model.ShareeDTO"><!--  -->
-		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, sharee_SEQ.currval, 0, 0, #{s_src},0)	
+		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, sharee_SEQ.currval, 0, 0, #{s_src},0,'가전가구 나눔')	
 	</insert>
 	
   	<update id="s_replyup" parameterType="com.sist.model.ShareeDTO">
@@ -30,7 +30,7 @@
   	</update>
   	
 	<insert id="s_replyadd" parameterType="com.sist.model.ShareeDTO"><!--  -->
-		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, #{s_group}, #{s_step}+1, #{s_indent}+1, #{s_src},0)	
+		insert into sharee values(sharee_SEQ.nextval, #{s_title}, #{s_cont}, #{s_memo},#{s_writer}, sysdate, default, #{s_group}, #{s_step}+1, #{s_indent}+1, #{s_src},0,'가전가구 나눔')	
 	</insert>
 	
   	<update id="s_count" parameterType="int">
@@ -44,6 +44,10 @@
   	<delete id="s_delete" parameterType="int">
   		delete from sharee where s_no = #{s_no}
   	</delete>
+  	<delete id="s_delete2" parameterType="java.util.ArrayList">
+		delete from sharee where <foreach collection="list" item="s_no" separator="or"> s_no = #{s_no} </foreach>
+	</delete>
+  	
   	<update id="s_update" parameterType="com.sist.model.ShareeDTO">
   		update sharee set  s_date = sysdate, s_cont = #{s_cont}, s_memo = #{s_memo}, s_src = #{s_src}, s_title=#{s_title} where s_no = #{s_no} 
   	</update>
@@ -70,8 +74,11 @@
   	</select>
   	
   	<select id="c_list" parameterType="int" resultType="com.sist.model.CommentsDTO"> <!-- 이름이 list이고, 리턴은 BOARDDTO 타입으로  -->
-		select * from comments where s_no=#{s_no} order by c_group, c_step
+		<![CDATA[select * from (select p.*,row_number() over(order by c_group, c_step) rnum from comments p where s_no=#{s_no}) where rnum>=#{s_startNo} and rnum<=#{s_endNo}]]>
 	</select>
+<!--   	<select id="c_list" parameterType="int" resultType="com.sist.model.CommentsDTO"> 이름이 list이고, 리턴은 BOARDDTO 타입으로 
+		select * from comments where s_no=#{s_no} order by c_group, c_step
+	</select> -->
   	<update id="c_update" parameterType="com.sist.model.ShareeDTO">
   		update comments set  c_date = sysdate, c_cont = #{c_cont} where c_no = #{c_no} 
   	</update>
@@ -110,9 +117,29 @@
   	</select>
   	
   	<select id="s_next" parameterType="int" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_group=(select max(s_group) from (select s_group from sharee where s_group<#{s_group})))where rnum=1]]>
+  	</select>
+  	<select id="s_pre" parameterType="int" resultType="com.sist.model.ShareeDTO">
+  		<![CDATA[select * from (select p.*, row_number() over(order by s_group desc,s_step) rnum from sharee p where s_group=(select min(s_group) from (select s_group from sharee where s_group>#{s_group})))where rnum=1]]>
+  	</select>
+<!--   	<select id="s_next" parameterType="int" resultType="com.sist.model.ShareeDTO">
   		<![CDATA[select * from sharee where s_no=(select max(s_no) from sharee where s_step=0 and s_no<#{s_no})]]>
   	</select>
   	<select id="s_pre" parameterType="int" resultType="com.sist.model.ShareeDTO">
   		<![CDATA[select * from sharee where s_no=(select min(s_no) from sharee where s_step=0 and s_no>#{s_no})]]>
+  	</select> -->
+  	
+  	 <select id="s_groupcount" resultType="int" parameterType="int">
+  		select count(*) from sharee where s_group=#{s_group}
   	</select>
+  	<update id="s_replyupdate" parameterType="com.sist.model.ShareeDTO">
+  		<![CDATA[update sharee set s_check=1 where  s_group= #{s_group} and s_indent=#{s_indent}+1 and s_step>#{s_step} and s_step<(select min(s_nextstep) from (select lead(s_step) over(order by s_group desc, s_step) s_nextstep from sharee where s_group= #{s_group} and s_indent=#{s_indent} order by s_group desc,s_step))]]> 
+  	</update>
+  	<update id="s_replyupdate2" parameterType="com.sist.model.ShareeDTO">
+  		<![CDATA[update sharee set s_check=1 where  s_group= #{s_group} and s_indent=#{s_indent}+1 and s_step>#{s_step}]]>  
+  	</update>
+  	<select id="s_replycheck" parameterType="com.sist.model.ShareeDTO" resultType="String">
+  		select min(s_nextstep) from (select lead(s_step) over(order by s_group desc, s_step) s_nextstep from sharee where s_group= #{s_group} and s_indent=#{s_indent} order by s_group desc,s_step)
+  	</select>
+  	
 </mapper>

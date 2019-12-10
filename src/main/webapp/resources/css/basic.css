@@ -12,9 +12,12 @@ body, h1, h2, h3,h4, p, ul, dl, dd{
     padding: 0;
     font-family: "NanumSquare";
 }
+.font{
+	font-family: "NanumSquare";
+	font-weight: bold;
+}
 ul li{ list-style: none; }
 a{ text-decoration: none;}
-hr {display: none;}
 .hidden{ position: absolute; left: -9999px;}
 address { font-style:normal; line-height: 30px;}
 small { font-size: 1em;}
@@ -135,23 +138,6 @@ table{
     -o-border-radius: 3px;
 }
 
-.is-btn-yg3 {
-    display: block;
-    width: 10%;
-    background-color: #ffd800;
-    border: 1px solid #ffd800;
-    color: #ffffff;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-}
-
-
-
-
-
 .is-txt-link {
     color: #1155cc;
     font-size: 11px;
@@ -194,3 +180,34 @@ table{
 .join .box3 p{margin-bottom: 15px;}
 
 .join .btn_submit{display: block; width: 400px; height: 51px; line-height: 51px; color: white; border: 0; background: #ffd800; text-align: center; font-size: 17px; border-radius: 5px; margin: 0 auto; margin-top: 50px; cursor: pointer;}
+
+.login_title{
+    display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    width: 150px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    padding: 5px 20px 5px 25px;
+    line-height: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: #333;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 100px;
+}
+
+.boardList th {
+    padding: 11px 0 9px;
+    border-left: 0px solid #e9e9e9;
+    font-weight: normal;
+    background: #fbfafa;
+}
+.B_submenu{
+    font-size:12px;
+    line-height:1.6;
+    color:#000;
+    letter-spacing:-.5px;
+}

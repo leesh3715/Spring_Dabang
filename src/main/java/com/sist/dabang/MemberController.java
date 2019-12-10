@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -73,7 +72,8 @@ public class MemberController {
 		memDTO mdto = new memDTO();
 		mdto.setM_email(input_email);
 		mdto.setM_pwd(AESCrypto.encrypt(input_pwd));
-		/* System.out.println(mdto.getM_pwd()); */
+		 System.out.println(AESCrypto.encrypt("1234")); 
+		 System.out.println(AESCrypto.encrypt("0000"));
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		memDTO mem = mservice.login(mdto);
@@ -92,6 +92,7 @@ public class MemberController {
 			session.setAttribute("member", mem);
 			session.setAttribute("m_no", mem.getM_no());
 			session.setAttribute("m_nick", mem.getM_nick());
+			session.setAttribute("m_email", mem.getM_email());
 			mav.setViewName("../../index");
 			return mav;
 		}
@@ -144,7 +145,7 @@ public class MemberController {
 				  out.println("</script>");
 			}
 			
-			
+			String decrypt_pwd = AESCrypto.decrypt(mdto2.getM_pwd());
 			
 			if(mdto2.getM_name()!=null)  {		
 			String setfrom = "leesh3715@naver.com";
@@ -152,7 +153,7 @@ public class MemberController {
 			String title = "청년다방에서 알려드립니다."; // 제목
 			String content = "안녕하세요.\r\n" + 
 					"\r\n" + 
-					"회원님의 비밀번호는 "+mdto2.getM_pwd()+" 입니다.\r\n" + 
+					"회원님의 비밀번호는 "+decrypt_pwd+" 입니다.\r\n" + 
 					"\r\n" + 
 					"혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\r\n" + 
 					""; // 내용
@@ -252,41 +253,42 @@ public class MemberController {
 	    	    System.out.println("Decrypted : " + valueDec); 
 	    	
 	    
+		
 		/*
-		 * String test2 = cryptor.encryptBase64(test); System.out.println("복호화된 문자열 = "
+		 * String test2 = crypto.encryptBase64(test); System.out.println("복호화된 문자열 = "
 		 * +test2);
 		 */
+		 
 	      
-		/*
-		 * String api_key = "NCSMB9OARN3QHQ6I"; String api_secret
-		 * ="LI8M3AF6VGRZF7CSBFIPACUARXAXD7PC"; Coolsms coolsms = new Coolsms(api_key,
-		 * api_secret);
-		 * 
-		 * 
-		 * System.out.println(send_address);
-		 * 
-		 * HashMap<String, String> set = new HashMap<String, String>(); set.put("to",
-		 * dto.getM_phone()); // 수신번호 set.put("from", "01051573715"); // 발신번호
-		 * set.put("text", send_text); // 문자내용 set.put("type", "sms"); // 문자 타입
-		 * 
-		 * System.out.println(set);
-		 * 
-		 * 
-		 * org.json.simple.JSONObject result = coolsms.send(set); // 보내기&전송결과받기
-		 * 
-		 * if ((boolean)result.get("status") == true) { // 메시지 보내기 성공 및 전송결과 출력
-		 * System.out.println("성공"); System.out.println(result.get("group_id")); //그룹아이디
-		 * System.out.println(result.get("result_code")); // 결과코드
-		 * System.out.println(result.get("result_message")); // 결과 메시지
-		 * System.out.println(result.get("success_count")); // 메시지아이디
-		 * System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수 } else {
-		 * // 메시지 보내기 실패 System.out.println("실패");
-		 * System.out.println(result.get("code")); // REST API 에러코드
-		 * System.out.println(result.get("message")); // 에러메시지 }
-		 * 
-		 * 
-		 * }
-		  */
+		
+		  String api_key = "";
+		  String api_secret ="";
+		  Coolsms coolsms = new Coolsms(api_key, api_secret);
+		  
+		  
+		  HashMap<String, String> set = new HashMap<String, String>();
+		  set.put("to", "01024621908");  // 수신번호 
+		  set.put("from", "01051573715"); // 발신번호
+		  set.put("text", send_text); // 문자내용 set.put("type", "sms"); // 문자 타입
+		  
+		  System.out.println(set);
+		  
+		  
+		  org.json.simple.JSONObject result = coolsms.send(set); // 보내기&전송결과받기
+		  
+		  if ((boolean)result.get("status") == true) { // 메시지 보내기 성공 및 전송결과 출력
+		  System.out.println("성공"); System.out.println(result.get("group_id")); //그룹아이디
+		  System.out.println(result.get("result_code")); // 결과코드
+		  System.out.println(result.get("result_message")); // 결과 메시지
+		  System.out.println(result.get("success_count")); // 메시지아이디
+		  System.out.println(result.get("error_count")); // 여러개 보낼시 오류난 메시지 수 } else {
+		  // 메시지 보내기 실패 System.out.println("실패");
+		  System.out.println(result.get("code")); // REST API 에러코드
+		  System.out.println(result.get("message")); // 에러메시지 }
+		  
+		  
+		  }
+		  
 		    response.setContentType("text/html;charset=UTF-8");
 	        PrintWriter out =  response.getWriter();
 	     	out.println("<script>");

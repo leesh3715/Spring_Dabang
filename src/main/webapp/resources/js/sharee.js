@@ -309,14 +309,14 @@ function getCommentList() {
 			success : function(data) {
 				
 				var html ="";
-				var cCnt = data.length;
+				/*var cCnt = data.length;*/
 				
-				if(data.length > 0) { 
+				if(data.length > 0) {
 					$(data).each(function(){
 						if(this.c_check1==1){ //답글이 있는 상태에서 메인글 삭제시
 							html +="<li id='c_no'><div>";
 							html +="<table border='0' style='width: 100%;'>";
-							html +="<tr><td><p><span>삭제된 댓글입니다.</span></p></td></tr>";
+							html +="<tr><td><div style='margin-top: 14px; margin-bottom: 14px '><span>삭제된 댓글입니다.</span></div></td></tr>";
 							html +="</table></div><div style='border-top:1px dashed; margin-top: 2px;'></div>";
 							html +="</li>";
 							html +="<li id='c_no"+this.c_no+"'><div>";
@@ -342,10 +342,12 @@ function getCommentList() {
 							html +="<div align='right'>";
 							html +="<table border='0'><tbody><tr><td>";
 							if(this.session!=null){
-							if(this.session==this.c_id){
-								html +="<a onClick='edit_comment("+this.c_no+","+this.s_no+",\""+this.c_id+"\",\""+this.c_cont+"\",\""+this.c_date.substring(0,16)+"\","+this.c_group+","+this.c_step+","+this.c_indent+")' style='font-weight: lighter;'>수정</a>";
-								html +="<span>&nbsp;|&nbsp;</span>";
-								html +="<a onClick='del_comment("+this.c_no+","+this.c_group+")' style='font-weight: lighter;'>삭제</a>";
+								if(this.session==this.c_id){
+									html +="<a onClick='edit_comment("+this.c_no+","+this.s_no+",\""+this.c_id+"\",\""+this.c_cont+"\",\""+this.c_date.substring(0,16)+"\","+this.c_group+","+this.c_step+","+this.c_indent+")' style='font-weight: lighter;'>수정</a>";
+									html +="<span>&nbsp;|&nbsp;</span>";
+								}
+								if(this.session==this.c_id || this.session=="admin"){
+									html +="<a onClick='del_comment("+this.c_no+","+this.c_group+")' style='font-weight: lighter;'>삭제</a>";
 							}
 							}
 							html +="</td></tr></tbody></table></div></div></td></tr>";
@@ -384,6 +386,8 @@ function getCommentList() {
 								if(this.session==this.c_id){
 									html +="<a onClick='edit_comment("+this.c_no+","+this.s_no+",\""+this.c_id+"\",\""+this.c_cont+"\",\""+this.c_date.substring(0,16)+"\","+this.c_group+","+this.c_step+","+this.c_indent+")' style='font-weight: lighter;'>수정</a>";
 									html +="<span>&nbsp;|&nbsp;</span>";
+								}
+								if(this.session==this.c_id || this.session=="admin"){
 									html +="<a onClick='del_comment("+this.c_no+","+this.c_group+")' style='font-weight: lighter;'>삭제</a>";
 								}
 							}
@@ -407,7 +411,7 @@ function getCommentList() {
 	                
 	            }*/
 	            
-	            $("#cCnt").html(cCnt);
+	            /*$("#cCnt").html(cCnt);*/
 	            $("#commentList").html(html);
 			},				
 			error : function() { // 비동기 통신이 실패한 경우

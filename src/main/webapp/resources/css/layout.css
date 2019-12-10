@@ -1,11 +1,11 @@
-.header_wrap{max-width: 1200px;}
+.header_wrap{max-width: 2000px;}
 
 /*header*/
 #header{background: #ffd800; }
 #header.white {background: #fff;}
 #header.underline {border-bottom: 2px solid #000;}
 #header h1{float: left; margin-top: 7px; margin-bottom: 0px; font-size: unset !important;}
-#gnb{position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%)}
+#gnb{width:560px;  position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%)}
 #gnb li{float: left;}
 #gnb li a{font-size: 17px; color: #726c5c; font-family: "NanumSquare"; font-weight: bold; padding: 0 15px;}
 .util{float: right; margin-top: 16px;}
@@ -13,7 +13,7 @@
 .util li img{vertical-align: bottom;}
 
 /*sub ����*/
-.sub_top{height: 155px; margin-bottom: 54px; overflow: hidden;}
+.sub_top{height: 155px; overflow: hidden;}
 .sub_top .title{margin-top: 45px; font-size: 36px; color: black; text-align: center; letter-spacing: 0.04em; display: block; text-align: center; margin-bottom: 10px;}
 .sub_top div{text-align: center;}
 .sub_top div span{display: inline-block; color: #3d3d3d; font-size: 18px; font-weight: bold;}

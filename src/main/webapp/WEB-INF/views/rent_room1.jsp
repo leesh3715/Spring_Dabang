@@ -97,14 +97,13 @@
                     					  <c:if test="${status.last}">
                     					  </c:if>
                       				</c:if>
-                      				<c:if test="${i.getR_monthlimit() ne '1~2개월'}">
-                      				<h2 align="center">검색 결과가 없습니다.</h2>
-                      				</c:if>
                 				 </c:forEach>
+                      				
 	        				</div>
 	  		  		</div>
 	    		</div>
 	    		</c:if>
+
 	    		<div class="sub3-slides-wrap1">
 	       			 <div class="slides-content">
 	           			 <h2>3개월 ~ 4개월</h2>
@@ -123,10 +122,11 @@
                     					  <c:if test="${status.last}">
                     					  </c:if>
                       				</c:if>
-                      				<c:if test="${i.getR_monthlimit() ne '3~4개월'}">
+                      				 </c:forEach>
+                      			<%-- 	<c:if test="${i.getR_monthlimit() ne '3~4개월'}">
                       				<h2 align="center">검색 결과가 없습니다.</h2>
-                      				</c:if>
-                				 </c:forEach>
+                      				</c:if> --%>
+                				
 	        				</div>
 	  		  		</div>
 	    		</div>
@@ -149,10 +149,11 @@
                     					  <c:if test="${status.last}">
                     					  </c:if>
                       				</c:if>
-                      				<c:if test="${i.getR_monthlimit() ne '5~6개월'}">
+                      				</c:forEach>
+                      				<%-- <c:if test="${i.getR_monthlimit() ne '5~6개월'}">
                       				<h2 align="center">검색 결과가 없습니다.</h2>
-                      				</c:if>
-                				 </c:forEach>
+                      				</c:if> --%>
+                				 
 	        				</div>
 	  		  		</div>
 	    		</div>

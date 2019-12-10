@@ -1,0 +1,93 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+/* Common */
+body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,a,button,select{margin:0;padding:0}
+body,input,textarea,select,button,table{font-family:'Montserrat','NanumGothic','���� ���','����',dotum,sans-serif;font-size:12px;line-height:1.6;color:#000;letter-spacing:-.5px}
+body{word-break:break-all}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+img,fieldset,iframe{border:0}
+img{max-width:100%;vertical-align:top}
+li{list-style:none}
+em,address{font-style:normal}
+address{margin-top:7px}
+input,select,button{vertical-align:middle}
+caption,legend,.blind{overflow:hidden;position:absolute;top:0;left:-999em;line-height:0}
+caption{position:static}
+input[type=text],input[type=password]{height:22px;padding:0 15px;border:1px solid #d4d4d4;border-radius:0;vertical-align:middle;-webkit-appearance:none}
+input[type=text].pop_input,input[type=password].pop_input{height:24px}
+/*:root input[type=text],:root input[type=password]{height:28px;padding:0 14px}*/
+/*input[type=text].readonly{border-top:1px solid #bfc6cc;border-left:1px solid #bfc6cc;border-right:1px solid #d8dee3;border-bottom:1px solid #d8dee3;background-color:#f1f3f4}*/
+/*input[type=text]:focus,input[type=password]:focus,select:focus,textarea:focus{border:1px solid #acc7ef;background-color:#f5f8fd}*/
+input[type=file]{width:99.5%;height:32px;background-color:#fff}
+input[type=file].pop_input{height:24px}
+input[type=text]::-ms-clear{display:none}
+input[type=radio],input[type=checkbox]{margin-top:-1px;margin-bottom:1px}
+textarea{width:95.5%;padding:10px 15px;border:1px solid #d4d4d4}
+table{border-collapse:collapse;border-spacing:0;table-layout:fixed;zoom:1}
+
+/*select{min-width:170px;height:32px;padding-left:15px;font-size:14px;border:1px solid #d4d4d4}*/
+.tx_ellipsis{display:inline-block;overflow:hidden;max-width:95%;white-space:nowrap;text-overflow:ellipsis}
+
+/* custom select style */
+.select{overflow:hidden;position:absolute;height:27px;padding:3px 21px 0 15px;border:1px solid #d4d4d4;background-color:#fff;text-align:left}
+.select:after{position:absolute;top:0;bottom:0;right:0;width:32px;background:url(../img/slct_arrow.gif) no-repeat 100% 0;content:""}
+.checkbox,.radio{display:inline-block;width:13px;height:20px;padding-right:10px;background: url(../img/checkbox.gif) no-repeat;vertical-align:middle}
+.radio{width:15px;background: url(../img/radio.gif) no-repeat}
+
+.filebox input[type=file]{overflow:hidden;position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;clip:rect(0,0,0,0)}
+.filebox label{display:inline-block;height:32px;margin-left:10px;padding:0 15px;background-color:#656a74;font-size:inherit;color:#fff;vertical-align:middle;cursor:pointer;;line-height:2.1;border-radius:3px}
+/* named upload */
+.filebox .upload_name{display:inline-block;height:30px;padding:0 15px;/* label�� �е����� ��ġ */border:1px solid #d4d4d4;background-color:#fff;font-family:inherit;font-size:inherit;line-height:normal;vertical-align:middle;-webkit-appearance:none; /* ����Ƽ�� ���� ���߱� */-moz-appearance:none;appearance:none}
+.filebox.pop .upload_name{height:24px}
+.filebox.pop label{height:26px;font-size:13px;line-height:24px}
+
+/* Aline */
+.fl{float:left}
+.fr{float:right}
+.of_h{overflow:hidden;zoom:1}
+.pr{position:relative}
+.vt{vertical-align:top !important}
+.tx_cnt{text-align:center}
+.tx_rgt{text-align:right}
+
+/* font */
+@font-face {
+  font-family: 'NanumGothic';
+  src: url(../fonts/NanumBarunGothic.eot);
+  src: local('NanumGothic'),
+       local('NanumGothic'),
+       url(../fonts/NanumGothic.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/NanumGothic.woff) format('woff'),
+}
+@font-face {
+  font-family: 'NanumGothicBold';
+  src: url(../fonts/NanumBarunGothic.eot);
+  src: local('NanumGothicBold'),
+       local('NanumGothicBold'),
+       url(../fonts/NanumGothicBold.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/NanumGothicBold.woff) format('woff'),
+}
+
+@font-face {
+  font-family: 'NeoSansPro-Medium';
+  src: url(../fonts/NanumBarunGothic.eot);
+  src: local('NeoSansPro-Medium'),
+       local('NeoSansPro-Medium'),
+       url(../fonts/NeoSansPro-Medium.eot?#iefix) format('embedded-opentype'),
+       url(../fonts/NeoSansPro-Medium.woff) format('woff'),
+       url(../fonts/NeoSansPro-Medium.ttf) format('truetype');
+}
+
+/* Link */
+a:link,a:visited{text-decoration:none}
+a:active,a:hover,a:focus{text-decoration:none}
+
+/* Skip Navigation */
+#u_skip{position:absolute;top:0;left:0;z-index:200;width:100%}
+#u_skip a{display:block;position:absolute;top:-50px;left:0;z-index:200;width:100%;padding:10px 0 13px;background:#475c9b;color:#fff;text-align:center;text-decoration:none}
+#u_skip a:active,#u_skip a:focus{top:0;text-decoration:none}
+#u_skip a{-moz-transition:all .3s;-webkit-transition:all .3s;transition:all .3s}
+
+/*ico*/
+[class^=ico]{display:inline-block;overflow:hidden;background:url(../images/ico_btn.gif)no-repeat;background-size:500px auto;vertical-align:top}
+[class^=ir]{display:inline-block;overflow:hidden;background:url(../images/ir_txt.png)no-repeat;background-size:1000px auto;vertical-align:top}
+

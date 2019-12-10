@@ -28,11 +28,62 @@
 	<script src="resources/js/uc.plugin.min.js"></script>
 	<script src="resources/js/slick.min.js"></script>
 	<script src="resources/js/common.js"></script>
+	
+	<script type="text/javascript">
+			function checkAll(){
+			      if( $("#checkbox").is(':checked') ){
+			        $("input[name=checkRow]").prop("checked", true);
+			      }else{
+			        $("input[name=checkRow]").prop("checked", false);
+			      }
+			}
+
+
+			function deleteAction(find_name, page){
+				  var checkRow = "";
+				  var find_field =$("#field").val();
+				  
+				  $( "input[name='checkRow']:checked" ).each (function (){
+				    checkRow = checkRow + $(this).val()+"," ;
+				  });
+				  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+				 
+				  if(checkRow == ''){
+				    alert("삭제할 게시글을 선택해 주세요.");
+				    return false;
+				  }
+				  console.log("### checkRow => {}"+checkRow);
+				 
+				  if(confirm("정보를 삭제 하시겠습니까?")){   
+					  alert(find_field);
+					  location.href="share_room_delete.do?s_checkno="+checkRow+"&find_field="+find_field+"&find_name="+find_name+"&page="+page+"";      
+				  }
+				}
+			function deleteAction(){
+				  var checkRow = "";
+				  
+				  $( "input[name='checkRow']:checked" ).each (function (){
+				    checkRow = checkRow + $(this).val()+"," ;
+				  });
+				  checkRow = checkRow.substring(0,checkRow.lastIndexOf( ",")); //맨끝 콤마 지우기
+				 
+				  if(checkRow == ''){
+				    alert("삭제할 게시글을 선택해 주세요.");
+				    return false;
+				  }
+				  console.log("### checkRow => {}"+checkRow);
+				 
+				  if(confirm("정보를 삭제 하시겠습니까?")){   
+					  location.href="share_room_delete.do?s_checkno="+checkRow+"";      
+				  }
+				}
+			</script>
 </head>
 
 <body>
 
 <%@ include file="../../resources/include/header.jsp" %>
+
 
 
 	<div class="content_wrap">
@@ -66,7 +117,14 @@
 					<h4>무료나눔정보</h4>
 				</div>
 				<div class="is-col-xs6 is-align-mid is-txt-right">
+				<c:if test="${empty nick }">
+					<a href="#loginModal" class="is-btn-brown"  data-uc-click="modal">나눔 등록 하기</a>
+				</c:if>
+				<c:if test="${!empty nick }">
 					<a href="<%=request.getContextPath()%>/share_room_upload.do" class="is-btn-brown">나눔 등록 하기</a>
+				</c:if>
+					
+
 				</div>
 			</div>
 
@@ -98,19 +156,26 @@
 					</li>
 				</ul>
 			</div>
-
+			<c:set var="admincheck" value="admin"></c:set>
 			<div data-uc-table class="is-scroll-x">
 				<table class="is-table-hor">
 					<colgroup>
+					
+					<c:if test="${nick eq admincheck}">
+						<col width="5%">
+					</c:if>
 						<col width="10%">
 						<col width="*">
-						<col width="10%">
+						<col width="20%">
 						<col width="10%">
 						<col width="10%">
 						
 					</colgroup>
 					<thead>
 						<tr>
+							<c:if test="${nick eq admincheck}">
+								<th>&nbsp;</th>
+							</c:if>
 							<th>번호</th>
 							<th>제목</th>
 							<th>작성자</th>
@@ -124,14 +189,17 @@
 					<c:if test="${!empty list }">
 					<c:forEach items="${list }" var="dto">
 						<tr>
+							<c:if test="${nick eq admincheck}">
+								<td><input type="checkbox" id="check${dto.getS_no() }" value="${dto.getS_no() }" name="checkRow"></td>
+							</c:if>
 							<td>${dto.getS_no() }</td>
 							<td>
-							<div align="left" style="padding-left: 250px;">
+							<div align="left">
 							<c:if test="${dto.getS_check()==0 }">
 							<c:forEach begin="1" end="${dto.getS_indent() }">&nbsp;&nbsp;&nbsp;</c:forEach>
 							<c:if test="${dto.getS_indent()>0 }">┗</c:if>
 							</c:if>
-							<c:if test="${dto.getS_check()==1 }">[원글이 삭제된 답글]</c:if>
+							<c:if test="${dto.getS_check()==1 }"><font color="red">[원글이 삭제된 답글]</font></c:if>
 							<a href="share_cont.do?s_no=${dto.getS_no() }">
 									${dto.getS_title() }</a>
 							<c:if test="${dto.getS_src() != null }">
@@ -152,22 +220,63 @@
 					</c:if>
 					<c:if test="${empty list }">
 						<tr>
-							<td colspan="6" align="center">
+							
+						<c:if test="${nick eq admincheck}">
+						<td colspan="6" align="center">
 							<h5>레코드가 없습니다.</h5>
-							</td>
+						</td>
+						</c:if>
+					
+						<c:if test="${nick ne admincheck}">
+						<td colspan="5" align="center">
+							<h5>레코드가 없습니다.</h5>
+						</td>
+						</c:if>
+								
 						</tr>
 					</c:if>
 					<tr>
+						<c:if test="${nick eq admincheck}">	
+						<td valign="top"><input type="checkbox" id="checkbox" onclick="checkAll()"></td>
+						<td valign="top"><label for="checkbox">전체선택</label></td>
+						</c:if>
+						<c:if test="${nick ne admincheck }">
+							<td></td> 
+						</c:if>
+						<td colspan="4">
+						<!-- <div align="left" style="float: left; margin: 0px 10px 10px; padding:0px 7px 10px;">&nbsp;&nbsp;</div> -->
+						<div align="right" style="margin: 0px 10px 10px; padding:0px 10px 10px;"> 
+						<c:if test="${nick eq admincheck}">	
+							<input type="hidden" value="${find_field}" id="field">
+							<c:if test="${!empty find_field }">
+							<input type="button" value="삭제" onclick="deleteAction(${find_name},${page})">
+							</c:if>
+							<c:if test="${empty find_field }">
+							<input type="button" value="삭제" onclick="deleteAction()">
+							</c:if>
+						</c:if>
+						<c:if test="${!empty nick }">
+							<input type="button" value="글쓰기" onclick="location.href='share_room_upload.do'"> 
+						</c:if>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<c:if test="${nick eq admincheck}">
+						<td colspan="6" align="center">
+						</c:if>
+					
+						<c:if test="${nick ne admincheck}">
 						<td colspan="5" align="center">
-						
+						</c:if>
 						<c:if test="${page > block }"> <!-- 페이지가 블럭 3 보다 클 경우  이전으로 가는 버튼 생성 -->
 							<c:if test="${empty find_name }">
-								[<a href="share_room.do?page=1">◀◀</a>] <!-- 무조건 첫번째 페이지로 보내 줌  -->
-								[<a href="share_room.do?page=${startBlock - 1 }">◀</a>] <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
+								<a href="share_room.do?page=1">[◀◀]</a> <!-- 무조건 첫번째 페이지로 보내 줌  -->
+								<a href="share_room.do?page=${startBlock - 1 }">[◀]</a> <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
 							</c:if>
 							<c:if test="${!empty find_name }">
-								[<a href="share_search.do?page=1&find_field=${find_field}&find_name=${find_name}">◀◀</a>] <!-- 무조건 첫번째 페이지로 보내 줌  -->
-								[<a href="share_search.do?page=${startBlock - 1 }&find_field=${find_field}&find_name=${find_name}"">◀</a>] <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
+								<a href="share_search.do?page=1&find_field=${find_field}&find_name=${find_name}">[◀◀]</a> <!-- 무조건 첫번째 페이지로 보내 줌  -->
+								<a href="share_search.do?page=${startBlock - 1 }&find_field=${find_field}&find_name=${find_name}">[◀]</a> <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
 							</c:if>
 						</c:if>
 						
@@ -178,22 +287,22 @@
 							
 							<c:if test="${!(i == page )}"> <!-- 현재 페이지랑 i가 다를 때는 연결할수 있게 링크를 걸어줌, i 에 해당하는 페이지 변수를 받아서  -->
 								<c:if test="${empty find_name }">
-									[<a href="share_room.do?page=${i }">${i }</a>]
+									<a href="share_room.do?page=${i }">[${i }]</a>
 								</c:if>
 								<c:if test="${!empty find_name }">
-									[<a href="share_search.do?page=${i }&find_field=${find_field}&find_name=${find_name}"">${i }</a>]
+									<a href="share_search.do?page=${i }&find_field=${find_field}&find_name=${find_name}"">[${i }]</a>
 								</c:if>
 							</c:if>				
 						</c:forEach>
 						
 						<c:if test="${endBlock < allPage }"> <!-- 전체 페이지가 마지막 블럭보다 클 경우 다음으로 가는 버튼 생성 -->
 							<c:if test="${empty find_name }">
-								[<a href="share_room.do?page=${endBlock + 1 }">▶</a>] <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
-								[<a href="share_room.do?page=${allPage }">▶▶</a>] <!-- 마지막 페이지의 끝으로 이동  -->
+								<a href="share_room.do?page=${endBlock + 1 }">[▶]</a> <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
+								<a href="share_room.do?page=${allPage }">[▶▶]</a> <!-- 마지막 페이지의 끝으로 이동  -->
 							</c:if>
 							<c:if test="${!empty find_name }">
-								[<a href="share_search.do?page=${endBlock + 1 }&find_field=${find_field}&find_name=${find_name}"">▶</a>] <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
-								[<a href="share_search.do?page=${allPage }&find_field=${find_field}&find_name=${find_name}"">▶▶</a>] <!-- 마지막 페이지의 끝으로 이동  -->
+								<a href="share_search.do?page=${endBlock + 1 }&find_field=${find_field}&find_name=${find_name}"">[▶]</a> <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
+								<a href="share_search.do?page=${allPage }&find_field=${find_field}&find_name=${find_name}"">[▶▶]</a> <!-- 마지막 페이지의 끝으로 이동  -->
 							</c:if>
 						</c:if>
 						</td>
@@ -202,9 +311,10 @@
 					</tr>
 					</tbody>
 				</table>
+				
 			</div>
-
-			<form data-uc-form class="is-mg-t_20"  method="post" action="<%=request.getContextPath() %>/share_search.do">
+			
+			<form data-uc-form class="is-mg-t_20" action="<%=request.getContextPath() %>/share_search.do">
 			
 				<div data-uc-colgroup>
 					<div class="is-col-md4 is-offset-md8">
@@ -214,14 +324,14 @@
 									<select name="find_field">
 										<option value="title">제목</option>
 										<option value="cont">내용</option>
-										<option value="title+cont">제목+내용</option>
+										<option value="title_cont">제목+내용</option>
 										<option value="writer">작성자</option>
 									</select>
 								</div>
 							</div>
 							<div class="is-col-xs9">
 								<div class="is-input-field">
-									<input type="text" name="find_name" id="" value="" />
+									<input type="text" name="find_name" id=""/>
 									<input type="image" src="resources/images/sub_2/search.png" style="position: absolute; top: 10px; right: 10px; margin-top: 5px;">
 									
 								</div>

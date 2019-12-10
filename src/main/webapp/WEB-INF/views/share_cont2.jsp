@@ -75,7 +75,12 @@
 					<h4>무료나눔정보</h4>
 				</div>
 				<div class="is-col-xs6 is-align-mid is-txt-right">
+				<c:if test="${empty nick }">
+					<a href="#loginModal" class="is-btn-brown"  data-uc-click="modal">나눔 등록 하기</a>
+				</c:if>
+				<c:if test="${!empty nick }">
 					<a href="<%=request.getContextPath()%>/share_room_upload.do" class="is-btn-brown">나눔 등록 하기</a>
+				</c:if>
 				</div>
 			</div>
 
@@ -110,8 +115,8 @@
 
 			<div data-uc-table>
 				<c:set var="dto" value="${cont }"/>
-				<c:set var="nick" value="${ses }"></c:set>
-				<div style="margin: 10px; border:1px solid; padding:10px;"> <!-- inbox -->
+				<%-- <c:set var="nick" value="${ses }"></c:set> --%>
+				<div style="margin: 10px; border:1px solid darkgray; padding:10px;"> <!-- inbox -->
 					<div > <!-- tit-box -->
 						<div style="display: inline; float: left;" > <!-- fl -->
 							<table role="presentation" cellspacing="0" cellpadding="0" border="0">
@@ -136,7 +141,7 @@
 							</table>
 						</div>
 					</div>
-					<div style="border-top:1px dashed; margin-top: 2px;"></div>
+					<div style="border-top:1px dashed darkgray; margin-top: 2px;"></div>
 					<div><!-- etc-box -->
 						<div > <!-- tit-box -->
 						<div style="margin-top: 20px;"> <!-- fl -->
@@ -200,7 +205,7 @@
 									<tr>
 										<td>
 											<span>댓글</span>
-											<span id="cCnt"></span>
+											<span>${c_count }</span>
 										</td>
 										<td>
 										<!-- 	<span></span> -->
@@ -219,17 +224,47 @@
 						</div>
 					</div>
 					<div id='check' value='0' style="display: block; padding-left: 43px; padding-right: 43px; padding-bottom: 30px; padding-top: 30px; background-color: #cccccc;"><!-- 댓글 -->
-					
 						
 						<div>
 						<ul id="commentList">
 						
 						
 						</ul>
+						<div align="center">
+						<c:if test="${c_page > block }"> <!-- 페이지가 블럭 3 보다 클 경우  이전으로 가는 버튼 생성 -->
+							
+								<a href="share_cont.do?c_page=1&s_no=${dto.getS_no() }">[◀◀]</a> <!-- 무조건 첫번째 페이지로 보내 줌  -->
+								<a href="share_cont.do?c_page=${startBlock - 1 }&s_no=${dto.getS_no() }">[◀]</a> <!-- 현재 페이지의 첫번째 블럭에 -1을 해주어 이전 페이지의 마지막 블럭으로 이동  -->
+							
+							
+						</c:if>
+						<c:if test="${endBlock >1 }">
+						<c:forEach begin="${startBlock }" end="${endBlock }" var="i">
+							<c:if test="${i == c_page }"> <!-- 현재 페이지랑 i랑 같을때는 언더라인, 굵게 표시  -->
+								<u><b>[${i }]</b></u>
+							</c:if>
+							
+							<c:if test="${!(i == c_page )}"> <!-- 현재 페이지랑 i가 다를 때는 연결할수 있게 링크를 걸어줌, i 에 해당하는 페이지 변수를 받아서  -->
+								
+									<a href="share_cont.do?c_page=${i }&s_no=${dto.getS_no() }">[${i }]</a>
+								
+							</c:if>				
+						</c:forEach>
+						</c:if>
+						<c:if test="${endBlock < allPage }"> <!-- 전체 페이지가 마지막 블럭보다 클 경우 다음으로 가는 버튼 생성 -->
+							
+								<a href="share_cont.do?c_page=${endBlock + 1 }&s_no=${dto.getS_no() }">[▶]</a> <!-- 현재 페이지의 마지막 블럭에 +1을 해주어 다음 페이지의 첫번째 블럭으로 이동  -->
+								<a href="share_cont.do?c_page=${allPage }&s_no=${dto.getS_no() }">[▶▶]</a> <!-- 마지막 페이지의 끝으로 이동  -->
+							
+						</c:if>
+						
+						</div>
      				   </div>
-     				   
+     				   <div style="margin-top: 20px;">
 						<form id="comments" name="comments">
 							<input type="hidden" value="${dto.getS_no() }" name="s_no">
+							<input type="hidden" value="${c_page }" name="c_page">
+							<input type="hidden" value="${c_rowsize }" name="c_rowsize">
 							
      				 	 	<c:if test="${!empty session }">
 							<table  cellspacing="0" cellpadding="0" border="0" style="width: 100%;">
@@ -254,7 +289,7 @@
 							</table>
 							</c:if>
 						</form>
-						
+						</div>
 					</div>
 					
 				</div>
@@ -266,15 +301,16 @@
 						} 
 					});
 				</script>
-				<script>
-					
-				</script>
-				
+				<c:set var="admin" value="admin"></c:set>
 				<div align="right" style="margin: 0px 10px 10px; padding:0px 10px 10px;"> 
-					<input type="button" value="글쓰기" onclick="location.href='share_room_upload.do'"> 
-					<input type="button" value="답글" onclick="location.href='share_room_upload.do?s_group=${dto.getS_group()}&s_title=${dto.getS_title() }&s_step=${dto.getS_step() }&s_indent=${dto.getS_indent() }'"> 
+					<c:if test="${!empty nick }">
+						<input type="button" value="글쓰기" onclick="location.href='share_room_upload.do'"> 
+						<input type="button" value="답글" onclick="location.href='share_room_upload.do?s_group=${dto.getS_group()}&s_title=${dto.getS_title() }&s_step=${dto.getS_step() }&s_indent=${dto.getS_indent() }'"> 
+					</c:if>
 					<c:if test="${dto.getS_writer()==nick }">
 						<input type="button" value="수정" onclick="location.href='share_room_upload.do?s_no=${dto.getS_no()}'"> 
+					</c:if>
+					<c:if test="${dto.getS_writer()==nick || nick==admin}">
 						<input type="button" value="삭제" onclick="deleteShere(${dto.getS_no() })"> 
 					</c:if>
 					<input type="button" value="목록" onclick="location.href='share_room.do'"> 
@@ -301,7 +337,17 @@
 								<a href="share_cont.do?s_no=${pre.getS_no() }"><font>이전글</font></a>
 							</td>
 							<td>
+							<div align="left">
+								<c:if test="${pre.getS_check()==1 }"><font color="red">[원글이 삭제된 답글]</font></c:if>
 								<a href="share_cont.do?s_no=${pre.getS_no() }">${pre.getS_title() }</a>
+								<c:if test="${pre.getS_src() != null }">
+									<img alt="" src="resources/images/img.jpg" width="25" height="25" style="opacity: 0.5;">
+								</c:if>		
+								<c:if test="${pre.getS_Comments_count() !=0}">		
+									&nbsp;
+									<a href="share_cont.do?s_no=${pre.getS_no() }">
+									<font color="red" style="font-weight: bolder;">[${pre.getS_Comments_count() }]</font></a></c:if>
+							</div>
 							</td>
 							<td>
 								<font>${pre.getS_writer() }</font>
@@ -311,13 +357,57 @@
 							</td>
 						</c:if>
 						</tr>
+						<c:if test="${!empty groupdto }">
+						<div style="background-color: #cccccc;">
+							<c:forEach items="${groupdto }" var="groupdto">
+							<tr style="background-color: #cccccc;" >
+							<td>
+								&nbsp;
+							</td>
+							<td>
+								<div align="left">
+								<c:if test="${groupdto.getS_check()==0 }">
+								<c:forEach begin="1" end="${dto.getS_indent() }">&nbsp;&nbsp;&nbsp;</c:forEach>
+								<c:if test="${groupdto.getS_indent()>0 }">┗</c:if>
+								</c:if>
+								<c:if test="${groupdto.getS_check()==1 }"><font color="red">[원글이 삭제된 답글]</font></c:if>
+								<a href="share_cont.do?s_no=${groupdto.getS_no() }">${groupdto.getS_title() }</a>
+								<c:if test="${groupdto.getS_src() != null }">
+									<img alt="" src="resources/images/img.jpg" width="25" height="25" style="opacity: 0.5;">
+								</c:if>		
+								<c:if test="${groupdto.getS_Comments_count() !=0}">		
+									&nbsp;
+									<a href="share_cont.do?s_no=${groupdto.getS_no() }">
+									<font color="red" style="font-weight: bolder;">[${groupdto.getS_Comments_count() }]</font></a></c:if>		
+								</div>
+							</td>
+							<td>
+								<font>${groupdto.getS_writer() }</font>
+							</td>
+							<td>
+								<font>${groupdto.getS_date().substring(0,10)  }</font>								
+							</td>
+							</tr>
+							</c:forEach>
+						</div>
+						</c:if>
 						<tr>
 						<c:if test="${!empty next }">
 							<td>
 								<a href="share_cont.do?s_no=${next.getS_no() }"><font>다음글</font></a>
 							</td>
 							<td>
+							<div align="left">
+								<c:if test="${next.getS_check()==1 }"><font color="red">[원글이 삭제된 답글]</font></c:if>
 								<a href="share_cont.do?s_no=${next.getS_no() }">${next.getS_title() }</a>
+								<c:if test="${next.getS_src() != null }">
+									<img alt="" src="resources/images/img.jpg" width="25" height="25" style="opacity: 0.5;">
+								</c:if>		
+								<c:if test="${next.getS_Comments_count() !=0}">		
+									&nbsp;
+									<a href="share_cont.do?s_no=${next.getS_no() }">
+									<font color="red" style="font-weight: bolder;">[${next.getS_Comments_count() }]</font></a></c:if>
+							</div>
 							</td>
 							<td>
 								<font>${next.getS_writer() }</font>

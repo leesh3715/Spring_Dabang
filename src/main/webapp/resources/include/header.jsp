@@ -32,278 +32,278 @@ var empJ = /\s/g;
 var idJ = /^[a-z0-9]{4,12}$/;
 
 
-	function setModal1() {
-	   	$('#joinModal1').fadeOut().removeClass('is-show').attr('aria-hidden','true');
-	    $('#joinModal1').removeAttr('style').attr("style", "display:none");
-	    $('body').removeAttr('style');
-	}
+   function setModal1() {
+         $('#joinModal1').fadeOut().removeClass('is-show').attr('aria-hidden','true');
+       $('#joinModal1').removeAttr('style').attr("style", "display:none");
+       $('body').removeAttr('style');
+   }
 
-	// 회원 가입 버튼 클릭시 공란 경고문
-	function signup_check(){
+   // 회원 가입 버튼 클릭시 공란 경고문
+   function signup_check(){
 
-		var m_email = $("#m_email").val();
-		var m_nick = $("#m_nick").val();
-		var m_pwd = $("#m_pwd").val();
-		var m_pwd2 = $("#m_pwd2").val();
-		var m_name = $("#m_name").val();
-		var m_birth = $("#m_birth").val();
-		var m_phone = $("#m_phone").val();
-			    
-		   	 if(m_email.length == 0){
-			        alert("이메일을 입력해 주세요"); 
-			        $("#m_email").focus();
-			        return false;
-		   	 }
+      var m_email = $("#m_email").val();
+      var m_nick = $("#m_nick").val();
+      var m_pwd = $("#m_pwd").val();
+      var m_pwd2 = $("#m_pwd2").val();
+      var m_name = $("#m_name").val();
+      var m_birth = $("#m_birth").val();
+      var m_phone = $("#m_phone").val();
+             
+             if(m_email.length == 0){
+                 alert("이메일을 입력해 주세요"); 
+                 $("#m_email").focus();
+                 return false;
+             }
 
-		   	 if(m_nick.length == 0){
-			        alert("닉네임을 입력해 주세요"); 
-			        $("#m_nick").focus();
-			        return false;
-			 }
-		   	 if(m_pwd.length == 0){
-			        alert("비밀번호를 입력해 주세요"); 
-			        $("#m_pwd").focus();
-			        return false;
-			 }
-		   	 if(m_pwd2.length == 0){
-			        alert("비밀번호 확인을 입력해 주세요"); 
-			        $("#m_pwd2").focus();
-			        return false;
-			 }
-		   	 if(m_name.length == 0){
-			        alert("이름을 입력해 주세요"); 
-			        $("#m_name").focus();
-			        return false;
-			 }
-		   	 if(m_birth.length == 0){
-			        alert("생년월일을 입력해 주세요"); 
-			        $("#m_birth").focus();
-			        return false;
-			 }
-		   	 if(m_phone.length == 0){
-				    alert("연락처를 입력해 주세요"); 
-			        $("#m_phone").focus();
-			        return false;
-			 }
-			    if(confirm("회원가입을 하시겠습니까?")){
-			        alert("회원가입을 축하합니다");
-			        return true;
-			 }
-		}
+             if(m_nick.length == 0){
+                 alert("닉네임을 입력해 주세요"); 
+                 $("#m_nick").focus();
+                 return false;
+          }
+             if(m_pwd.length == 0){
+                 alert("비밀번호를 입력해 주세요"); 
+                 $("#m_pwd").focus();
+                 return false;
+          }
+             if(m_pwd2.length == 0){
+                 alert("비밀번호 확인을 입력해 주세요"); 
+                 $("#m_pwd2").focus();
+                 return false;
+          }
+             if(m_name.length == 0){
+                 alert("이름을 입력해 주세요"); 
+                 $("#m_name").focus();
+                 return false;
+          }
+             if(m_birth.length == 0){
+                 alert("생년월일을 입력해 주세요"); 
+                 $("#m_birth").focus();
+                 return false;
+          }
+             if(m_phone.length == 0){
+                alert("연락처를 입력해 주세요"); 
+                 $("#m_phone").focus();
+                 return false;
+          }
+             if(confirm("회원가입을 하시겠습니까?")){
+                 alert("회원가입을 축하합니다");
+                 return true;
+          }
+      }
 
-	 // 생년월일 정규식 검사 및 길이 확인
-	$(function(){
-		$('#m_birth').blur(function(){
-			var m_birth = $('#m_birth').val();
-			if(m_birth.match(birthJ) != null) {
-				return true;
-			}else{
-				if(m_birth.length < 7){
-					if((m_birth)!=''){
-						alert("생년월일 길이가 짧습니다.");
-						$("#m_birth").val('');
-						$("#m_birth").focus();
-					}
-				}if(m_birth.length > 9){
-					if((m_birth)!=''){
-						alert("생년월일 길이가 너무 깁니다.");
-						$("#m_birth").val('');
-						$("#m_birth").focus();
-					}
-				}else if(m_birth.length == 8){
-					if((m_birth)!=''){
-						alert("생년월일은 8자리의 숫자만 가능합니다.");
-						$("#m_birth").val('');
-						$("#m_birth").focus();
-					}
-				}
-			}
-		});
-	});
-	
-	// 이름 정규식 검사 및 길이 확인
-	$(function(){
-		$('#m_name').blur(function(){
-			var m_name = $('#m_name').val();
-			if(m_name.match(nameJ) != null) {
-				return true;
-			}else{
-				if(m_name.length < 2){
-					if((m_name)!=''){
-						alert("이름길이가 짧습니다.");
-						$("#m_name").val('');
-						$("#m_name").focus();
-					}
-				}if(m_name.length > 10){
-					if((m_name)!=''){
-						alert("이름 길이가 너무 깁니다.");
-						$("#m_name").val('');
-						$("#m_name").focus();
-					}
-				}else if(m_name.length > 1 && m_name.length < 11){
-					if((m_name)!=''){
-						alert("이름은 한글만 가능합니다.");
-						$("#m_name").val('');
-						$("#m_name").focus();
-					}
-				}
-			}
-		});
-	});
+    // 생년월일 정규식 검사 및 길이 확인
+   $(function(){
+      $('#m_birth').blur(function(){
+         var m_birth = $('#m_birth').val();
+         if(m_birth.match(birthJ) != null) {
+            return true;
+         }else{
+            if(m_birth.length < 7){
+               if((m_birth)!=''){
+                  alert("생년월일 길이가 짧습니다.");
+                  $("#m_birth").val('');
+                  $("#m_birth").focus();
+               }
+            }if(m_birth.length > 9){
+               if((m_birth)!=''){
+                  alert("생년월일 길이가 너무 깁니다.");
+                  $("#m_birth").val('');
+                  $("#m_birth").focus();
+               }
+            }else if(m_birth.length == 8){
+               if((m_birth)!=''){
+                  alert("생년월일은 8자리의 숫자만 가능합니다.");
+                  $("#m_birth").val('');
+                  $("#m_birth").focus();
+               }
+            }
+         }
+      });
+   });
+   
+   // 이름 정규식 검사 및 길이 확인
+   $(function(){
+      $('#m_name').blur(function(){
+         var m_name = $('#m_name').val();
+         if(m_name.match(nameJ) != null) {
+            return true;
+         }else{
+            if(m_name.length < 2){
+               if((m_name)!=''){
+                  alert("이름길이가 짧습니다.");
+                  $("#m_name").val('');
+                  $("#m_name").focus();
+               }
+            }if(m_name.length > 10){
+               if((m_name)!=''){
+                  alert("이름 길이가 너무 깁니다.");
+                  $("#m_name").val('');
+                  $("#m_name").focus();
+               }
+            }else if(m_name.length > 1 && m_name.length < 11){
+               if((m_name)!=''){
+                  alert("이름은 한글만 가능합니다.");
+                  $("#m_name").val('');
+                  $("#m_name").focus();
+               }
+            }
+         }
+      });
+   });
 
-	// 비밀번호 정규식 검사 및 길이 확인
-	$(function(){
-		$('#m_pwd').blur(function(){
-			var m_pwd = $('#m_pwd').val();
-			if(m_pwd.match(pwdJ) != null) {
-				return true;
-			}else{
-				if(m_pwd.length < 8){
-					if((m_pwd)!=''){
-						alert("비밀번호가 짧습니다.");
-						$("#m_pwd").val('');
-						$("#m_pwd").focus();
-					}
-				}if(m_pwd.length > 15){
-					if((m_pwd)!=''){
-						alert("비밀번호가 너무 깁니다.");
-						$("#m_pwd").val('');
-						$("#m_pwd").focus();
-					}
-				}else if(m_pwd.length > 7 && m_pwd.length < 16){
-					if((m_pwd)!=''){
-						alert("비밀번호는 영문,숫자,특수문자 조합 형태입니다.");
-						$("#m_pwd").val('');
-						$("#m_pwd").focus();
-					}
-				}
-			}
-		});
-	});
+   // 비밀번호 정규식 검사 및 길이 확인
+   $(function(){
+      $('#m_pwd').blur(function(){
+         var m_pwd = $('#m_pwd').val();
+         if(m_pwd.match(pwdJ) != null) {
+            return true;
+         }else{
+            if(m_pwd.length < 8){
+               if((m_pwd)!=''){
+                  alert("비밀번호가 짧습니다.");
+                  $("#m_pwd").val('');
+                  $("#m_pwd").focus();
+               }
+            }if(m_pwd.length > 15){
+               if((m_pwd)!=''){
+                  alert("비밀번호가 너무 깁니다.");
+                  $("#m_pwd").val('');
+                  $("#m_pwd").focus();
+               }
+            }else if(m_pwd.length > 7 && m_pwd.length < 16){
+               if((m_pwd)!=''){
+                  alert("비밀번호는 영문,숫자,특수문자 조합 형태입니다.");
+                  $("#m_pwd").val('');
+                  $("#m_pwd").focus();
+               }
+            }
+         }
+      });
+   });
 
-	// 핸드폰번호 정규식 검사 및 길이 확인
-	$(function(){
-		$('#m_phone').blur(function(){
-			var m_phone = $('#m_phone').val();
-			if(m_phone.match(phoneJ) != null) {
-				return true;
-			}else{
-				if(m_phone.length < 10){
-					if((m_phone)!=''){
-						alert("핸드폰 번호가 짧습니다.");
-						$("#m_phone").val('');
-						$("#m_phone").focus();
-					}
-				}if(m_pwd.length > 11){
-					if((m_pwd)!=''){
-						alert("핸드폰 번호가 너무 깁니다.");
-						$("#m_phone").val('');
-						$("#m_phone").focus();
-					}
-				}else if(m_phone.length > 9 && m_pwd.length < 12){
-					if((m_phone)!=''){
-						alert("핸드폰 번호는 10~11자리입니다.");
-						$("#m_phone").val('');
-						$("#m_phone").focus();
-					}
-				}
-			}
-		});
-	});
-	
-	$(function() {
-		// 비밀 번호 일치 여부 확인 
-		$('#m_pwd2').blur(function(){
-			   if($('#m_pwd').val() != $('#m_pwd2').val()){
-			    	if($('#m_pwd2').val()!=''){
-				    alert("비밀번호가 일치하지 않습니다.");
-			    	    $('#m_pwd2').val('');
-			          $('#m_pwd2').focus();
-			       }
-			    }
-			});  
-	});	 
+   // 핸드폰번호 정규식 검사 및 길이 확인
+   $(function(){
+      $('#m_phone').blur(function(){
+         var m_phone = $('#m_phone').val();
+         if(m_phone.match(phoneJ) != null) {
+            return true;
+         }else{
+            if(m_phone.length < 10){
+               if((m_phone)!=''){
+                  alert("핸드폰 번호가 짧습니다.");
+                  $("#m_phone").val('');
+                  $("#m_phone").focus();
+               }
+            }if(m_pwd.length > 11){
+               if((m_pwd)!=''){
+                  alert("핸드폰 번호가 너무 깁니다.");
+                  $("#m_phone").val('');
+                  $("#m_phone").focus();
+               }
+            }else if(m_phone.length > 9 && m_pwd.length < 12){
+               if((m_phone)!=''){
+                  alert("핸드폰 번호는 10~11자리입니다.");
+                  $("#m_phone").val('');
+                  $("#m_phone").focus();
+               }
+            }
+         }
+      });
+   });
+   
+   $(function() {
+      // 비밀 번호 일치 여부 확인 
+      $('#m_pwd2').blur(function(){
+            if($('#m_pwd').val() != $('#m_pwd2').val()){
+                if($('#m_pwd2').val()!=''){
+                alert("비밀번호가 일치하지 않습니다.");
+                    $('#m_pwd2').val('');
+                   $('#m_pwd2').focus();
+                }
+             }
+         });  
+   });    
 
-	// 이메일 텍스트창에서 커서 이동시 중복확인 및 정규화 체크
-	$(function() {
-		$('#m_email').blur(function(){
-		var m_email = $('#m_email').val();
-			$.ajax({
-				async : false,
-				url :  "${pageContext.request.contextPath}/checkemail.do?mem_email="+ m_email,
-				type : "post",
-				success : function(data){
-					console.log("1 = 중복o / 0 = 중복x : "+ data);	
-					if(data == 1){
-						
+   // 이메일 텍스트창에서 커서 이동시 중복확인 및 정규화 체크
+   $(function() {
+      $('#m_email').blur(function(){
+      var m_email = $('#m_email').val();
+         $.ajax({
+            async : false,
+            url :  "${pageContext.request.contextPath}/checkemail.do?mem_email="+ m_email,
+            type : "post",
+            success : function(data){
+               console.log("1 = 중복o / 0 = 중복x : "+ data);   
+               if(data == 1){
+                  
 
-		  				$("#emailcheck").text("사용중인 이메일입니다. 확인해주세요 :p");  
-						$("#emailcheck").css("color", "red");
-					} else{
-						if(emailJ.test(m_email)){
-							// 이메일 정규 체크
-							$("#emailcheck").css("color","green");
-							$("#emailcheck").text("사용 가능한 아이디입니다.");
-						} else if(m_email == ""){
-							$('#emailcheck').text('이메일을 입력해주세요 :)');
-							$('#emailcheck').css('color', 'red');		
-						} else {
-							$('#emailcheck').text("이메일 형식이 올바르지 않습니다.");
-							$('#emailcheck').css('color', 'red');
-						}	 
-					}
-				}, error : function() {
-						console.log("실 ㅡ 패");
-				}
-			});
-		});
-	});
+                    $("#emailcheck").text("사용중인 이메일입니다. 확인해주세요 :p");  
+                  $("#emailcheck").css("color", "red");
+               } else{
+                  if(emailJ.test(m_email)){
+                     // 이메일 정규 체크
+                     $("#emailcheck").css("color","green");
+                     $("#emailcheck").text("사용 가능한 아이디입니다.");
+                  } else if(m_email == ""){
+                     $('#emailcheck').text('이메일을 입력해주세요 :)');
+                     $('#emailcheck').css('color', 'red');      
+                  } else {
+                     $('#emailcheck').text("이메일 형식이 올바르지 않습니다.");
+                     $('#emailcheck').css('color', 'red');
+                  }    
+               }
+            }, error : function() {
+                  console.log("실 ㅡ 패");
+            }
+         });
+      });
+   });
 
-	// 닉네임 텍스트창에서 커서 이동시 중복확인 및 정규화 체크
-	$(function(){
-		$('#m_nick').blur(function(){
-			var m_nick = $('#m_nick').val();
-				$.ajax({
-					async : false,
-					url :  "${pageContext.request.contextPath}/checknick.do?mem_nick="+ m_nick,
-					type : "post",
-					success : function(data){
-						if(data == 1){
-			  				$("#nickcheck").text("사용중인  닉네임입니다 :p");  
-							$("#nickcheck").css("color", "red");
-						} else{
-							if(nickJ.test(m_nick)){
-								// 닉네임 정규 체크
-								$("#nickcheck").css("color","green");
-								$("#nickcheck").text("아주 멋진 닉네임이군요!");
-							} else if(m_nick == ""){
-								$('#nickcheck').text('닉네임을 입력해주세요 :)');
-								$('#nickcheck').css('color', 'red');		
-							} else if(m_nick < 2){
-								$('#nickcheck').text('닉네임은 2글자 이상입니다.');
-								$('#nickcheck').css('color', 'red');
-							}else if(m_nick > 12){
-								$('#nickcheck').text('닉네임은 12글자 이하입니다.');
-								$('#nickcheck').css('color', 'red');
-							}else {
-								$('#nickcheck').text("사용 불가능한 닉네임입니다.");
-								$('#nickcheck').css('color', 'red');
-							}	 
-						}
-					}, error : function() {
-							$('#nickcheck').text("error 발생");
-					}
-				});
-			});
-		});
+   // 닉네임 텍스트창에서 커서 이동시 중복확인 및 정규화 체크
+   $(function(){
+      $('#m_nick').blur(function(){
+         var m_nick = $('#m_nick').val();
+            $.ajax({
+               async : false,
+               url :  "${pageContext.request.contextPath}/checknick.do?mem_nick="+ m_nick,
+               type : "post",
+               success : function(data){
+                  if(data == 1){
+                       $("#nickcheck").text("사용중인  닉네임입니다 :p");  
+                     $("#nickcheck").css("color", "red");
+                  } else{
+                     if(nickJ.test(m_nick)){
+                        // 닉네임 정규 체크
+                        $("#nickcheck").css("color","green");
+                        $("#nickcheck").text("아주 멋진 닉네임이군요!");
+                     } else if(m_nick == ""){
+                        $('#nickcheck').text('닉네임을 입력해주세요 :)');
+                        $('#nickcheck').css('color', 'red');      
+                     } else if(m_nick < 2){
+                        $('#nickcheck').text('닉네임은 2글자 이상입니다.');
+                        $('#nickcheck').css('color', 'red');
+                     }else if(m_nick > 12){
+                        $('#nickcheck').text('닉네임은 12글자 이하입니다.');
+                        $('#nickcheck').css('color', 'red');
+                     }else {
+                        $('#nickcheck').text("사용 불가능한 닉네임입니다.");
+                        $('#nickcheck').css('color', 'red');
+                     }    
+                  }
+               }, error : function() {
+                     $('#nickcheck').text("error 발생");
+               }
+            });
+         });
+      });
 /*  document.onkeydown = checkKeycode 키코드 보는것
-	function checkKeycode(e) {
-	var keycode;
-	if (window.event) keycode = window.event.keyCode;
-	else if (e) keycode = e.which;
-	alert("keycode: " + keycode);
+   function checkKeycode(e) {
+   var keycode;
+   if (window.event) keycode = window.event.keyCode;
+   else if (e) keycode = e.which;
+   alert("keycode: " + keycode);
 } */
-	 
+    
 
 </script>
 </head>
@@ -571,7 +571,7 @@ var idJ = /^[a-z0-9]{4,12}$/;
 
 
 
-										</textarea>
+                              </textarea>
                                     </dd>
                                 </dl>
                             </div>
@@ -602,8 +602,8 @@ var idJ = /^[a-z0-9]{4,12}$/;
 
 <!--                            <input type="submit" class="btn btn_submit" value="회원가입">-->
                             <a href="#joinModal" data-uc-click="modal" class="btn btn_submit" onclick="javascript:setModal1();">회원가입</a>
-                       		
-                       		
+                             
+                             
                             
 
 
@@ -626,11 +626,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
                             <div class="is-input-field is-mg-b_15 kk">
                                 <input type="text" id="m_email" name="m_email" value="" placeholder="* 이메일주소" />
                             </div>
-                            <div id="emailcheck" ></div>
+                            <div id="emailcheck" >1</div>
                               <div class="is-input-field is-mg-b_15">
                                 <input type="text" id="m_nick" name="m_nick" value="" placeholder="* 닉네임" />
                             </div>
-                            <div id="nickcheck" ></div>
+                            <div id="nickcheck" >1</div>
                             <div class="is-input-field is-mg-b_15">
                                 <input type="password" id="m_pwd" name="m_pwd" value="" placeholder="* 비밀번호(영문,숫자,특수문자 포함 8자리 이상)" />
                             </div>
@@ -650,11 +650,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
                                 <div data-uc-colgroup style="background-color: #eee; padding: 10px 0;">
                                     <div class="is-col-xs6 is-align-mid is-txt-center">
                                         <label class="is-chk-lab">
-                                            <input type="radio" id="m_gender" name="m_gender" value="남성" checked="checked"><span></span> 남성</label>
+                                            <input type="radio" id="m_gender" name="m_gender" value="여성" checked="checked"><span></span> 여</label>
                                     </div>
                                     <div class="is-col-xs6 is-align-mid is-txt-center">
                                         <label class="is-chk-lab">
-                                            <input type="radio" id="m_gender" name="m_gender" value="여성"><span></span> 여성</label>
+                                            <input type="radio" id="m_gender" name="m_gender" value="남성"><span></span> 남</label>
                                     </div>
                                 </div>
                             </div>
@@ -678,13 +678,10 @@ var idJ = /^[a-z0-9]{4,12}$/;
         </div>
     </div>
  <c:set var="session" value="${member}"/>
- 	<c:if test="${!empty session}">
-	<header id="header">
-        <div class="header_wrap row">
-        	<div class="col-xs-8 col-sm-3"> 
-            <h1><a href="<%=request.getContextPath() %>/main_room.do"><img src="resources/images/main/logo.png" alt=""></a></h1>
-            </div>
-            <div class="col-xs-8 col-sm-5">
+    <c:if test="${!empty session}">
+<header id="header">
+        <div class="header_wrap">
+            <h1><a href="<%=request.getContextPath() %>/main_room.do"><img src="resources/images/main/logo.png" alt="" style="position: absolute; left: 15%"></a></h1>
             <nav id="gnb">
             
             
@@ -694,12 +691,11 @@ var idJ = /^[a-z0-9]{4,12}$/;
                     <li><a href="<%=request.getContextPath() %>/upload_room.do">방올리기</a></li>
                     <li><a href="<%=request.getContextPath() %>/share_room.do">공유방</a></li>
                     <li><a href="<%=request.getContextPath() %>/customer_room.do">고객센터</a></li>
+                    <li><a href="<%=request.getContextPath() %>/board_list.do?b_head=전체글보기">커뮤니티</a></li>
                 </ul>
             </nav>
-            </div>
-             <div class="util col-xs-8 col-sm-4">
+             <div class="util" style="position: absolute; left: 70%">
                 <ul>
-                  	
                     <li><a href="<%=request.getContextPath() %>/my_room_1.do"><img src="resources/images/main/mypage_icon.png" alt=""></a></li>
                     <li><a class="logout" href="<%=request.getContextPath() %>/logout.do">로그아웃</a></li>
                     <li><p style="margin-top: 4px;">${session.getM_nick() }님 환영합니다.</p></li>
@@ -707,22 +703,25 @@ var idJ = /^[a-z0-9]{4,12}$/;
             </div>
         </div>
     </header>
- 	</c:if>
- 	 	<c:if test="${empty session}">
+    </c:if>
+        <c:if test="${empty session}">
     <!--header-->
     <header id="header">
         <div class="header_wrap">
-            <h1><a href="<%=request.getContextPath() %>/main_room.do"><img src="resources/images/main/logo.png" alt=""></a></h1>
+            <h1><a href="<%=request.getContextPath() %>/main_room.do"><img src="resources/images/main/logo.png" alt="" style="position: absolute; left: 15%"></a></h1>
             <nav id="gnb">
+            
+            
                 <ul>
                     <li><a href="<%=request.getContextPath() %>/view_room.do">방보기</a></li>
                     <li><a href="<%=request.getContextPath() %>/rent_room.do">단기임대</a></li>
                     <li><a href="<%=request.getContextPath() %>/upload_room.do">방올리기</a></li>
                     <li><a href="<%=request.getContextPath() %>/share_room.do">공유방</a></li>
                     <li><a href="<%=request.getContextPath() %>/customer_room.do">고객센터</a></li>
+                    <li><a href="<%=request.getContextPath() %>/board_list.do?b_head=전체글보기">커뮤니티</a></li>
                 </ul>
             </nav>
-            <div class="util">
+            <div class="util" style="position: absolute; left: 70%">
                 <ul>
                     <li><a href="#loginModal" data-uc-click="modal"><img src="resources/images/main/login_icon.png" alt=""></a></li>
                     <li><a href="#joinModal1" data-uc-click="modal"><img src="resources/images/main/join_icon.png" alt=""></a></li>

@@ -1,5 +1,6 @@
 package com.sist.model;
 
+
 import java.util.List;
 
 
@@ -12,8 +13,9 @@ public interface ShareeDAO {
 	public ShareeDTO content(int s_no);
 	public void updateBoard(ShareeDTO dto);
 	public void deleteBoard(int s_no);
+	public void deleteBoard2(List<Integer> list);
 	public List<ShareeDTO> search(String field, String name);
-	public List<CommentsDTO> List_s_Comments(int s_no);
+	public List<CommentsDTO> List_s_Comments(int s_no,int page, int rowsize);
 	public void insert_s_Comments(CommentsDTO dto);
 	public void delete_s_Comments(int c_no);
 	public void delete2_s_Comments(int c_no);
@@ -27,5 +29,13 @@ public interface ShareeDAO {
 	public int S_Comments_count(int s_no);
 	public ShareeDTO S_next_Board(int s_no);
 	public ShareeDTO S_pre_Board(int s_no);
-	
+	public void replyupdate(ShareeDTO dto);
+	public void replyupdate2(ShareeDTO dto);
+	public String replycheck(ShareeDTO dto);
+	public int groupcount(int s_group);
+	public List<ShareeDTO> groupList(int s_group);
+	/*
+	 * public String nextcheck(ShareeDTO dto); public String precheck(ShareeDTO
+	 * dto);
+	 */
 }

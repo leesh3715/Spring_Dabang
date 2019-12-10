@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="resources/css/slick.css">
 	<link rel="stylesheet" href="resources/css/slick-theme.css">
 	<link rel="stylesheet" href="resources/css/style_sub3.css">
-	<link rel="stylesheet" href="resources/css/layout.css">
+	<link rel="stylesheet" href="resources/css/layout.css">	
 
 	<script src="resources/js/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/uc.lib.min.js"></script>

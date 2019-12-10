@@ -60,10 +60,10 @@ header .nav .mypage {
 
 .is-btn-brown {
     display: inline-block;
-    padding: 5px;
-    font-size: 18px;
+    padding: 8px 12px;
+    font-size: 15px;
     color: #fff;
-    background-color: #969172;
+    background-color: #777;
 }
 
 .is-btn-yellow {
@@ -103,23 +103,39 @@ header .nav .mypage {
 
 [data-uc-table] {
     border-top: 2px solid #403c3b;
+    font-family:'Montserrat','NanumGothic','맑은 고딕','돋움',dotum,sans-serif;
+    font-size:12px;
+    line-height:1.6;
+    color:#000;
+    letter-spacing:-.5px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
-[data-uc-table]>[class*=is-table-] th {
+/* [data-uc-table]>[class*=is-table-] th {
     border-color: #73706f;
     font-size: 16px;
     color: #989898;
-}
+} */
 
 [data-uc-table]>[class*=is-table-] td {
     border-color: #d1d1cd;
     color: #020000;
 }
 
-[data-uc-table]>[class*=is-table-] td,
+[data-uc-table]>[class*=is-table-] td{
+    text-align: center;
+    padding: 5px 0;
+    
+}
+
 [data-uc-table]>[class*=is-table-] th {
     text-align: center;
     padding: 5px 0;
+    padding: 11px 0 9px;
+    border-left: 0px solid #e9e9e9;
+    font-weight: normal;
+    background: #fbfafa;
 }
 
 [data-uc-form] .is-input-field input.is-input-control,

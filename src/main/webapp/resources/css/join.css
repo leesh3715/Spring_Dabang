@@ -1,0 +1,142 @@
+.join_area{
+    position: relative;
+    bottom: 100px;
+    text-align:center;
+    margin-bottom:140px;
+}
+.join_area form{
+display:inline-block;
+}
+.join_title{
+	display: inline-block;
+    text-align: center;
+    overflow: hidden;
+    margin: 60px 0;
+    padding: 5px 20px 5px 25px;
+    line-height: 24px;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    color: #333;
+    background: #fff;
+    border: 1px solid #ececec;
+    border-radius: 100px;
+/* font-size:20px;
+ margin-bottom:30px; */
+}
+
+.boardWrite {
+    position: relative;
+    background: #fff;
+    border-top: 2px solid #bfbfbf;
+    text-align: left;
+    overflow: hidden;
+}
+.boardWrite th {
+    width: 130px;
+    padding: 10px 0 8px 20px;
+    border-bottom: 1px dotted #e8e8e8;
+    border-right: 0px solid #e8e8e8;
+    background-color: #fff;
+    text-align: left;
+    font-weight: normal;
+    vertical-align: middle;
+    font-size: 12px;
+}
+.boardWrite td {
+    width: 88%;
+    padding: 10px 0 8px 10px;
+    border-bottom: 1px dotted #e8e8e8;
+}
+.boardWrite img{
+    margin-top: -3px;
+    vertical-align: middle;
+}
+.boardWrite select{
+    height: 24px;
+}
+.id_check{
+    display:inline-block;
+    padding: 3px 10px;
+    margin: 0 1px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    vertical-align: middle;
+    background: #777;
+    color: #fff;
+}
+.join_agreement_column
+{
+    float: left;
+    width: 49%;
+    vertical-align: top;
+    text-align: left;
+    margin-top:60px;
+}
+.join_agreement_column h3
+{
+    font-size: 12px;
+    padding: 50px 0 5px 5px;
+}
+.agreeArea{
+    padding: 10px 10px 10px 10px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    color: #747474;
+    font-size: 11px;
+    
+}
+.agree{
+    overflow: auto;
+    height: 110px;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+}
+ .agreeArea .check {
+    padding: 7px 0 0 0;
+    color: #202020;
+    font-size: 12px;
+}
+.right{
+    float:right;
+}
+
+.join_btn{
+    cursor: pointer;
+    display: inline-block;
+    height:41px;
+    padding: 12px 20px;
+    font-size: 13px;
+    margin: 0 1px;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    background: #777;
+    color: #fff;
+    vertical-align: middle;
+    font-weight: 600;
+}
+.reset{
+    background: #fff;
+    color: #888;
+}
+.join_btn, .reset{
+    margin-top:22px;
+}
+
+.login_foward{
+display:inline-block;
+margin-top:10px;
+padding:5px 70px;
+background:#000;
+color:#fff;
+}
+
+.secession_btn{
+    position: absolute;
+    right:0;
+    bottom:0;
+    padding: 8px 15px;
+    background: #fff;
+    color: #888;
+}

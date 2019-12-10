@@ -66,6 +66,7 @@
 		</div>
 	</div>
 
+
 	<!--header-->
     <%@ include file="../../resources/include/header.jsp"%>
 
@@ -74,7 +75,7 @@
 <div class="container">
 <div class="gongyu my1 my1-4">
 
-		<div style="background-image: url(resources/images/sub_2_2/2_2.jpg); background-position: center center; height: 170px;">
+		<div style="background-image: url(resources/images/sub_2_2/2_2.jpg); background-position: center center; height: 170px; background-repeat: no-repeat; background-size: cover;">
 			<div class="is-frame-md is-relative" style="height: 100%;">
 				<b class="title">방 올리기</b>
 
@@ -284,10 +285,10 @@
                                                     &nbsp;&nbsp;/&nbsp;&nbsp;
                                                     <input type="text" class="type1" name="r_rentfee2" value="${tdto.getR_rentfee().split("/")[1]}">
                                                 </div>
-                                                <script>
+                                               <!--  <script>
                                                     
                                                     $("input:radio[name='radio3']:radio[value='월세']").prop('checked', true); // 선택하기
-                                                    </script>
+                                                    </script> -->
                                                 </c:if>
                                                 
                                                 <c:if test="${tdto.getR_deposit() ne null }">
@@ -327,10 +328,9 @@
                                                     <input type="text" class="type1" name="r_deposit" value="${tdto.getR_deposit()}">
                                                     &nbsp;&nbsp;만원
                                                 </div>
-                                                <script>
-                                                     
+                                              <!--   <script>
                                                     $("input:radio[name='radio3']:radio[value='전세']").prop('checked', true); // 선택하기
-                                                    </script>
+                                                    </script> -->
                                                 </c:if>
                                             </td>
                                         </tr>

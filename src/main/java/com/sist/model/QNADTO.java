@@ -8,15 +8,23 @@ public class QNADTO {
 	private String myqna_cont;
 	private String myqna_writer;
 	private String myqna_regdate;
+	private String myqna_id;
+
+	public String getMyqna_id() {
+		return myqna_id;
+	}
+
+	public void setMyqna_id(String myqna_id) {
+		this.myqna_id = myqna_id;
+	}
 
 	private int myqna_group;
-	private int myqna_recomplete;
+	private String myqna_recomplete;
 	private int myqna_reanswer	;
 	
 	private String myqna_answerdate;
+	
 
-	
-	
 	public int getMyqna_no() {
 		return myqna_no;
 	}
@@ -73,11 +81,11 @@ public class QNADTO {
 		this.myqna_group = myqna_group;
 	}
 
-	public int getMyqna_recomplete() {
+	public String getMyqna_recomplete() {
 		return myqna_recomplete;
 	}
 
-	public void setMyqna_recomplete(int myqna_recomplete) {
+	public void setMyqna_recomplete(String myqna_recomplete) {
 		this.myqna_recomplete = myqna_recomplete;
 	}
 

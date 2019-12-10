@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
- <meta name="description" content="">
-   <meta name="author" content="">
 
+<!doctype html>
+<html>
+
+<head>
+   <meta charset="utf-8">
+
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+   <title>방 올리기</title>
+   <meta name="description" content="">
+   <meta name="author" content="">
    <meta name="viewport" content="width=device-width,initial-scale=1">
 
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
@@ -19,8 +22,6 @@
    <link rel="stylesheet" href="resources/css/slick.css">
    <link rel="stylesheet" href="resources/css/slick-theme.css">
    <link rel="stylesheet" href="resources/plugins/fonts/line-awesome.css">
-   <link rel="stylesheet" href="resources/plugins/owlCarousel/owl.carousel.min.css">
-   <link rel="stylesheet" href="resources/plugins/owlCarousel/owl.theme.default.min.css">
    <link rel="stylesheet" href="resources/css/style_sub2_3.css">
    <link rel="stylesheet" href="resources/plugins/jquery-ui/jquery-ui.css">
    <link rel="stylesheet" href="resources/css/layout.css">
@@ -32,228 +33,151 @@
    <script src="resources/js/uc.plugin.min.js"></script>
    <script src="resources/js/slick.min.js"></script>
    <script src="resources/js/common.js"></script>
-
-<title>청춘다방</title>
+	<style type="text/css">
+		li {
+		   list-style:none;
+		   display:inline-block;
+		} 
+	</style>
+	
 </head>
-<script>
-      $(function () {
-
-
-         $('#reset').click(function () {
-            $("#yearPriceRange").slider({
-               range: true,
-               min: 0,
-               max: 2000,
-               values: [0, 2000],
-               slide: function (event, ui) {
-
-               }
-            });
-
-            $("#yearPriceRange1").slider({
-               range: true,
-               min: 0,
-               max: 300,
-               values: [0, 300],
-               slide: function (event, ui) {
-
-               }
-            });
-            $("#yearPriceRange2").slider({
-               range: true,
-               min: 0,
-               max: 500,
-               values: [0, 1000],
-               slide: function (event, ui) {
-
-               }
-            });
-
-            $("#monthPriceRange1").slider({
-               range: true,
-               min: 0,
-               max: 300,
-               values: [0, 600],
-               slide: function (event, ui) {
-
-               }
-            });
-            $("#monthPriceRange2").slider({
-               range: true,
-               min: 0,
-               max: 50,
-               values: [0, 100],
-               slide: function (event, ui) {
-
-               }
-            });
-            $("#slider-range2").slider({
-               range: true,
-               min: 0,
-               max: 10,
-               values: [0, 20],
-               slide: function (event, ui) {
-
-               }
-            });
-            filterInit();
-         })
-
-         $("#yearPriceRange").slider({
-            range: true,
-            min: 0,
-            max: 2000,
-            values: [0, 2000],
-            slide: function (event, ui) {
-
-            }
-         });
-
-         $("#yearPriceRange1").slider({
-            range: true,
-            min: 0,
-            max: 300,
-            values: [0, 300],
-            slide: function (event, ui) {
-
-            }
-         });
-         $("#yearPriceRange2").slider({
-            range: true,
-            min: 0,
-            max: 500,
-            values: [0, 1000],
-            slide: function (event, ui) {
-
-            }
-         });
-
-         $("#monthPriceRange1").slider({
-            range: true,
-            min: 0,
-            max: 300,
-            values: [0, 600],
-            slide: function (event, ui) {
-
-            }
-         });
-         $("#monthPriceRange2").slider({
-            range: true,
-            min: 0,
-            max: 50,
-            values: [0, 100],
-            slide: function (event, ui) {
-
-            }
-         });
-         $("#slider-range2").slider({
-            range: true,
-            min: 0,
-            max: 10,
-            values: [0, 20],
-            slide: function (event, ui) {
-
-            }
-         });
-      });
-
-      function filterInit(name) {
-
-         if (name == '전세') {
-            $('.filter-chk').removeClass('is-active');
-            $('.year-chk2').addClass('is-active');
-            $('.range-wrap').css('display', 'none');
-            $('#yearPrice2').css('display', 'block');
-         } else if (name == '연세') {
-            $('.filter-chk').removeClass('is-active');
-            $('.year-chk1').addClass('is-active');
-            $('.range-wrap').css('display', 'none');
-            $('#yearPrice1').css('display', 'block')
-         } else if (name == '월세') {
-            $('.filter-chk').removeClass('is-active');
-            $('.month-chk').addClass('is-active');
-            $('.range-wrap').css('display', 'none');
-            $('#monthPrice').css('display', 'block')
-         } else {
-            $('.range-wrap').css('display', 'none');
-            $('.filter-chk').removeClass('is-active');
-         }
-      }
-   </script>
-
-
 
 <body>
-<%@ include file="../../resources/include/header.jsp"%>	
+	
+	<%@ include file="../../resources/include/header.jsp"%>	
+		
+   <!-- 허위매물 제재 정책 팝업 -->
+   <div id="fakePropertyModal" data-uc-modal class="is-fade">
+      <div class="is-modal-dialog">
+         <div data-uc-panel>
+            <div class="is-panel-body">
+               <div data-uc-colgroup="">
+                  <div class="is-col-lg12" style="font-size:0.8em; line-height: 2.8em">
+                     <p>매물 등록</p>
+                     <div>
+                        <p>1) 전?월세 매물만 등록 가능</p>
+                        <p>- 원룸, 1.5룸, 투룸, 쓰리룸, 오피스텔, 아파트에 해당하는 전,월세 매물만 등록 가능합니다.</p>
+                        <p>&nbsp;&nbsp;&nbsp;ex) 상가, 사무실 등 주거 외 시설 불가</p>
+                        <p>- LH/SH의 장기전세주택 상품과 고시원업(고시원,원룸텔 등), 쉐어하우스, 레지던스 등의 매물 등록은 불가합니다.</p>
+                        <p>2) 직거래 매물 등록과 공인중개사 매물물 등록으로 구분</p>
+                        <p>- 직거래 매물 : 개인사용자 회원의 경우 무료로 1개 매물 등록이 가능합니다.</p>
+                        <p>- 공인중개사 매물 : 일반상품품, 지하철상품, 동상품, 대학교상품 등을 최소 10개 이상 구매 후 매물 등록 가능합니다.</p>
+                        <p>3) 정확한 매물 위치 정보 입력</p>
+                        <p>- 등록 매물의 정확한 주소를를 입력해야 합니다.</p>
+                        <p>&nbsp;&nbsp;&nbsp;ex) 서울특별시 강남구 역삼동 635-2 / 서울특별시 강남구 태해란로 7길 2</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 
-
-<%-- <c:out value="${List}"/>	 --%>
-
-  <c:set var="list" value="${List }"/>	
-   <li class="content_wrap">
+	<c:set var="list" value="${List }"/>	
       <div class="is-frame-md is-pd-y_50" data-uc-tab>
-      <div align="center"><b><c:out value="${search_text}"/></b> (으)로 검색한 결과 입니다.</div>
          <ul class="is-tab-nav">
             <li class="is-active">
-            <a href="#prdList1" data-uc-click="tab"><b>핫한 방</b> </a></li>
+            <a href="#prdList1" data-uc-click="tab">검색 결과 방 목록 </a></li>
          </ul>
          <div class="is-tab-content">
             <div id="prdList1" class="is-tab-pane is-active is-show">
-               <div class="owl-carousel owl-theme is-product-wrap">
-              
+               <div class="owl-carousel is-product-wrap">
+              <div id="results">
+              <ul>
               <c:forEach items="${list }" var="tdto" varStatus="status">
-                  <div id="item" class="item">
+              	<li>
+                  <div id="item" class="item" style="width: 170px; margin-bottom: 20px;">
                      <div class="is-thumb">
                         <a href="room_cont.do?r_no=${tdto.getR_no() }">
                         <img style="width:450px; height:150px;"src="${tdto.getR_photoOne() }" alt="" /></a>
                      </div>
                      <div class="is-info">
                         <span>${ tdto.getR_btype()} <span>#</span></span>
-                        <c:set var="String" value="${ tdto.getR_rentfee()}"/>
-                        
-                        <c:if test="${fn:contains(String,'/')}">
-                        <p>보증금/월세</p>
                         <h3>${ tdto.getR_rentfee()}</h3>
-                        </c:if>
-                        
-                        <c:if test="${!fn:contains(String,'/')}">
-                        <p>전세</p>
-                        <h3>${ tdto.getR_deposit()}</h3>
-                        </c:if>
-                        
                         <p>${ tdto.getR_floor()}층, ${ tdto.getR_dimension()}m²</p>
                          <p>관리비 ${ tdto.getR_utility()}, ${ tdto.getR_detail()})</p>
                      </div>
                   </div>
+                  </li>
                 </c:forEach>
-                
+                </ul>
+                  </div>
+                	<p >
+                		<a style="position: relative; left: 375px;" id="target" >Show more</a>
+                	</p>
                </div>
             </div>
          </div>
       </div>
-      
-      
-</body>
-
-<script src="resources/plugins/owlCarousel/owl.carousel.min.js"></script>
-<script>
-   $('.owl-carousel').owlCarousel({
-      loop: false,
-      margin: 10,
-      nav: true,
-      dots: true,
-      responsive: {
-         0: {
-            items: 1
-         },
-         600: {
-            items: 3
-         },
-         1000: {
-            items: 5	
-         }
-      }
-   })
+      <script>
+	  $('.item:gt(4)').hide().last().after(
+	    $("#target").click(function(){
+	        var a = this;
+	        $('.item:not(:visible):lt(5)').fadeIn(function(){
+	         if ($('.item:not(:visible)').length == 0) $(a).remove();   
+	        }); return false;
+	    })
+	);  
 </script>
+      <div class="is-bg-brown is-pd-y_30">
+         <div class="is-frame-md">
+            <h3 class="is-txt-center" style="font-size: 22px; color: #1d160e; margin-bottom: 30px;">청춘다방, 간편<span
+                  style="font-size: 22px; color: #726c5c; ">하게 이용하는 방법</span></h3>
+            <ul class="columns-xs5 is-clearfix">
+               <li class="is-col" style="border-right: 2px solid #f8f2e6; height: 80px;">
+                  <img src="resources/images/sub_2_3/icon_1.png">
+               </li>
+               <li class="is-col" style="border-right: 2px solid #f8f2e6; height: 80px;">
+                  <img src="resources/images/sub_2_3/icon_2.png">
+               </li>
+               <li class="is-col" style="border-right: 2px solid #f8f2e6; height: 80px;">
+                  <img src="resources/images/sub_2_3/icon_3.png">
+               </li>
+               <li class="is-col" style="border-right: 2px solid #f8f2e6; height: 80px;">
+                  <img src="resources/images/sub_2_3/icon_4.png">
+               </li>
+               <li class="is-col">
+                  <img src="resources/images/sub_2_3/icon_5.png">
+               </li>
+            </ul>
+
+         </div>
+      </div>
+        
+      <!-- 하단 시작 -->
+      <footer class="footer">
+         <div class="is-frame-md is-relative">
+            <div class="is-area-top">
+               <ul>
+                  <li class=""><a href="#">회사소개</a></li>
+                  <li class=""><a href="#">이용약관</a></li>
+                  <li class=""><a href="#">개인정보 처리방침</a></li>
+                  <li class=""><a href="#">위치기반</a></li>
+                  <li class=""><a href="#">중개사 사이트 바로가기</a></li>
+               </ul>
+            </div>
+            <div class="is-area-mid">
+               <p><span>상호: </span><span>대표: </span><span>사업자등록번호: </span></p>
+               <p><span>주소: </span></p>
+               <p><span>팩스: </span><span>통신판매업 신고번호: </span></p>
+               <p><span>서비스 이용문의: </span><span>이메일: </span><span>서비스제휴문의: </span></p>
+            </div>
+            <div class="is-area-bot">
+               <!-- 아이콘 필요 -->
+               <a href="#" class="is-btn-transparent"><img src="" alt=""></a>
+               <a href="#" class="is-btn-transparent"><img src="" alt=""></a>
+               <a href="#" class="is-btn-transparent"><img src="" alt=""></a>
+               <a href="#" class="is-btn-transparent"><img src="" alt=""></a>
+               <p class="is-copyright">Copyright .All Rights Reserved.</p>
+            </div>
+         </div>
+      </footer>
+      <!-- 하단 끝 -->
+
+
+</body>
+<div style="text-align: center;">
+
+</div>
 
 </html>

@@ -74,6 +74,12 @@ public class ShareeDAOimpl implements ShareeDAO {
 	}
 	
 	@Override
+	public void deleteBoard2(List<Integer> list) {
+		// TODO Auto-generated method stub
+		this.SqlSession.delete("s_delete2",list);
+	}
+	
+	@Override
 	public void updateBoard(ShareeDTO dto) {
 		// TODO Auto-generated method stub
 		this.SqlSession.update("s_update",dto);
@@ -87,9 +93,18 @@ public class ShareeDAOimpl implements ShareeDAO {
 	}
 	
 	@Override
-	public List<CommentsDTO> List_s_Comments(int s_no) {
+	public List<CommentsDTO> List_s_Comments(int s_no,int page, int rowsize) {
 		// TODO Auto-generated method stub
-		return this.SqlSession.selectList("c_list",s_no);
+		int startNo = ((page - 1) * rowsize) + 1;
+		// 해당 페이지의 끝 글번호
+		int endNo = (page * rowsize);
+
+		SearchDTO dto = new SearchDTO();
+		System.out.println(s_no);
+		dto.setS_no(s_no);
+		dto.setS_startNo(startNo);
+		dto.setS_endNo(endNo);
+		return this.SqlSession.selectList("c_list",dto);
 	}
 	
 	@Override
@@ -149,7 +164,7 @@ public class ShareeDAOimpl implements ShareeDAO {
 			return this.SqlSession.selectOne("s_titlecount",find_name);
 		}else if(find_field.equals("cont")){
 			return this.SqlSession.selectOne("s_contentcount",find_name);
-		}else if(find_field.equals("title+cont")){
+		}else if(find_field.equals("title_cont")){
 			return this.SqlSession.selectOne("s_title_contcount",find_name);
 		}else{
 			return this.SqlSession.selectOne("s_writercount",find_name);			
@@ -170,7 +185,7 @@ public class ShareeDAOimpl implements ShareeDAO {
 			return this.SqlSession.selectList("s_title",dto);
 		}else if(find_field.equals("cont")){
 			return this.SqlSession.selectList("s_content",dto);
-		}else if(find_field.equals("title+cont")){
+		}else if(find_field.equals("title_cont")){
 			return this.SqlSession.selectList("s_title_cont",dto);
 		}else{
 			return this.SqlSession.selectList("s_writer",dto);			
@@ -178,16 +193,48 @@ public class ShareeDAOimpl implements ShareeDAO {
 	}
 
 	@Override
-	public ShareeDTO S_next_Board(int s_no) {
+	public ShareeDTO S_next_Board(int s_group) {
 		// TODO Auto-generated method stub
-		return this.SqlSession.selectOne("s_next",s_no);
+		return this.SqlSession.selectOne("s_next",s_group);
 	}
 
 	@Override
-	public ShareeDTO S_pre_Board(int s_no) {
+	public ShareeDTO S_pre_Board(int s_group) {
 		// TODO Auto-generated method stub
-		return this.SqlSession.selectOne("s_pre",s_no);
+		return this.SqlSession.selectOne("s_pre",s_group);
 	}
+
+	@Override
+	public void replyupdate(ShareeDTO dto) {
+		// TODO Auto-generated method stub
+		this.SqlSession.update("s_replyupdate",dto);
+	}
+
+	@Override
+	public void replyupdate2(ShareeDTO dto) {
+		// TODO Auto-generated method stub
+		this.SqlSession.update("s_replyupdate2",dto);
+	}
+
+	@Override
+	public String replycheck(ShareeDTO dto) {
+		// TODO Auto-generated method stub
+		return this.SqlSession.selectOne("s_replycheck",dto);
+	}
+
+	@Override
+	public int groupcount(int s_group) {
+		// TODO Auto-generated method stub
+		return this.SqlSession.selectOne("s_groupcount",s_group);
+	}
+
+	@Override
+	public List<ShareeDTO> groupList(int s_group) {
+		// TODO Auto-generated method stub
+		return this.SqlSession.selectList("s_grouplist",s_group);
+	}
+
+	
 
 
 

@@ -14,8 +14,16 @@ public class QNADAOimpl implements QNADAO {
 	//데이터소스, 매퍼 있음. root-context.xml 참고	
 	
 	@Override
-	public List<QNADTO> getList() {
-		return this.sqlSession.selectList("qnaList"); 
+	public List<QNADTO> getList(String e_mail) {
+		return this.sqlSession.selectList("qnaList", e_mail); 
+		// 기본적으로 sql세션에 selectList라는 메소드 있음. 
+		// 전체내용  dto로 가져와서 List에 저장해줌
+		//mapper의 id를 list로 지정해주면 매칭이 됨
+	}
+	
+	@Override
+	public List<QNADTO> getList2() {
+		return this.sqlSession.selectList("qnaList2"); 
 		// 기본적으로 sql세션에 selectList라는 메소드 있음. 
 		// 전체내용  dto로 가져와서 List에 저장해줌
 		//mapper의 id를 list로 지정해주면 매칭이 됨
@@ -46,5 +54,42 @@ public class QNADAOimpl implements QNADAO {
 		
 	}
 
+	@Override
+	public int insertReply(REPLYDTO dto) {
+		// TODO Auto-generated method stub
+		return this.sqlSession.insert("qnaReplyAdd", dto);
+	}
+
+	@Override
+	public void updateRecomplete(int no) {
+		this.sqlSession.update("qnaReplycomplete", no);
+	}
+	@Override
+	public int isAnswer(int no) {
+		return this.sqlSession.selectOne("qnaIsAnswer", no);
+	}
+	
+	@Override
+	public List<REPLYDTO> getReplylist(int no){
+		return this.sqlSession.selectList("qnaReplylist", no);
+	}
+
+	@Override
+	public REPLYDTO replycontent(int no) {
+		// TODO Auto-generated method stub
+		return this.sqlSession.selectOne("qnaReplyCont", no);
+	}
+
+	@Override
+	public int replyUpdate(REPLYDTO dto) {
+		// TODO Auto-generated method stub
+		return this.sqlSession.update("qnaReplyUpdate", dto);
+	}
+
+	@Override
+	public void replyDelete(int no) {
+		
+		this.sqlSession.delete("qnaReplyDelete", no);
+	}
 	
 }
